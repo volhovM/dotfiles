@@ -1,0 +1,38 @@
+Config {
+	-- fonts may not differ from terminus 8 (or fixed?) set by default
+	-- xmobar must me built with 'xft' use flag to get nice fonts
+	font = "xft:Terminus-8"
+	--font = "-*-terminus-*-*-*-*-13-*-*-*-*-*-*-u"
+	--font = "-*-terminus-medium-*-*-*-14-*-*-*-*-*-*-u"
+	--font = "xft:Ubuntu:size=8"
+	, bgColor = "#222C30"
+	, fgColor = "#9FC6CC"
+	--       , fgColor = "#5993C2"
+	, position = TopW L 100
+	, commands = [ Run Cpu ["-t", "<total>%", "-L","15","-H","50","-l","green","-h","red", "-n", "yellow"] 50
+	             , Run Memory ["-t","<usedratio>%", "-L", "20", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 50
+	             , Run BatteryP ["BAT0"]
+	             ["-t", "<acstatus>",
+	             "-L", "15", "-H", "70",
+	             "-l", "red", "-h", "green", "-n", "yellow",
+	             "--", "-O", "<fc=green>*</fc> Bat:<left>% <fc=green>*</fc>",
+	             "-i", "<fc=#0088FF>Full</fc>",
+	             "-o", "Bat: <left>%"] 100
+	             , Run Com "sh" ["/home/volhovm/dotfiles/scripts/volumescript.sh"] "vol" 9
+	             , Run Swap ["-t", "<usedratio>%", "-H", "30", "-L", "2", "-l", "green", "-n", "yellow", "-h", "red"] 100
+	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/todayStudy.sh"] "schedule" 200
+	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/wificon.sh" ] "wificon" 10
+	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/pingIndicator.sh" ] "pingI" 50
+	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/curlIndicator.sh" ] "curlI" 50
+	             , Run Date "%a %b %_d %V.%Y %H:%M:%S" "date" 10
+	             , Run Com "dropbox" ["status"] "dropbox" 100
+ 	             , Run DiskIO [("/", "<read> <write>"), ("sdb1", "<total>")] [] 10
+	             , Run Kbd [ ("us(dvorak)" , "us")
+	              	       , ("ru"         , "ru") ]
+	             , Run StdinReader
+	             ]
+	, sepChar = "%"
+	, alignSep = "}{"
+	, template = " %schedule% <fc=#429942>|</fc> %StdinReader% }{ %dropbox% <fc=#429942>|</fc> %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu% <fc=#429942>/</fc> %memory% <fc=#429942>/</fc> %swap% <fc=#429942>/</fc> %diskio% <fc=#429942>|</fc> %vol% <fc=#429942>| *</fc> <fc=#EE4444>%date%</fc> <fc=#429942>*</fc>  "
+}
+

@@ -1,0 +1,62 @@
+" color scheme
+colorscheme zhe
+
+" hint chars
+set hintchars=uhetonasidpgcr
+
+" Make Firefox run faster by using JIT
+set! javascript.options.jit.chrome=true
+
+" keys
+noremap h :tabprevious<CR>
+noremap t :tabnext<CR>
+
+noremap s :undo<CR>
+
+noremap = n
+noremap + N
+
+"noremap e :js liberator.plugins.smooziee.smoothScrollBy(300)<CR>
+"noremap u :js liberator.plugins.smooziee.smoothScrollBy(-300)<CR>
+
+noremap u <C-b>
+noremap e <C-d>
+
+noremap <A-e> h
+noremap <A-u> l
+
+noremap o :open 
+noremap O O
+noremap n :tabopen 
+noremap N T
+
+noremap <C-h> :back<CR>
+noremap <C-t> :forward<CR>
+noremap l <CR>
+
+
+noremap f f
+noremap b ;b
+noremap F ;t
+
+" open links in same tab
+set popups=tab
+
+" no auto insert mode on page load
+set focuscontent=true
+
+" show only input and url in status bar
+set status=input,location
+
+" don't split input by commas
+set urlseparator=
+
+" max # of items in a listing
+set maxitems=30
+
+" set gui
+set gui=tabs,nonavigation
+
+set cpt=lsS
+
+set defsearch=duckduckgo

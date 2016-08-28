@@ -4,7 +4,7 @@ dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 # $1 filename, $2 real path
 function makeLink {
-  rm $1
+  rm $2
   ln -s $dir$1 $2
 }
 

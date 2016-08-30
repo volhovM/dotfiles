@@ -17,5 +17,5 @@ makeLink "/.xmodmap" ~/.xmodmap
 makeLink "/.zshrc" ~/.zshrc
 makeLink "/.mrconfig" ~/.mrconfig
 mkdir -p ~/.config/dunstrc/
-makeLink "/.dunstrc" ~/.config/dunst/dunstrc
+makeLink "/dunstrc" ~/.config/dunst/dunstrc
 makeLink "/.vimrc" ~/.vimrc

@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
  
 #let 
+#  packageOverrides = super: let self = pkgs; in
+#  {
+#    haskellPackages = self.haskell.packages.ghc7103.override {
+#      overrides = config.haskellPackageOverrides or (self: super: {});
+#    };
+#  };
 #myAndroidSdk = pkgs.androidenv.androidsdk {
 #    platformVersions = [ "22" ];
 #    abiVersions = [ "armeabi-v7a" ];
@@ -14,6 +20,7 @@
     ];
 
   boot.loader.systemd-boot.enable = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 # boot.loader.gummiboot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernel.sysctl = { "vm.swappiness" = 0; };
@@ -207,7 +214,7 @@
     tabbed
     tdesktop
     tcpdump
-    teeworlds
+    # teeworlds
     # texLiveFull # Moved to nix-env (rebuilds every time, it hurts)
     thunderbird
     tlp
@@ -256,6 +263,8 @@
     haskellPackages.Agda
     haskellPackages.haddock
     haskellPackages.hgettext
+#    haskell.packages.ghc7103.hindent_5_0_0
+#    haskellPackages.hindent_5_0_0
     haskellPackages.hindent
     haskellPackages.hlint
 #    haskellPackages.ghc-mod

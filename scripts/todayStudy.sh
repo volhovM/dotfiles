@@ -11,23 +11,23 @@ fi
 
 free="Let org lead you"
 case $day in
-        1) out="11:00 pe-__-funcan-pp-pp 18:40" ;;
-        2) out="11:00 seg-seg-seg-phil 15:40" ;;
-        3) out="09:00 military department stuff 17:00 " ;;
-        4) out="11:00 dm-dm-dm 15:40" ;;
-        5) out="11:00 stat-stat-mph-mph 17:10" ;;
-        6) out="15:50 eng-eng 18:40" ;;
+        1) out="08:20 pe-11:40-ml-ml-func-func 18:30" ;;
+        2) out="10:00 cod-cod-db-db-db 18:30" ;;
+        3) out="no university" ;;
+        4) out="11:40 seg-seg 15:40" ;;
+        5) out="no university" ;;
+        6) out="10:00 po-po-net-net 16:50" ;;
         7) out=$free ;;
 
         8) out="10:00 pe-__-funcan-pp-pp 18:40" ;;
-        9) out="11:00 seg-seg-seg 15:40" ;;
-        10) out="09:00 military department stuff 17:00 " ;;
-        11) out="11:00 dm-dm-dm 15:40" ;;
-        12) out="09:30 phil-stat-stat-mph-mph 17:10" ;;
-        13) out="15:50 eng-eng 18:40" ;;
+        9) out="10:00 cod-cod-db 15:00" ;;
+        10) out="no university" ;;
+        11) out="11:40 seg-seg 15:40" ;;
+        12) out="no university" ;;
+        13) out="10:00 po-po-net-net 16:50" ;;
         14) out=$free ;;
 
-        15) out="11:00 pe-__-funcan-pp-pp 18:40" ;;
+        15) out="08:20 pe-11:40-ml-ml-func-func 18:30" ;;
         *) out="SHDL ERROR" ;;
 esac
 

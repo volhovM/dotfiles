@@ -100,10 +100,8 @@
   nix = {
     trustedBinaryCaches = 
       [ https://cache.nixos.org 
-        http://hydra.cryp.to 
         https://hydra.serokell.io ];
     binaryCachePublicKeys = [
-      "hydra.nixos.org-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8bezVs="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "hydra.serokell.io-1:he7AKwJKKiOiy8Sau9sPcso9T/PmlVNxcnNpRgcFsps="
     ];
@@ -267,6 +265,7 @@
 #    haskellPackages.hindent_5_0_0
     haskellPackages.hindent
     haskellPackages.hlint
+    haskellPackages.purescript
 #    haskellPackages.ghc-mod
 #    haskellPackages.idris
     haskellPackages.stylish-haskell
@@ -280,8 +279,10 @@
 #	   Chart-gtk
           conduit
           lens
+          pretty-tree
           random
           numbers 
+          monad-loops
           ghc
           ghc-mod
           turtle
@@ -290,9 +291,9 @@
         ]))
     libnotify
     ncurses
-    nodejs
+    nodejs-6_x
     nodePackages.browserify
-    nodePackages.webpack
+#    nodePackages.webpack
 #    maven
     openjdk
     perl

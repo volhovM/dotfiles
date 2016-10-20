@@ -23,7 +23,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 # boot.loader.gummiboot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernel.sysctl = { "vm.swappiness" = 0; };
+  #boot.kernel.sysctl = { "vm.swappiness" = 0; };
   #boot.initrd.kernelModules = [ "fbcon" ];
 
   boot.initrd.luks.devices = [
@@ -66,6 +66,12 @@
     torsocks.enable = true;
   };
   
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql;
+    authentication = "local all all ident"; 
+  };
+
 #  services.i2p.enable = true;
 #  services.i2pd.enable = true;
 
@@ -110,7 +116,7 @@
 #  nix.binaryCaches = [];
   nixpkgs.config = {
 #    virtualbox.enableExtensionPack = false;
-    allowUnfree = true;
+    allowUnfree = false;
     firefox = {
 #     enableGoogleTalkPlugin = true;
 #     enableAdobeFlash = true;
@@ -118,10 +124,14 @@
   };
 
   environment.systemPackages = with pkgs; [
-    skype
+#    skype
 #    teamspeak_client
     acpi
     acpid
+    aspell
+    aspellDicts.en
+    aspellDicts.ru
+    aspellDicts.uk
     at
     autocutsel
     bc
@@ -134,7 +144,7 @@
     dhcpcd
     ditaa
     djvulibre
-    dropbox-cli
+#    dropbox-cli
     efibootmgr
     electrum
     elinks    
@@ -192,6 +202,7 @@
     pavucontrol 
     pciutils
     pkgconfig
+    postgresql
     powertop
     ppp
     pptp
@@ -222,7 +233,7 @@
     transmission_gtk
     tree
     unetbootin
-    unrar
+#    unrar
     unzip
     usbutils
     utox
@@ -262,7 +273,7 @@
     haskellPackages.haddock
     haskellPackages.hgettext
 #    haskell.packages.ghc7103.hindent_5_0_0
-#    haskellPackages.hindent_5_0_0
+#    haskellPackages.hindent_5_0_1
     haskellPackages.hindent
     haskellPackages.hlint
     haskellPackages.purescript
@@ -282,12 +293,15 @@
           pretty-tree
           random
           numbers 
+          file-embed
           monad-loops
           ghc
           ghc-mod
           turtle
+          unordered-containers
           xmonad  
           xmonad-contrib
+          zlib
         ]))
     libnotify
     ncurses

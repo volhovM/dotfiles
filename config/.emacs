@@ -5,11 +5,12 @@
 ;;; Code:
 (require 'package)
 
-(setq package-list '(haskell-mode nyan-mode nlinum flycheck
-                     unicode-fonts scala-mode2 sublime-themes
-                     undo-tree idris-mode))
+;(setq package-list '(haskell-mode nyan-mode nlinum flycheck
+;                     unicode-fonts org-drill-table sublime-themes
+;                     undo-tree idris-mode))
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(
+                         ;("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
@@ -22,22 +23,22 @@
   (package-refresh-contents))
 
 ; install the missing packages
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
+;(dolist (package package-list)
+;  (unless (package-installed-p package)
+;    (package-install package)))
 
 
-(defun volhovm-save-some-buffers ()
-(interactive)
-  (save-some-buffers 'no-confirm (lambda ()
-    (cond
-      ((and buffer-file-name (equal buffer-file-name abbrev-file-name)))
-      ((and buffer-file-name (eq major-mode 'latex-mode)))
-      ((and buffer-file-name (eq major-mode 'markdown-mode)))
-      ((and buffer-file-name (eq major-mode 'emacs-lisp-mode)))
-      ((and buffer-file-name (derived-mode-p 'org-mode)))))))
-
-(global-set-key (kbd "C-x s") 'volhovm-save-some-buffers)
+;(defun volhovm-save-some-buffers ()
+;(interactive)
+;  (save-some-buffers 'no-confirm (lambda ()
+;    (cond
+;      ((and buffer-file-name (equal buffer-file-name abbrev-file-name)))
+;      ((and buffer-file-name (eq major-mode 'latex-mode)))
+;      ((and buffer-file-name (eq major-mode 'markdown-mode)))
+;      ((and buffer-file-name (eq major-mode 'emacs-lisp-mode)))
+;      ((and buffer-file-name (derived-mode-p 'org-mode)))))))
+;
+;(global-set-key (kbd "C-x s") 'volhovm-save-some-buffers)
 
 ;;; EVIL MODE
 ;; It's built from sources because main repo was failing (just a regular thing...)
@@ -95,10 +96,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 105 :width normal))))
+ '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 95 :width normal))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
- '(sbt:error ((t (:foreground "red"))) t)
+ '(sbt:error ((t (:foreground "red"))))
  '(whitespace-hspace ((t (:foreground "gray22"))))
  '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
  '(whitespace-space ((t (:foreground "gray20"))))
@@ -110,16 +111,12 @@
 ;; ORG MODE
 ;; Load org files from git rep (elpa package is broken)
 ;; Don't forget to `make autoload`
-(add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
-(add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
-(add-to-list 'load-path "~/.emacs.d/org-drill-table/")
+; (add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
+; (add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
+; (add-to-list 'load-path "~/.emacs.d/org-drill-table/")
 (require 'org-drill-table)
-; hooks
-;(add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
-(add-hook 'org-mode-hook 'my-org-mode-hook)
-(add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
 (setq org-drill-learn-fraction 0.35)
-; bindings
+; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key "\C-ca" 'org-agenda)
 (defun my-org-mode-hook ()
@@ -132,6 +129,8 @@
   (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
   (define-key org-agenda-mode-map "l" 'evil-forward-char)
   (define-key org-agenda-mode-map "h" 'evil-backward-char))
+(add-hook 'org-mode-hook 'my-org-mode-hook)
+(add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
 (setq org-ditaa-jar-path (expand-file-name
           "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
 (org-babel-do-load-languages
@@ -234,6 +233,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (require 'ox-latex)
 (setq org-latex-listings t)
 
+(setq org-reveal-root "file:///home/volhovm/programs/reveal.js")
 
 (defun org-export-latex-no-toc (depth)
   (when depth
@@ -361,6 +361,7 @@ Switch projects and subprojects from STARTED back to TODO"
  '(haskell-process-type (quote auto))
  '(haskell-stylish-on-save t)
  '(inhibit-startup-screen t)
+ '(ispell-program-name "aspell")
  '(ledger-reports
    (quote
     (("debit" "ledger -f finances.dat report Assets:Debit")
@@ -633,6 +634,9 @@ Switch projects and subprojects from STARTED back to TODO"
     (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-drill)))
  '(org-startup-truncated nil)
  '(org-trello-current-prefix-keybinding "C-c o")
+ '(package-selected-packages
+   (quote
+    (org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode intero idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode ghc font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -660,11 +664,8 @@ Switch projects and subprojects from STARTED back to TODO"
            (quote innamespace)
            0)
      (indicate-empty-lines . t))))
- '(scala-indent:align-forms t)
- '(scala-indent:align-parameters t)
- '(scala-indent:default-run-on-strategy 2)
- '(scala-indent:indent-value-expression t)
  '(scroll-bar-mode nil)
+ '(select-enable-primary t)
  '(speedbar-after-create-hook
    (quote
     (speedbar-frame-reposition-smartly sr-speedbar-refresh-turn-off)))
@@ -674,8 +675,7 @@ Switch projects and subprojects from STARTED back to TODO"
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-default-width 30)
  '(sr-speedbar-right-side nil)
- '(tool-bar-mode nil)
- '(x-select-enable-primary t))
+ '(tool-bar-mode nil))
 
 (customize-set-variable 'haskell-stylish-on-save t)
 
@@ -701,7 +701,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (require 'whitespace)
 (setq whitespace-line-column 100)
 (add-hook 'c++-mode-hook 'whitespace-mode)
-(add-hook 'scala-mode 'whitespace-mode)
+;(add-hook 'scala-mode 'whitespace-mode)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;;; SPEEDBAR
@@ -829,25 +829,25 @@ Switch projects and subprojects from STARTED back to TODO"
 (add-hook 'java-mode-hook '(lambda () (whitespace-mode)))
 
 
-;;; Scala
-(unless (package-installed-p 'scala-mode2)
-  (package-refresh-contents) (package-install 'scala-mode2))
-(unless (package-installed-p 'sbt-mode)
-  (package-refresh-contents) (package-install 'sbt-mode))
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(add-hook 'sbt-mode-hook '(lambda ()
-                            (setq compilation-skip-threshold 1)
-                            (local-set-key (kbd "C-a") 'comint-bol)
-                            (local-set-key (kbd "M-RET") 'comint-accumulate)
-                            ))
-(add-hook 'scala-mode-hook '(lambda ()
-                              (local-set-key (kbd "<C-f7>") 'sbt-find-definitions)
-                              (local-set-key (kbd "C-c C-l") 'sbt-run-previous-command)
-                              (local-set-key (kbd "RET") 'newline-and-indent)
-                              (local-set-key (kbd "<backtab>") 'scala-indent:indent-with-reluctant-strategy)
-                              (whitespace-mode)
-                              (show-paren-mode)
-))
+;;;; Scala
+;(unless (package-installed-p 'scala-mode2)
+;  (package-refresh-contents) (package-install 'scala-mode2))
+;(unless (package-installed-p 'sbt-mode)
+;  (package-refresh-contents) (package-install 'sbt-mode))
+;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;(add-hook 'sbt-mode-hook '(lambda ()
+;                            (setq compilation-skip-threshold 1)
+;                            (local-set-key (kbd "C-a") 'comint-bol)
+;                            (local-set-key (kbd "M-RET") 'comint-accumulate)
+;                            ))
+;(add-hook 'scala-mode-hook '(lambda ()
+;                              (local-set-key (kbd "<C-f7>") 'sbt-find-definitions)
+;                              (local-set-key (kbd "C-c C-l") 'sbt-run-previous-command)
+;                              (local-set-key (kbd "RET") 'newline-and-indent)
+;                              (local-set-key (kbd "<backtab>") 'scala-indent:indent-with-reluctant-strategy)
+;                              (whitespace-mode)
+;                              (show-paren-mode)
+;))
 
 ;;; Proof General
 (load-file "~/.emacs.d/ProofGeneral/generic/proof-site.el")

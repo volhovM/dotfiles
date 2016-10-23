@@ -11,6 +11,7 @@ function makeLink {
 makeLink "/.xmobarrc" ~/.xmobarrc
 makeLink "/.vimperatorrc" ~/.vimperatorrc
 makeLink "/.xinitrc" ~/.xinitrc
+makeLink "/.gitconfig" ~/.gitconfig
 makeLink "/xmonad.hs" ~/.xmonad/xmonad.hs
 makeLink "/.emacs" ~/.emacs
 makeLink "/.xmodmap" ~/.xmodmap
@@ -19,3 +20,4 @@ makeLink "/.mrconfig" ~/.mrconfig
 mkdir -p ~/.config/dunstrc/
 makeLink "/dunstrc" ~/.config/dunst/dunstrc
 makeLink "/.vimrc" ~/.vimrc
+makeLink "/.bashrc" ~/.bashrc

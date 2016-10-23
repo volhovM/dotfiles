@@ -11,7 +11,7 @@ thunderbird&
 #skype&
 telegram-desktop&
 #qtox&
-dropbox start&
+#dropbox start&
 #quiterss&
 #deadbeef&
 dunst&

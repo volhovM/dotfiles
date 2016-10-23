@@ -144,7 +144,6 @@
     dhcpcd
     ditaa
     djvulibre
-#    dropbox-cli
     efibootmgr
     electrum
     elinks    
@@ -233,7 +232,6 @@
     transmission_gtk
     tree
     unetbootin
-#    unrar
     unzip
     usbutils
     utox
@@ -307,7 +305,7 @@
     ncurses
     nodejs-6_x
     nodePackages.browserify
-#    nodePackages.webpack
+    nodePackages.webpack
 #    maven
     openjdk
     perl
@@ -318,6 +316,7 @@
     stack
     valgrind
     vimPlugins.vim-addon-nix
+    
     wireshark-qt
     yasm
 

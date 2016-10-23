@@ -66,7 +66,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff2d), spawn "slimlock")
 
           -- org mode files
-    , ((modm,              0x6f), spawn "emacs ~/Dropbox/org/private.org.gpg")
+    , ((modm,              0x6f), spawn "emacs ~/org/private.org.gpg")
 
           -- launch browser
     , ((modm,              0x73), spawn $ myBrowser ++ "&")

@@ -402,11 +402,11 @@ Switch projects and subprojects from STARTED back to TODO"
        (todo "DONE" nil))
       ((org-agenda-files
         (quote
-         ("~/Dropbox/org/study.org")))
+         ("~/org/study.org")))
        (org-agenda-span 5))))))
  '(org-agenda-files
    (quote
-    ("~/Dropbox/org/work.org" "~/Dropbox/org/private.org.gpg" "~/Dropbox/org/study.org")))
+    ("~/org/work.org" "~/org/private.org.gpg" "~/org/study.org")))
  '(org-agenda-span 10)
  '(org-archive-location "archive.org.gpg::* From %s")
  '(org-cycle-include-plain-lists t)

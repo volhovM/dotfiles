@@ -21,7 +21,7 @@ alias o2h="perl -e 'printf qq|%X\n|, oct( shift )'"
 alias o2d="perl -e 'printf qq|%d\n|, oct( shift )'"
 alias o2b="perl -e 'printf qq|%b\n|, oct( shift )'"
 
-function xautolockdisable {
+function xal {
   (xautolock -disable && sleep $(($1 * 60)) && xautolock -enable)&
 }
 

@@ -38,10 +38,11 @@
 #    fakeButtons = true;
   };
 
-#  services.cron.systemCronJobs = [
-#    "* * * * *  root    su -c 'sh /home/volhovm/Dropbox/data/scripts/cron/xautolock.sh  >> /tmp/cronwifi' volhovm"
-#    "* * * * *  root    date > /tmp/crontest"
-#  ];
+  services.cron.enable = true;
+  services.cron.systemCronJobs = [
+    "*/20 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "* * * * *  volhovm date > /tmp/crontest"
+  ];
 
   programs.light.enable = true;
 

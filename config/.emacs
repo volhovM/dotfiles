@@ -47,6 +47,13 @@
 (evil-mode 1)
 (setq evil-want-C-i-jump nil)
 
+;;; YASNIPPET
+(yas-global-mode 1)
+(custom-set-variables
+ '(yas-indent-line (quote fixed))
+ '(yas-snippet-dirs (quote ("~/.emacs.d/snippets")) nil (yasnippet)))
+
+
 ;;; IDO MODE
 (ido-mode t)
 (nyan-mode t)
@@ -113,7 +120,7 @@
 ;; Don't forget to `make autoload`
 ; (add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
 ; (add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
-; (add-to-list 'load-path "~/.emacs.d/org-drill-table/")
+(add-to-list 'load-path "~/.emacs.d/org-drill-table/")
 (require 'org-drill-table)
 (setq org-drill-learn-fraction 0.35)
 ; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
@@ -636,7 +643,7 @@ Switch projects and subprojects from STARTED back to TODO"
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode intero idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode ghc font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode intero idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode ghc font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset

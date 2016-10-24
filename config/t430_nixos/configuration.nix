@@ -1,18 +1,21 @@
 { config, pkgs, ... }:
  
-#let 
+let 
 #  packageOverrides = super: let self = pkgs; in
 #  {
 #    haskellPackages = self.haskell.packages.ghc7103.override {
 #      overrides = config.haskellPackageOverrides or (self: super: {});
 #    };
 #  };
+  haskellPackages7103 = pkgs.haskell.packages.ghc7103.override {
+    overrides = pkgs.haskell.config.haskellPackageOverrides or (self: super: {});
+  };
 #myAndroidSdk = pkgs.androidenv.androidsdk {
 #    platformVersions = [ "22" ];
 #    abiVersions = [ "armeabi-v7a" ];
 #    useGoogleAPIs = true;
 #  };
-#in
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -40,7 +43,7 @@
 
   services.cron.enable = true;
   services.cron.systemCronJobs = [
-    "*/20 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "*/30 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
     "* * * * *  volhovm date > /tmp/crontest"
   ];
 
@@ -272,8 +275,9 @@
     haskellPackages.haddock
     haskellPackages.hgettext
 #    haskell.packages.ghc7103.hindent_5_0_0
-#    haskellPackages.hindent_5_0_1
+#    haskellPackages7103.hindent_5_2_1
     haskellPackages.hindent
+#    haskellPackages7103.hlint_1_9_37
     haskellPackages.hlint
     haskellPackages.purescript
 #    haskellPackages.ghc-mod
@@ -296,6 +300,7 @@
           monad-loops
           ghc
           ghc-mod
+          primes
           turtle
           unordered-containers
           xmonad  

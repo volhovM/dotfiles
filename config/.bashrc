@@ -8,7 +8,7 @@ alias dvorak='setxkbmap -layout us,ru -variant dvorak,ruu -option "grp:caps_togg
 alias undvorak='setxkbmap us,ru'
 alias monon='xrandr --auto && xrandr --output VGA1 --primary --above LVDS1 --dpi 105'
 alias monoff='xrandr --auto --dpi 105'
-alias ledger="ledger -f ~/Dropbox/org/finances.dat"
+alias ledger="ledger -f ~/org/finances.dat"
 alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "
 
 alias d2h="perl -e 'printf qq|%X\n|, int( shift )'"

@@ -50,290 +50,6 @@
 ;;; YASNIPPET
 (yas-global-mode 1)
 (custom-set-variables
- '(yas-indent-line (quote fixed))
- '(yas-snippet-dirs (quote ("~/.emacs.d/snippets")) nil (yasnippet)))
-
-
-;;; IDO MODE
-(ido-mode t)
-(nyan-mode t)
-
-;;; ERC
-(require 'erc)
-(require 'tls)
-(setq erc-hide-list '("JOIN" "PART" "QUIT"))
-(setq erc-modules '(
-  autojoin
-  button
-  completion
-  fill
-  irccontrols
-  list
-  log
-  match
-  menu
-  move-to-prompt
-  netsplit
-  networks
-  noncommands
-  notifications
-  readonly
-  ring
-  stamp
-  track))
-(erc-update-modules)
-;; Notify my when someone mentions my nick.
-(require 'erc-match)
-(erc-match-mode t)
-(defun erc-global-notify (matched-type nick msg)
-  (interactive)
-  (when (eq matched-type 'current-nick)
-    (shell-command
-     (concat "notify-send -t 4000 -c \"im.received\" \""
-             (car (split-string nick "!"))
-             " mentioned your nick\" \""
-             msg
-             "\""))))
-(add-hook 'erc-text-matched-hook 'erc-global-notify)
-
-
-;; FONTS
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 95 :width normal))))
- '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
- '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
- '(sbt:error ((t (:foreground "red"))))
- '(whitespace-hspace ((t (:foreground "gray22"))))
- '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
- '(whitespace-space ((t (:foreground "gray20"))))
- '(whitespace-tab ((t (:foreground "dim gray")))))
-
-;; MIDNIGHT
-(require 'midnight)
-
-;; ORG MODE
-;; Load org files from git rep (elpa package is broken)
-;; Don't forget to `make autoload`
-; (add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
-; (add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
-(add-to-list 'load-path "~/.emacs.d/org-drill-table/")
-(require 'org-drill-table)
-(setq org-drill-learn-fraction 0.35)
-; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
-(global-set-key (kbd "<f12>") 'org-agenda)
-(global-set-key "\C-ca" 'org-agenda)
-(defun my-org-mode-hook ()
-  "Hook for org mode."
-  (turn-on-auto-fill)
-  (local-set-key (kbd "C-c C-x C-k") 'org-resolve-clocks))
-(defun my-org-agenda-mode-hook ()
-  "Enables hjkl-bindings for agenda-mode."
-  (define-key org-agenda-mode-map "j" 'org-agenda-next-line)
-  (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
-  (define-key org-agenda-mode-map "l" 'evil-forward-char)
-  (define-key org-agenda-mode-map "h" 'evil-backward-char))
-(add-hook 'org-mode-hook 'my-org-mode-hook)
-(add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
-(setq org-ditaa-jar-path (expand-file-name
-          "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ditaa . t)
-   (ledger . t)
-   (haskell . t)))
-(setq org-todo-keywords '((type "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
-(setq org-todo-keyword-faces
- '(("TODO" . "red")
-   ("STARTED" . "yellow")
-   ("WAITING" . "grey")
-   ("CANCELED" . (:foreground "blue" :weight bold))
-   ("DONE" . "green")
-   ("BUG" . "red")
-   ("PROGRESS" . "yellow")
-   ("UNTESTED" . "purple")
-   ("DROPPED" . (:foreground "blue" :weight bold))
-   ("FIXED" . "green")
-   ("0" . (:background "red" :foreground "black" :weight bold))
-   ("X" . "blue")
-   ("-" . "blue")
-   ("1" . "red3")
-   ("2" . "yellow")
-   ("3" . "green")
-   ("V" . (:background "green" :foreground "black" :weight bold))
-   ("OK" . "green")))
-(org-clock-persistence-insinuate)
-(setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
-(setq org-clock-history-length 23)
-(setq org-clock-in-resume t)
-(setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
-(setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
-(setq org-clock-into-drawer t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-clock-out-remove-zero-time-clocks t)
-(setq org-log-done t)
-(setq org-clock-out-when-done t)
-(setq org-clock-persist-query-resume nil)
-(setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
-(setq org-clock-report-include-clocking-task t)
-(define-key org-mode-map (kbd "C-c C-x C-s") nil)
-
-(defun bh/is-project-p ()
-  "Any task with a todo keyword subtask"
-  (save-restriction
-    (widen)
-    (let ((has-subtask)
-          (subtree-end (save-excursion (org-end-of-subtree t)))
-          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
-      (save-excursion
-        (forward-line 1)
-        (while (and (not has-subtask)
-                    (< (point) subtree-end)
-                    (re-search-forward "^\*+ " subtree-end t))
-          (when (member (org-get-todo-state) org-todo-keywords-1)
-            (setq has-subtask t))))
-      (and is-a-task has-subtask))))
-
-(defun bh/is-task-p ()
-  "Any task with a todo keyword and no subtask"
-  (save-restriction
-    (widen)
-    (let ((has-subtask)
-          (subtree-end (save-excursion (org-end-of-subtree t))) (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1))) (save-excursion
-        (forward-line 1)
-        (while (and (not has-subtask)
-                    (< (point) subtree-end)
-                    (re-search-forward "^\*+ " subtree-end t))
-          (when (member (org-get-todo-state) org-todo-keywords-1)
-            (setq has-subtask t))))
-      (and is-a-task (not has-subtask)))))
-
-(defun bh/clock-in-to-next (kw)
-  "Switch a task from TODO to STARTED when clocking in.
-Skips capture tasks, projects, and subprojects.
-Switch projects and subprojects from STARTED back to TODO"
-  (when (not (and (boundp 'org-capture-mode) org-capture-mode))
-    (cond
-     ((and (member (org-get-todo-state) (list "TODO"))
-           (bh/is-task-p))
-      "STARTED")
-     ((and (member (org-get-todo-state) (list "STARTED"))
-           (bh/is-project-p))
-      "TODO"))))
-
-(defun my-org-clocktable-indent-string (level)
-  (if (= level 1)
-      ""
-    (let ((str "*"))
-      (while (> level 2)
-        (setq level (1- level)
-              str (concat str "  ")))
-      (concat str " "))))
-
-(advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
-
-
-(require 'ox-latex)
-(setq org-latex-listings t)
-
-(setq org-reveal-root "file:///home/volhovm/programs/reveal.js")
-
-(defun org-export-latex-no-toc (depth)
-  (when depth
-    (format "%% Org-mode is exporting headings to %s levels.\n"
-            depth)))
-(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
-
-
-;;; Originally taken from Bruno Tavernier: http://thread.gmane.org/gmane.emacs.orgmode/31150/focus=31432
-;;; but adapted to use latexmk 4.20 or higher.
-;(defun my-auto-tex-cmd ()
-;  "When exporting from .org with latex, automatically run latex,
-;     pdflatex, or xelatex as appropriate, using latexmk."
-;  (let ((texcmd)))
-;  ;; default command: oldstyle latex via dvi
-;  (setq texcmd "latexmk -dvi -pdfps -quiet %f")
-;  ;; pdflatex -> .pdf
-;  (if (string-match "LATEX_CMD: pdflatex" (buffer-string))
-;      (setq texcmd "latexmk -pdf -quiet %f"))
-;  ;; xelatex -> .pdf
-;  (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-;      (setq texcmd "latexmk -pdflatex=xelatex -pdf -quiet %f"))
-;  ;; LaTeX compilation command
-;  (setq org-latex-to-pdf-process (list texcmd)))
-;
-;(add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-cmd)
-;
-;
-;;; Specify default packages to be included in every tex file, whether pdflatex or xelatex
-;(setq org-latex-packages-alist
-;      '(("" "graphicx" t)
-;            ("" "longtable" nil)
-;            ("" "float" nil)))
-;
-;(defun my-auto-tex-parameters ()
-;      "Automatically select the tex packages to include."
-;      ;; default packages for ordinary latex or pdflatex export
-;      (setq org-latex-default-packages-alist
-;            '(("AUTO" "inputenc" t)
-;              ("T1"   "fontenc"   t)
-;              (""     "fixltx2e"  nil)
-;              (""     "wrapfig"   nil)
-;              (""     "soul"      t)
-;              (""     "textcomp"  t)
-;              (""     "marvosym"  t)
-;              (""     "wasysym"   t)
-;              (""     "latexsym"  t)
-;              (""     "amssymb"   t)
-;              (""     "hyperref"  nil)))
-;
-;      ;; Packages to include when xelatex is used
-;      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-;          (setq org-latex-default-packages-alist
-;                '(("" "fontspec" t)
-;                  ("" "xunicode" t)
-;                  ("" "url" t)
-;                  ("" "rotating" t)
-;                  ("american" "babel" t)
-;                  ("babel" "csquotes" t)
-;                  ("" "soul" t)
-;                  ("xetex" "hyperref" nil)
-;                  )))
-;
-;      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-;          (setq org-latex-classes
-;                (cons '("article"
-;                        "\\documentclass[11pt,article,oneside]{memoir}"
-;                        ("\\section{%s}" . "\\section*{%s}")
-;                        ("\\subsection{%s}" . "\\subsection*{%s}")
-;                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-;                        ("\\paragraph{%s}" . "\\paragraph*{%s}")
-;                        ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-;                      org-latex-classes))))
-;
-;(add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)
-
-
-
-;;; HASKELL
-;(require 'haskell-interactive-mode)
-(require 'haskell-process)
-(add-hook 'haskell-mode-hook 'volhovm-haskell-mode-hook)
-(defun volhovm-haskell-mode-hook ()
-  "Func for haskell-mode hook."
-  (interactive-haskell-mode)
-;  (toggle-input-method)
-  (whitespace-mode)
-;  (intero-mode)
-;  (turn-on-haskell-indentation)
-  (volhovm-haskell-style)
-  (hindent-mode))
-
-(custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
@@ -682,7 +398,291 @@ Switch projects and subprojects from STARTED back to TODO"
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-default-width 30)
  '(sr-speedbar-right-side nil)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(yas-indent-line (quote fixed))
+ '(yas-snippet-dirs (quote ("~/.emacs.d/snippets")) nil (yasnippet)))
+
+
+;;; IDO MODE
+(ido-mode t)
+(nyan-mode t)
+
+;;; ERC
+(require 'erc)
+(require 'tls)
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
+(setq erc-modules '(
+  autojoin
+  button
+  completion
+  fill
+  irccontrols
+  list
+  log
+  match
+  menu
+  move-to-prompt
+  netsplit
+  networks
+  noncommands
+  notifications
+  readonly
+  ring
+  stamp
+  track))
+(erc-update-modules)
+;; Notify my when someone mentions my nick.
+(require 'erc-match)
+(erc-match-mode t)
+(defun erc-global-notify (matched-type nick msg)
+  (interactive)
+  (when (eq matched-type 'current-nick)
+    (shell-command
+     (concat "notify-send -t 4000 -c \"im.received\" \""
+             (car (split-string nick "!"))
+             " mentioned your nick\" \""
+             msg
+             "\""))))
+(add-hook 'erc-text-matched-hook 'erc-global-notify)
+
+
+;; FONTS
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 95 :width normal))))
+ '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
+ '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
+ '(sbt:error ((t (:foreground "red"))))
+ '(whitespace-hspace ((t (:foreground "gray22"))))
+ '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
+ '(whitespace-space ((t (:foreground "gray20"))))
+ '(whitespace-tab ((t (:foreground "dim gray")))))
+
+;; MIDNIGHT
+(require 'midnight)
+
+;; ORG MODE
+;; Load org files from git rep (elpa package is broken)
+;; Don't forget to `make autoload`
+; (add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
+; (add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/.emacs.d/org-drill-table/")
+(require 'org-drill-table)
+(setq org-drill-learn-fraction 0.35)
+; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
+(global-set-key (kbd "<f12>") 'org-agenda)
+(global-set-key "\C-ca" 'org-agenda)
+(defun my-org-mode-hook ()
+  "Hook for org mode."
+  (turn-on-auto-fill)
+  (local-set-key (kbd "C-c C-x C-k") 'org-resolve-clocks))
+(defun my-org-agenda-mode-hook ()
+  "Enables hjkl-bindings for agenda-mode."
+  (define-key org-agenda-mode-map "j" 'org-agenda-next-line)
+  (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
+  (define-key org-agenda-mode-map "l" 'evil-forward-char)
+  (define-key org-agenda-mode-map "h" 'evil-backward-char))
+(add-hook 'org-mode-hook 'my-org-mode-hook)
+(add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
+(setq org-ditaa-jar-path (expand-file-name
+          "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ditaa . t)
+   (ledger . t)
+   (haskell . t)))
+(setq org-todo-keywords '((type "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
+(setq org-todo-keyword-faces
+ '(("TODO" . "red")
+   ("STARTED" . "yellow")
+   ("WAITING" . "grey")
+   ("CANCELED" . (:foreground "blue" :weight bold))
+   ("DONE" . "green")
+   ("BUG" . "red")
+   ("PROGRESS" . "yellow")
+   ("UNTESTED" . "purple")
+   ("DROPPED" . (:foreground "blue" :weight bold))
+   ("FIXED" . "green")
+   ("0" . (:background "red" :foreground "black" :weight bold))
+   ("X" . "blue")
+   ("-" . "blue")
+   ("1" . "red3")
+   ("2" . "yellow")
+   ("3" . "green")
+   ("V" . (:background "green" :foreground "black" :weight bold))
+   ("OK" . "green")))
+(org-clock-persistence-insinuate)
+(setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+(setq org-clock-history-length 23)
+(setq org-clock-in-resume t)
+(setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
+(setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+(setq org-clock-into-drawer t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-clock-out-remove-zero-time-clocks t)
+(setq org-log-done t)
+(setq org-clock-out-when-done t)
+(setq org-clock-persist-query-resume nil)
+(setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+(setq org-clock-report-include-clocking-task t)
+(define-key org-mode-map (kbd "C-c C-x C-s") nil)
+
+(defun bh/is-project-p ()
+  "Any task with a todo keyword subtask"
+  (save-restriction
+    (widen)
+    (let ((has-subtask)
+          (subtree-end (save-excursion (org-end-of-subtree t)))
+          (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1)))
+      (save-excursion
+        (forward-line 1)
+        (while (and (not has-subtask)
+                    (< (point) subtree-end)
+                    (re-search-forward "^\*+ " subtree-end t))
+          (when (member (org-get-todo-state) org-todo-keywords-1)
+            (setq has-subtask t))))
+      (and is-a-task has-subtask))))
+
+(defun bh/is-task-p ()
+  "Any task with a todo keyword and no subtask"
+  (save-restriction
+    (widen)
+    (let ((has-subtask)
+          (subtree-end (save-excursion (org-end-of-subtree t))) (is-a-task (member (nth 2 (org-heading-components)) org-todo-keywords-1))) (save-excursion
+        (forward-line 1)
+        (while (and (not has-subtask)
+                    (< (point) subtree-end)
+                    (re-search-forward "^\*+ " subtree-end t))
+          (when (member (org-get-todo-state) org-todo-keywords-1)
+            (setq has-subtask t))))
+      (and is-a-task (not has-subtask)))))
+
+(defun bh/clock-in-to-next (kw)
+  "Switch a task from TODO to STARTED when clocking in.
+Skips capture tasks, projects, and subprojects.
+Switch projects and subprojects from STARTED back to TODO"
+  (when (not (and (boundp 'org-capture-mode) org-capture-mode))
+    (cond
+     ((and (member (org-get-todo-state) (list "TODO"))
+           (bh/is-task-p))
+      "STARTED")
+     ((and (member (org-get-todo-state) (list "STARTED"))
+           (bh/is-project-p))
+      "TODO"))))
+
+(defun my-org-clocktable-indent-string (level)
+  (if (= level 1)
+      ""
+    (let ((str "*"))
+      (while (> level 2)
+        (setq level (1- level)
+              str (concat str "  ")))
+      (concat str " "))))
+
+(advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
+
+
+(require 'ox-latex)
+(setq org-latex-listings t)
+
+(setq org-reveal-root "file:///home/volhovm/programs/reveal.js")
+
+(defun org-export-latex-no-toc (depth)
+  (when depth
+    (format "%% Org-mode is exporting headings to %s levels.\n"
+            depth)))
+(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+
+
+;;; Originally taken from Bruno Tavernier: http://thread.gmane.org/gmane.emacs.orgmode/31150/focus=31432
+;;; but adapted to use latexmk 4.20 or higher.
+;(defun my-auto-tex-cmd ()
+;  "When exporting from .org with latex, automatically run latex,
+;     pdflatex, or xelatex as appropriate, using latexmk."
+;  (let ((texcmd)))
+;  ;; default command: oldstyle latex via dvi
+;  (setq texcmd "latexmk -dvi -pdfps -quiet %f")
+;  ;; pdflatex -> .pdf
+;  (if (string-match "LATEX_CMD: pdflatex" (buffer-string))
+;      (setq texcmd "latexmk -pdf -quiet %f"))
+;  ;; xelatex -> .pdf
+;  (if (string-match "LATEX_CMD: xelatex" (buffer-string))
+;      (setq texcmd "latexmk -pdflatex=xelatex -pdf -quiet %f"))
+;  ;; LaTeX compilation command
+;  (setq org-latex-to-pdf-process (list texcmd)))
+;
+;(add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-cmd)
+;
+;
+;;; Specify default packages to be included in every tex file, whether pdflatex or xelatex
+;(setq org-latex-packages-alist
+;      '(("" "graphicx" t)
+;            ("" "longtable" nil)
+;            ("" "float" nil)))
+;
+;(defun my-auto-tex-parameters ()
+;      "Automatically select the tex packages to include."
+;      ;; default packages for ordinary latex or pdflatex export
+;      (setq org-latex-default-packages-alist
+;            '(("AUTO" "inputenc" t)
+;              ("T1"   "fontenc"   t)
+;              (""     "fixltx2e"  nil)
+;              (""     "wrapfig"   nil)
+;              (""     "soul"      t)
+;              (""     "textcomp"  t)
+;              (""     "marvosym"  t)
+;              (""     "wasysym"   t)
+;              (""     "latexsym"  t)
+;              (""     "amssymb"   t)
+;              (""     "hyperref"  nil)))
+;
+;      ;; Packages to include when xelatex is used
+;      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
+;          (setq org-latex-default-packages-alist
+;                '(("" "fontspec" t)
+;                  ("" "xunicode" t)
+;                  ("" "url" t)
+;                  ("" "rotating" t)
+;                  ("american" "babel" t)
+;                  ("babel" "csquotes" t)
+;                  ("" "soul" t)
+;                  ("xetex" "hyperref" nil)
+;                  )))
+;
+;      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
+;          (setq org-latex-classes
+;                (cons '("article"
+;                        "\\documentclass[11pt,article,oneside]{memoir}"
+;                        ("\\section{%s}" . "\\section*{%s}")
+;                        ("\\subsection{%s}" . "\\subsection*{%s}")
+;                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+;                        ("\\paragraph{%s}" . "\\paragraph*{%s}")
+;                        ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+;                      org-latex-classes))))
+;
+;(add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)
+
+
+
+;;; HASKELL
+;(require 'haskell-interactive-mode)
+(require 'haskell-process)
+(add-hook 'haskell-mode-hook 'volhovm-haskell-mode-hook)
+(defun volhovm-haskell-mode-hook ()
+  "Func for haskell-mode hook."
+  (interactive-haskell-mode)
+;  (toggle-input-method)
+  (whitespace-mode)
+;  (intero-mode)
+;  (turn-on-haskell-indentation)
+  (volhovm-haskell-style)
+  (hindent-mode))
+
+
 
 (customize-set-variable 'haskell-stylish-on-save t)
 

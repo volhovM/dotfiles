@@ -767,9 +767,7 @@ Switch projects and subprojects from STARTED back to TODO"
            ("\\<[A-Za-z_]+[A-Za-z_0-9]*_\\(t\\|type\\|ptr\\)\\>" . font-lock-type-face)
            ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
            ))
-        ) t)
-
-
+        ))
 
 ;;; Autocomplete
 (require 'auto-complete-config)

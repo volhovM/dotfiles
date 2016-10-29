@@ -74,12 +74,11 @@
  '(erc-email-userid "volhovm")
  '(erc-nick "volhovm")
  '(flycheck-ghc-args (quote ("-v")))
- '(flycheck-ghc-stack-use-nix t)
  '(flycheck-haskell-runghc-command
    (quote
-    ("stack" "--nix" "--verbosity" "silent" "runghc" "--")))
+    ("stack" "--verbosity" "silent" "runghc" "--")))
  '(haskell-interactive-popup-errors nil)
- '(haskell-process-args-stack-ghci (quote ("--nix" "--ghc-options=-ferror-spans")))
+ '(haskell-process-args-stack-ghci (quote ("--ghc-options=-ferror-spans")))
  '(haskell-process-log t)
  '(haskell-process-type (quote auto))
  '(haskell-stylish-on-save t)
@@ -858,7 +857,7 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;;; Proof General
 (load-file "~/.emacs.d/ProofGeneral/generic/proof-site.el")
-(setq coq-prog-name "/nix/var/nix/profiles/system/sw/bin/coqtop")
+(setq coq-prog-name "/run/current-system/sw/bin/coqtop")
 (setq proof-splash-enable nil)
 
 ;;; Eshell

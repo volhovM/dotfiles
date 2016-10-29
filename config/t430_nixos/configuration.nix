@@ -17,10 +17,7 @@ let
 #  };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -28,26 +25,14 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   #boot.kernel.sysctl = { "vm.swappiness" = 0; };
   #boot.initrd.kernelModules = [ "fbcon" ];
-
-  boot.initrd.luks.devices = [
-    { 
-      name = "root"; device = "/dev/sda2"; preLVM = true;
-    }
-  ];
+  boot.initrd.luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
 
   hardware.trackpoint = {
     enable = true;
     emulateWheel = true;
 #    fakeButtons = true;
   };
-
-  services.cron.enable = true;
-  services.cron.systemCronJobs = [
-    "*/30 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
-    "* * * * *  volhovm date > /tmp/crontest"
-  ];
-
-  programs.light.enable = true;
+  hardware.pulseaudio.enable = true;
 
   networking = {
     hostName = "avishai"; 
@@ -60,25 +45,6 @@ in
     nameservers = [ "77.88.8.8" "77.88.8.1" "8.8.8.8" "192.168.0.1" ];
   };
 
-#  services.clamav = {
-#    updater.enable = true;
-#  };
-
-  services.tor = {
-    enable = true;
-    client.enable = true; 
-    torsocks.enable = true;
-  };
-  
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql;
-    authentication = "local all all ident"; 
-  };
-
-#  services.i2p.enable = true;
-#  services.i2pd.enable = true;
-
   time.timeZone = "Europe/Moscow";
 
   i18n = {
@@ -90,8 +56,6 @@ in
 #      enabled = "ibus";
 #    };
   };
-
-  hardware.pulseaudio.enable = true;
 
   virtualisation.virtualbox.host.enable = true;
 
@@ -121,10 +85,10 @@ in
   nixpkgs.config = {
 #    virtualbox.enableExtensionPack = false;
     allowUnfree = false;
-    firefox = {
+#    firefox = {
 #     enableGoogleTalkPlugin = true;
 #     enableAdobeFlash = true;
-    };
+#    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -312,7 +276,7 @@ in
     nodejs-6_x
     nodePackages.browserify
     nodePackages.webpack
-#    maven
+    maven
     openjdk
     perl
     python
@@ -350,6 +314,9 @@ in
 #  ++ [ myAndroidSdk ]
   ;
 
+#  environment.variables = {
+#    ANDROID_HOME = "${myAndroidSdk}/libexec/android-sdk-linux";
+#  };
 
   programs.bash = {
     enableCompletion = true;
@@ -371,12 +338,25 @@ in
     };
   };
 
-  environment.variables = {
-#    ANDROID_HOME = "${myAndroidSdk}/libexec/android-sdk-linux";
-  };
+  programs.light.enable = true;
+
+
+# ------ SERVICES ------
+
+
+  services.cron.enable = true;
+  services.syslogd.enable = true;
+  services.cron.systemCronJobs = [
+    "*/30 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "* * * * *  volhovm date > /tmp/crontest"
+  ];
+  services.journald.extraConfig = ''
+    ForwardToSyslog=yes
+  '';
+  services.journald.enableHttpGateway = true;
 
   services.openssh.enable = true;
-  services.printing.enable = true;
+#  services.printing.enable = true;
 #  services.fprintd.enable = true; 
 #  security.pam.services.slimlock = {
 #    fprintAuth = true;
@@ -427,6 +407,22 @@ in
   };
   services.tlp.enable = true;
 
+#  services.clamav = {
+#    updater.enable = true;
+#  };
+
+  services.tor = {
+    enable = true;
+    client.enable = true; 
+    torsocks.enable = true;
+  };
+  
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql;
+    authentication = "local all all ident"; 
+  };
+
 #  services.udev.extraRules = ''
 #   SUBSYSTEM=="usb", ATTR{idVendor}="18d1", MODE="0666", GROUP="plugdev"
 #  '';
@@ -438,6 +434,6 @@ in
   users.motd = "Stay noided";
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "15.09";
+  system.stateVersion = "17.03";
 
 }

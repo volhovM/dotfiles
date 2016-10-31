@@ -34,6 +34,7 @@ myWorkspaces    = ["1", "2", "3", "4", "5", "6", "7", "8"]
 myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
 makeScreen = "scrot -s ~/screen.png"
+myDmenu = "dmenu_run -fn \"Terminus-10:normal\""
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -71,8 +72,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           -- launch browser
     , ((modm,              0x73), spawn $ myBrowser ++ "&")
 
-    , ((modm,              0x3b), spawn "xterm")
-
           -- make a screenshot
     , ((modm,              0x72), spawn $ makeScreen ++ "&")
 
@@ -82,7 +81,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
           -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run -fn \"Terminus-9:normal\"")
+    , ((modm,               xK_p     ), spawn myDmenu)
 
 --          -- launch connman_dmenu
 --    , ((modm .|. shiftMask, xK_p     ), spawn "/home/volhovm/programs/nmcli-dmenu/nmcli_dmenu")

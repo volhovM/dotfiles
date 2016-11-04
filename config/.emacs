@@ -74,13 +74,14 @@
  '(erc-email-userid "volhovm")
  '(erc-nick "volhovm")
  '(flycheck-ghc-args (quote ("-v")))
- '(flycheck-haskell-runghc-command
-   (quote
-    ("stack" "--verbosity" "silent" "runghc" "--")))
- '(haskell-interactive-popup-errors nil)
- '(haskell-process-args-stack-ghci (quote ("--ghc-options=\"-ferror-spans -isrc -ibench -itest\"")))
+ '(flycheck-haskell-runghc-command (quote ("stack" "--verbosity" "silent" "runghc" "--")))
+ '(haskell-interactive-mode-hide-multi-line-errors t)
+ '(haskell-interactive-popup-errors t)
+ '(haskell-stylish-on-save t)
+ '(haskell-interactive-types-for-show-ambiguous t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-suggest-hoogle-imports t)
  '(haskell-process-log t)
- '(haskell-process-type (quote auto))
  '(haskell-stylish-on-save t)
  '(inhibit-startup-screen t)
  '(ispell-program-name "aspell")
@@ -447,7 +448,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 110 :width normal))))
+ '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 100 :width normal))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(sbt:error ((t (:foreground "red"))))
@@ -666,24 +667,18 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; HASKELL
 ;(require 'haskell-interactive-mode)
 (require 'haskell-process)
+(remove-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'volhovm-haskell-mode-hook)
 (defun volhovm-haskell-mode-hook ()
   "Func for haskell-mode hook."
+  (local-set-key (kbd "C-c C-g") 'haskell-session-change-target)
   (interactive-haskell-mode)
-;  (toggle-input-method)
   (whitespace-mode)
-;  (intero-mode)
-;  (turn-on-haskell-indentation)
+  (haskell-auto-insert-module-template)
   (volhovm-haskell-style)
   (hindent-mode))
-
-
-
-(customize-set-variable 'haskell-stylish-on-save t)
-
 (require 'hindent)
 (setq-default hindent-style "johan-tibell")
-
 (defun volhovm-haskell-style ()
   "Style properties for haskell."
   (interactive)
@@ -691,12 +686,6 @@ Switch projects and subprojects from STARTED back to TODO"
         haskell-indentation-layout-offset 4
         haskell-indentation-left-offset 4
         haskell-indentation-ifte-offset 4))
-; ghc-mod
-
-;(custom-set-variables '(haskell-process-type 'stack-ghci))
-;(autoload 'ghc-init "ghc" nil t)
-;(autoload 'ghc-debug "ghc" nil t)
-;(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
 
 
 ;;; WHITESPACE

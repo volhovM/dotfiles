@@ -75,13 +75,11 @@
  '(erc-nick "volhovm")
  '(flycheck-ghc-args (quote ("-v")))
  '(flycheck-haskell-runghc-command (quote ("stack" "--verbosity" "silent" "runghc" "--")))
- '(haskell-interactive-mode-hide-multi-line-errors t)
- '(haskell-interactive-popup-errors t)
- '(haskell-stylish-on-save t)
+ '(haskell-interactive-popup-errors nil)
  '(haskell-interactive-types-for-show-ambiguous t)
- '(haskell-process-auto-import-loaded-modules t)
- '(haskell-process-suggest-hoogle-imports t)
+ '(haskell-process-args-stack-ghci (quote ("--bench" "--test" "--ghc-options=-ferror-spans")))
  '(haskell-process-log t)
+ '(haskell-process-suggest-hoogle-imports t)
  '(haskell-stylish-on-save t)
  '(inhibit-startup-screen t)
  '(ispell-program-name "aspell")
@@ -673,6 +671,7 @@ Switch projects and subprojects from STARTED back to TODO"
   "Func for haskell-mode hook."
   (local-set-key (kbd "C-c C-g") 'haskell-session-change-target)
   (interactive-haskell-mode)
+ ; (intero-mode)
   (whitespace-mode)
   (haskell-auto-insert-module-template)
   (volhovm-haskell-style)
@@ -809,10 +808,10 @@ Switch projects and subprojects from STARTED back to TODO"
   version-control t)
 
 ;;; Flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+;(add-hook 'after-init-hook #'global-flycheck-mode)
+;(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;(eval-after-load 'flycheck
+;  '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 ;;; Java
 (add-hook 'java-mode-hook '(lambda () (whitespace-mode)))

@@ -1,21 +1,18 @@
 { config, pkgs, ... }:
  
-let 
+#let 
 #  packageOverrides = super: let self = pkgs; in
 #  {
 #    haskellPackages = self.haskell.packages.ghc7103.override {
 #      overrides = config.haskellPackageOverrides or (self: super: {});
 #    };
 #  };
-  haskellPackages7103 = pkgs.haskell.packages.ghc7103.override {
-    overrides = pkgs.haskell.config.haskellPackageOverrides or (self: super: {});
-  };
 #myAndroidSdk = pkgs.androidenv.androidsdk {
 #    platformVersions = [ "22" ];
 #    abiVersions = [ "armeabi-v7a" ];
 #    useGoogleAPIs = true;
 #  };
-in
+#in
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -103,7 +100,6 @@ in
     at
     autocutsel
     bc
-    calibre
     chromium
     clipit
     cryptsetup
@@ -174,6 +170,7 @@ in
     ppp
     pptp
     psmisc
+    python35Packages.glances
     pv
     qemu
     qtox
@@ -187,7 +184,8 @@ in
     speedtest-cli
     sslh
     syslinux
-    tabbed
+    sysstat
+#    tabbed
     tdesktop
     tcpdump
     # teeworlds
@@ -235,18 +233,23 @@ in
 #    gnome3_18.glade
     gnumake
     gradle
-    haskellPackages.Agda
+#    haskellPackages.Agda
+    haskellPackages.alex
     haskellPackages.haddock
+    haskellPackages.happy
     haskellPackages.hgettext
 #    haskell.packages.ghc7103.hindent_5_0_0
 #    haskellPackages7103.hindent_5_2_1
     haskellPackages.hindent
 #    haskellPackages7103.hlint_1_9_37
     haskellPackages.hlint
+#    haskellPackages.intero
     haskellPackages.purescript
 #    haskellPackages.ghc-mod
 #    haskellPackages.idris
-    haskellPackages.stylish-haskell
+    (haskellPackages.stylish-haskell_0_6_4_0.override { 
+      haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
+    })
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
           generic-deriving
@@ -257,6 +260,7 @@ in
 #	   Chart-gtk
           conduit
           lens
+          linear
           pretty-tree
           random
           numbers 
@@ -264,6 +268,7 @@ in
           monad-loops
           ghc
           ghc-mod
+          gtk2hs-buildtools
           primes
           turtle
           unordered-containers
@@ -348,6 +353,7 @@ in
   services.syslogd.enable = true;
   services.cron.systemCronJobs = [
     "*/30 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "*/120 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
     "* * * * *  volhovm date > /tmp/crontest"
   ];
   services.journald.extraConfig = ''

@@ -11,6 +11,7 @@ alias monoff='xrandr --auto --dpi 105'
 alias ledger="ledger -f ~/org/finances.dat"
 alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "
 alias sbuild="stack build --test --bench --no-run-tests --no-run-benchmarks"
+alias notify="notify-send \"Task is over\""
 
 alias d2h="perl -e 'printf qq|%X\n|, int( shift )'"
 alias d2o="perl -e 'printf qq|%o\n|, int( shift )'"

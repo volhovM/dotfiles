@@ -239,9 +239,10 @@
     haskellPackages.happy
     haskellPackages.hgettext
 #    haskell.packages.ghc7103.hindent_5_0_0
-#    haskellPackages7103.hindent_5_2_1
-    haskellPackages.hindent
-#    haskellPackages7103.hlint_1_9_37
+    (haskellPackages.hindent_5_2_1.override { 
+      haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
+    })
+#    haskellPackages.hindent
     haskellPackages.hlint
 #    haskellPackages.intero
     haskellPackages.purescript

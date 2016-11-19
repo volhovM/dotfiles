@@ -10,7 +10,7 @@ Config {
 	--       , fgColor = "#5993C2"
 	, position = TopW L 100
 	, commands = [ Run Cpu ["-t", "<total>%", "-L","15","-H","50","-l","green","-h","red", "-n", "yellow"] 50
-	             , Run Memory ["-t","<usedratio>%", "-L", "20", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 50
+	             , Run Memory ["-t","<usedratio>%", "-L", "40", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 50
 	             , Run BatteryP ["BAT0"]
 	             ["-t", "<acstatus>",
 	             "-L", "15", "-H", "70",

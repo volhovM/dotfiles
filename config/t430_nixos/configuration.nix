@@ -139,6 +139,7 @@
     inkscape
     iotop
     iptables
+    iw
     jmtpfs
     ledger
     libjpeg
@@ -253,24 +254,25 @@
     })
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
-          generic-deriving
-          turtle
           attoparsec  
-#          Chart 
-#	   Chart-cairo 
+          Chart 
+          Chart-cairo 
 #	   Chart-gtk
           conduit
-          lens
-          linear
-          pretty-tree
-          random
-          numbers 
           file-embed
-          monad-loops
+          generic-deriving
           ghc
           ghc-mod
           gtk2hs-buildtools
+          lens
+          linear
+          monad-loops
+          numbers 
+          normaldistribution
+          pretty-tree
           primes
+          random
+          random-shuffle
           turtle
           unordered-containers
           xmonad  

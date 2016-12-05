@@ -126,6 +126,7 @@
     gitstats
     gnupg
     gnupg1compat
+    gnuplot
     gnutls
     gparted
     gptfdisk
@@ -239,17 +240,16 @@
     haskellPackages.haddock
     haskellPackages.happy
     haskellPackages.hgettext
-#    haskell.packages.ghc7103.hindent_5_0_0
-    (haskellPackages.hindent_5_2_1.override { 
-      haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
-    })
-#    haskellPackages.hindent
+##haskell-src-exts >=1.13 && <1.17,
+##optparse-applicative >=0.8 && <0.12
+#    })
+    haskellPackages.hindent
     haskellPackages.hlint
 #    haskellPackages.intero
     haskellPackages.purescript
 #    haskellPackages.ghc-mod
 #    haskellPackages.idris
-    (haskellPackages.stylish-haskell_0_6_4_0.override { 
+    (haskellPackages.stylish-haskell_0_6_5_0.override { 
       haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
     })
     (haskellPackages.ghcWithPackages (p: with p;
@@ -356,7 +356,7 @@
   services.syslogd.enable = true;
   services.cron.systemCronJobs = [
     "*/30 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
-    "*/120 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "*/120 * * * *  volhovm bash /home/volhovm/org/backup.sh 1 > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
     "* * * * *  volhovm date > /tmp/crontest"
   ];
   services.journald.extraConfig = ''

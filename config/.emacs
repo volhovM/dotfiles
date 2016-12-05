@@ -800,12 +800,12 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; Encrypting
 (require 'epa-file)
 (epa-file-enable)
-(setq backup-directory-alist `(("." . "~/.emacs.d/.saves")))
-(setq backup-by-copying t)
-(setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+(setq backup-directory-alist '(("." . "~/.emacs.d/.saves"))
+      backup-by-copying t
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 ;;; Flycheck
 ;(add-hook 'after-init-hook #'global-flycheck-mode)

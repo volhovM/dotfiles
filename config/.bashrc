@@ -6,12 +6,13 @@ alias screenshot="cd ~/pictures/screen/ && scrot -s"
 alias instantphoto="cd ~/pictures/screen/ && (sleep 2 && scrot -u) & timeout 3 mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -fps 32 && cd -"
 alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
 alias undvorak='setxkbmap us,ru'
-alias monon='xrandr --auto && xrandr --output VGA1 --primary --above LVDS1 --dpi 105'
-alias monoff='xrandr --auto --dpi 105'
+function fgon { feh --bg-fill ~/wallpaper.jpg; }
+function monon { xrandr --auto && xrandr --output VGA1 --primary --above LVDS1 --dpi 105; fgon; }
+function monoff { xrandr --auto --dpi 105; fgon; }
 alias ledger="ledger -f ~/org/finances.dat"
 alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "
 alias sbuild="stack build --fast -j 2 --test --bench --no-run-tests --no-run-benchmarks"
-alias notify="notify-send \"Task is over\""
+alias notify="notify-send -u critical \"Task is over\""
 
 alias d2h="perl -e 'printf qq|%X\n|, int( shift )'"
 alias d2o="perl -e 'printf qq|%o\n|, int( shift )'"

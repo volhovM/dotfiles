@@ -23,3 +23,4 @@ xautolock -locker slimlock -time 1 -notify 10 -notifier "notify-send 'locking sc
 #exec ck-launch-session dbus-launch --sh-syntax --exit-with-session xmonad
 powertop --auto-tune
 (while true; do notify-send -u low "  Concentrate  "; sleep $((60*75)); done)&
+(while true; do sh ~/dotfiles/scripts/lowBattery.sh; sleep 90; done)&

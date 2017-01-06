@@ -123,7 +123,7 @@
        (org-agenda-span 5))))))
  '(org-agenda-files
    (quote
-    ("~/org/work.org" "~/org/private.org.gpg" "~/org/study.org")))
+    ("~/org/knowledge.org" "~/org/work.org" "~/org/private.org.gpg" "~/org/study.org")))
  '(org-agenda-span 10)
  '(org-archive-location "archive.org.gpg::* From %s")
  '(org-cycle-include-plain-lists t)
@@ -446,7 +446,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 110 :width normal))))
+ '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 100 :width normal))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(sbt:error ((t (:foreground "red"))))
@@ -523,8 +523,14 @@
 (setq org-clock-persist-query-resume nil)
 (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
 (setq org-clock-report-include-clocking-task t)
+(setq org-file-apps '(
+  (auto-mode . emacs)
+  ("\\.pdf\\'" . "zathura %s")
+  ("\\.djvu\\'" . "zathura %s")
+  ("\\.ps\\'" . "zathura %s")
+  ("\\.x?html?\\'" . "firefox --new-tab %s")
+))
 (define-key org-mode-map (kbd "C-c C-x C-s") nil)
-
 (defun bh/is-project-p ()
   "Any task with a todo keyword subtask"
   (save-restriction

@@ -136,6 +136,7 @@
     grub2_efi
     hdparm
     htop
+    httpie
     imagemagick
     inkscape
     iotop
@@ -153,6 +154,7 @@
     mercurial
     microcodeIntel
     minitube
+    mkpasswd
     mplayer
     mr
     mosh
@@ -185,6 +187,7 @@
     speedcrunch
     speedtest-cli
     sslh
+    sshpass
     syslinux
     sysstat
 #    tabbed
@@ -220,6 +223,7 @@
     cabal2nix
     nix-repl
     nix-prefetch-git
+    nixops
     npm2nix
     nox
     patchelf
@@ -232,7 +236,7 @@
     gcc
     gdb
     gmpxx
-#    gnome3_18.glade
+    gnome3.glade
     gnumake
     gradle
 #    haskellPackages.Agda
@@ -245,6 +249,7 @@
 #    })
     haskellPackages.hindent
     haskellPackages.hlint
+#    haskell.packages.ghc7103.haskell-import-graph
 #    haskellPackages.intero
     haskellPackages.purescript
 #    haskellPackages.ghc-mod
@@ -269,6 +274,7 @@
           monad-loops
           numbers 
           normaldistribution
+          permutation
           pretty-tree
           primes
           random
@@ -355,8 +361,8 @@
   services.cron.enable = true;
   services.syslogd.enable = true;
   services.cron.systemCronJobs = [
-    "*/30 * * * *  volhovm bash /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
-    "*/120 * * * *  volhovm bash /home/volhovm/org/backup.sh 1 > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "*/30 * * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "*/200 * * * *  volhovm sh /home/volhovm/org/backup.sh 1 > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
     "* * * * *  volhovm date > /tmp/crontest"
   ];
   services.journald.extraConfig = ''

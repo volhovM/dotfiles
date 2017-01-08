@@ -1,0 +1,107 @@
+scopes:
+  - paths: [/home/volhovm/org/study.org, /home/volhovm/org/work.org, /home/volhovm/org/private.org.gpg]
+  - name: study
+    paths: [/home/volhovm/org/study.org]
+  - name: studyWork
+    paths: [/home/volhovm/org/study.org, /home/volhovm/org/work.org]
+  - name: private
+    paths: [/home/volhovm/org/private.org.gpg]
+reports:
+  - name: prevWeekFull
+    type: 
+      type: timeline
+      range: week-1
+      colWidth: 1.2
+      colHeight: 1.1
+      topDay: 4
+  - name: prevWeekTop
+    type: 
+      type: timeline
+      range: week-1
+      colWidth: 1.2
+      colHeight: 1.1
+      topDay: 4
+    modifiers:
+      - type: prune
+        path: /study/
+        depth: 1
+      - type: prune
+        path: /work/
+        depth: 1
+  - name: curWeekFull
+    type: 
+      type: timeline
+      range: week
+      colWidth: 1.2
+      colHeight: 1.1
+      topDay: 4
+  - name: curWeekTop
+    type: 
+      type: timeline
+      range: week
+      colWidth: 1.2
+      colHeight: 1.1
+      topDay: 4
+    modifiers:
+      - type: prune
+        path: /study/
+        depth: 1
+      - type: prune
+        path: /work/
+        depth: 1
+  - name: thisWeekStudy
+    type: 
+      type: timeline
+      range: week
+      colWidth: 1.1
+      colHeight: 1.1
+      topDay: 3
+    modifiers: 
+      - type: select 
+        path: study/Term 7
+      - type: prune
+        path: /
+        depth: 2
+  - name: thisWeekWork
+    type: 
+      type: timeline
+      range: week
+      colWidth: 1.1
+      colHeight: 1.1
+      topDay: 3
+    modifiers: 
+      - type: select 
+        path: work/Serokell
+      - type: prune
+        path: /
+        depth: 2
+  - name: prevWeekStudy
+    type: 
+      type: timeline
+      range: week-1
+      colWidth: 1.1
+      colHeight: 1.1
+      topDay: 3
+    modifiers: 
+      - type: select 
+        path: study/Term 7
+      - type: prune
+        path: /
+        depth: 2
+  - name: prevWeekWork
+    type: 
+      type: timeline
+      range: week-1
+      colWidth: 1.1
+      colHeight: 1.1
+      topDay: 3
+    modifiers: 
+      - type: select 
+        path: work/Serokell
+      - type: prune
+        path: /
+        depth: 2
+
+output: ./tmp
+todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED ]
+colorSalt: 4

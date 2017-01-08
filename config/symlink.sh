@@ -23,3 +23,4 @@ makeLink "./.vimrc" ~/.vimrc
 makeLink "./.bashrc" ~/.bashrc
 mkdir -p ~/.stack
 makeLink "./config.yaml" ~/.stack/config.yaml
+makeLink "./.orgstat.yaml" ~/.orgstat.yaml

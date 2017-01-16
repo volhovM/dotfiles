@@ -104,7 +104,7 @@
  '(nyan-wavy-trail nil)
  '(org-agenda-clock-consistency-checks
    (quote
-    (:max-duration "13:00" :min-duration 0 :max-gap "0:04" :gap-ok-around nil :default-face
+    (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
                    ((:background "DarkRed")
                     (:foreground "white"))
                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))

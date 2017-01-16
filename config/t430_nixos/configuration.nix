@@ -18,10 +18,10 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-# boot.loader.gummiboot.enable = true;
+#  boot.loader.gummiboot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  #boot.kernel.sysctl = { "vm.swappiness" = 0; };
-  #boot.initrd.kernelModules = [ "fbcon" ];
+#  boot.kernel.sysctl = { "vm.swappiness" = 0; };
+#  boot.initrd.kernelModules = [ "fbcon" ];
   boot.initrd.luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
 
   hardware.trackpoint = {
@@ -33,9 +33,11 @@
 
   networking = {
     hostName = "avishai"; 
-    extraHosts = "127.0.0.1 local.host";
-#    wireless.enable = true;  
-#    proxy.default = "localhost:9063";
+    extraHosts = ''
+      127.0.0.1 local.host
+      127.0.0.1 2-ch.ru
+      127.0.0.1 2ch.hk
+    '';
     firewall.allowPing = true;
     firewall.enable = false;
     networkmanager.enable = true;

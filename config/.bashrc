@@ -12,7 +12,22 @@ function monoff { xrandr --auto --dpi 105; fgon; }
 alias ledger="ledger -f ~/org/finances.dat"
 alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "
 alias sbuild="stack build --fast -j 2 --test --bench --no-run-tests --no-run-benchmarks"
-alias notify="notify-send -u critical \"Task is over\""
+function notify {
+  pitch=$(($RANDOM % 50 - 25))
+  rate=$(($RANDOM % 30 - 15))
+
+  notPhrase[0]="The task is over"
+  notPhrase[1]="The task was completed"
+  notPhrase[2]="Task is finished"
+  notPhrase[3]="Get back to work"
+  
+  rand=$[ $RANDOM % 4 ]
+  chosenPhrase=${notPhrase[$rand]}
+  spd-say --rate $rate --pitch $pitch "$chosenPhrase"
+
+  curtime=$(date +%T)
+  notify-send -u critical "$curtime Task is over"
+}
 
 alias d2h="perl -e 'printf qq|%X\n|, int( shift )'"
 alias d2o="perl -e 'printf qq|%o\n|, int( shift )'"

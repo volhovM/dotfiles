@@ -37,6 +37,7 @@
       127.0.0.1 local.host
       127.0.0.1 2-ch.ru
       127.0.0.1 2ch.hk
+      127.0.0.1 2ch.pm
     '';
     firewall.allowPing = true;
     firewall.enable = false;
@@ -262,6 +263,8 @@
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
           attoparsec  
+          base64-bytestring
+          Cabal
           Chart 
           Chart-cairo 
 #	   Chart-gtk
@@ -271,8 +274,10 @@
           ghc
           ghc-mod
           gtk2hs-buildtools
+          HTTP
           lens
           linear
+          lifted-async
           monad-loops
           numbers 
           normaldistribution

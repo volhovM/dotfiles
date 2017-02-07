@@ -1,34 +1,31 @@
 #!/bin/bash
 
-day=$(date +%u) 
-weeks="10#"$(date +%W)
-day=$(((weeks % 2) * 7 + day))
+day=$(($(date +%u) - 1))
+weeks=$(date +%W)
+day=$(((weeks % 2) * 7 + (day % 14)))
 hour=$(date +%H)
 
 if [ "$hour" -gt "16" ]; then
   day=$(($day + 1))
 fi
 
-free="Let org lead you"
+free="org/work"
 case $day in
-        1) out="08:20 pe-11:40-ml-ml-func-func 18:30" ;;
-        2) out="10:00 cod-cod-db-db-db 18:30" ;;
-        3) out="no university" ;;
-        4) out="11:40 seg-seg 15:40" ;;
-        5) out="no university" ;;
-        6) out="10:00 po-po-net-net 16:50" ;;
-        7) out=$free ;;
+        # Even week
+        0) out="11:40 ml-ml-net-net 18:30" ;;
+        2) out="10:00 pe-13:30-eng-eng 16:50" ;;
+        3) out="10:00 game-game-opt-opt 16:50" ;;
+        4) out="08:20 pe 9:50" ;;
+        5) out="10:00 po-po 13:10" ;;
 
-        8) out="08:20 pe-11:40-ml-ml-func-func 18:30" ;;
-        9) out="10:00 cod-cod-db 15:00" ;;
-        10) out="no university" ;;
-        11) out="11:40 seg-seg 15:40" ;;
-        12) out="no university" ;;
-        13) out="10:00 po-po-net-net 16:50" ;;
-        14) out=$free ;;
+        # Odd week
+        7) out="11:40-ml-ml-net-net 18:30" ;;
+        9) out="10:00 pe 11:30" ;;
+        10) out="10:00 game-game-opt-opt 16:50" ;;
+        11) out="08:20 pe 9:50" ;;
+        12) out="10:00 po-po 13:10" ;;
 
-        15) out="08:20 pe-11:40-ml-ml-func-func 18:30" ;;
-        *) out="SHDL ERROR" ;;
+        *) out=$free ;;
 esac
 
 echo $out

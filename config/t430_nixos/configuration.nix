@@ -331,6 +331,7 @@
     xorg.xmodmap
     xorg.xkbprint
     xorg.xev
+    xsel
   ] 
 #  ++ [ myAndroidSdk ]
   ;

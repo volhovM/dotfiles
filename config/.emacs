@@ -73,13 +73,9 @@
  '(erc-away-nickname "volhovm")
  '(erc-email-userid "volhovm")
  '(erc-nick "volhovm")
- '(flycheck-ghc-args (quote ("-v")))
- '(flycheck-haskell-runghc-command (quote ("stack" "--verbosity" "silent" "runghc" "--")))
  '(haskell-interactive-popup-errors nil)
  '(haskell-interactive-types-for-show-ambiguous t)
- '(haskell-process-args-stack-ghci (quote ("--bench" "--test" "--ghc-options=-ferror-spans")))
  '(haskell-process-log t)
- '(haskell-process-suggest-hoogle-imports t)
  '(haskell-stylish-on-save t)
  '(inhibit-startup-screen t)
  '(ispell-program-name "aspell")
@@ -446,7 +442,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 100 :width normal))))
+ '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 95 :width normal))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(sbt:error ((t (:foreground "red"))))
@@ -677,11 +673,12 @@ Switch projects and subprojects from STARTED back to TODO"
   "Func for haskell-mode hook."
   (local-set-key (kbd "C-c C-g") 'haskell-session-change-target)
   (interactive-haskell-mode)
- ; (intero-mode)
+; (intero-mode)
   (whitespace-mode)
   (haskell-auto-insert-module-template)
   (volhovm-haskell-style)
-  (hindent-mode))
+  (hindent-mode)
+  )
 (require 'hindent)
 (setq-default hindent-style "johan-tibell")
 (defun volhovm-haskell-style ()

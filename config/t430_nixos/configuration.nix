@@ -247,17 +247,15 @@
     haskellPackages.haddock
     haskellPackages.happy
     haskellPackages.hgettext
-##haskell-src-exts >=1.13 && <1.17,
-##optparse-applicative >=0.8 && <0.12
-#    })
     haskellPackages.hindent
     haskellPackages.hlint
-#    haskell.packages.ghc7103.haskell-import-graph
-#    haskellPackages.intero
+    haskellPackages.orgstat
+#    (haskellPackages.orgstat.override {
+#      orgmode-parse = haskell.lib.dontCheck haskellPackages.orgmode-parse;
+#    })
     haskellPackages.purescript
-#    haskellPackages.ghc-mod
-#    haskellPackages.idris
-    (haskellPackages.stylish-haskell_0_6_5_0.override { 
+#    haskellPackages.stylish-haskell
+    (haskellPackages.stylish-haskell_0_7_1_0.override { 
       haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
     })
     (haskellPackages.ghcWithPackages (p: with p;
@@ -294,9 +292,9 @@
         ]))
     libnotify
     ncurses
-    nodejs-6_x
-    nodePackages.browserify
-    nodePackages.webpack
+    # nodejs-6_x
+    # nodePackages.browserify
+    # nodePackages.webpack
     maven
     openjdk
     perl

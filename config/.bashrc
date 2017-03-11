@@ -50,7 +50,7 @@ export EDITOR='vim'
 export BROWSER='firefox'
 export NIX_STACK='--nix'
 export HISTFILESIZE=-1
-export HISTSIZE=10000
+export HISTSIZE=-1
 PATH=$PATH:/home/volhovm/.local/bin
 #export NIX_PATH="/home/volhovm/nixpkgsGlobal:$NIX_PATH"
 set -o vi

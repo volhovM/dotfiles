@@ -83,6 +83,7 @@
 
 #  nix.binaryCaches = [];
   nixpkgs.config = {
+    permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
 #    virtualbox.enableExtensionPack = false;
     allowUnfree = false;
 #    firefox = {
@@ -120,6 +121,7 @@
     ffmpeg
     file
     firefox
+    ffmpeg-full
     gimp
     git
     gitAndTools.gitAnnex
@@ -183,10 +185,12 @@
     qtox
     rsync
     scrot
+    #scudcloud
     simplescreenrecorder
     smartmontools
     socat
     sox
+    speechd
     speedcrunch
     speedtest-cli
     sslh
@@ -205,6 +209,7 @@
     traceroute
     transmission_gtk
     tree
+    unar
     unetbootin
     unzip
     usbutils
@@ -235,7 +240,7 @@
     cabal-install
     clang
     coq
-    elmPackages.elm
+#    elmPackages.elm
     gcc
     gdb
     gmpxx
@@ -246,18 +251,18 @@
     haskellPackages.alex
     haskellPackages.haddock
     haskellPackages.happy
-    haskellPackages.hgettext
+#    haskellPackages.hgettext
     haskellPackages.hindent
     haskellPackages.hlint
-    haskellPackages.orgstat
+#    haskellPackages.orgstat
 #    (haskellPackages.orgstat.override {
 #      orgmode-parse = haskell.lib.dontCheck haskellPackages.orgmode-parse;
 #    })
-    haskellPackages.purescript
-#    haskellPackages.stylish-haskell
-    (haskellPackages.stylish-haskell_0_7_1_0.override { 
-      haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
-    })
+#    haskellPackages.purescript
+    haskellPackages.stylish-haskell
+#    (haskellPackages.stylish-haskell_0_7_1_0.override { 
+#      haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
+#    })
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
           attoparsec  
@@ -292,14 +297,14 @@
         ]))
     libnotify
     ncurses
-    # nodejs-6_x
+    nodejs
     # nodePackages.browserify
-    # nodePackages.webpack
+    nodePackages.webpack
     maven
     openjdk
     perl
     python
-    python3
+    #python3
     sbt
     scala
     stack

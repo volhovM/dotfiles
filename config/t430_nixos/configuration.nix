@@ -20,7 +20,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 #  boot.loader.gummiboot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-#  boot.kernel.sysctl = { "vm.swappiness" = 0; };
+  boot.kernel.sysctl = { 
+    #"vm.swappiness" = 0; 
+    "net.ipv4.ip_default_ttl" = 129;
+  };
 #  boot.initrd.kernelModules = [ "fbcon" ];
   boot.initrd.luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
 
@@ -97,10 +100,6 @@
 #    teamspeak_client
     acpi
     acpid
-    aspell
-    aspellDicts.en
-    aspellDicts.ru
-    aspellDicts.uk
     at
     autocutsel
     bc
@@ -197,7 +196,6 @@
     sshpass
     syslinux
     sysstat
-#    tabbed
     tdesktop
     tcpdump
     # teeworlds
@@ -238,26 +236,20 @@
 
     # Development
     cabal-install
-    clang
-    coq
+#    coq
 #    elmPackages.elm
     gcc
-    gdb
+#    gdb
     gmpxx
     gnome3.glade
     gnumake
     gradle
 #    haskellPackages.Agda
-    haskellPackages.alex
+#    haskellPackages.alex
     haskellPackages.haddock
-    haskellPackages.happy
-#    haskellPackages.hgettext
     haskellPackages.hindent
     haskellPackages.hlint
 #    haskellPackages.orgstat
-#    (haskellPackages.orgstat.override {
-#      orgmode-parse = haskell.lib.dontCheck haskellPackages.orgmode-parse;
-#    })
 #    haskellPackages.purescript
     haskellPackages.stylish-haskell
 #    (haskellPackages.stylish-haskell_0_7_1_0.override { 
@@ -285,8 +277,6 @@
           numbers 
           normaldistribution
           permutation
-          pretty-tree
-          primes
           random
           random-shuffle
           turtle
@@ -305,8 +295,6 @@
     perl
     python
     #python3
-    sbt
-    scala
     stack
     valgrind
     vimPlugins.vim-addon-nix
@@ -318,9 +306,6 @@
     dunst
     dmenu
     feh
-#    (fcitx-with-plugins.override { plugins = [ anthy ]; } )
-#    fcitx-configtool
-#    ibus-qt
     inotify-tools
     haskellPackages.xmobar
     kbd

@@ -11,6 +11,9 @@ Config {
 	, position = TopW L 100
 	, commands = [ Run Cpu ["-t", "<total>%", "-L","15","-H","50","-l","green","-h","red", "-n", "yellow"] 50
 	             , Run Memory ["-t","<usedratio>%", "-L", "40", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 50
+                     , Run CoreTemp ["-t", "<core0>C",
+                                     "-L", "50", "-H", "70",
+                                     "-l", "green", "-n", "yellow", "-h", "red"] 50
 	             , Run BatteryP ["BAT0"]
 	             ["-t", "<acstatus>",
 	             "-L", "15", "-H", "70",
@@ -32,6 +35,6 @@ Config {
 	             ]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = " %schedule% <fc=#429942>|</fc> %StdinReader% }{ %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu% <fc=#429942>/</fc> %memory% <fc=#429942>/</fc> %swap% <fc=#429942>/</fc> %diskio% <fc=#429942>|</fc> %vol% <fc=#429942>| *</fc> <fc=#EE4444>%date%</fc> <fc=#429942>*</fc>  "
+	, template = " %schedule% <fc=#429942>|</fc> %StdinReader% }{ %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu% <fc=#429942>/</fc> %memory% <fc=#429942>/</fc> %swap% <fc=#429942>/</fc> %coretemp% <fc=#429942>/</fc> %diskio% <fc=#429942>|</fc> %vol% <fc=#429942>| *</fc> <fc=#EE4444>%date%</fc> <fc=#429942>*</fc>  "
 }
 

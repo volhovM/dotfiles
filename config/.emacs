@@ -119,7 +119,7 @@
        (org-agenda-span 5))))))
  '(org-agenda-files
    (quote
-    ("~/org/knowledge.org" "~/org/work.org" "~/org/private.org.gpg" "~/org/study.org")))
+    ("~/org/work.org" "~/org/private.org.gpg" "~/org/study.org")))
  '(org-agenda-span 10)
  '(org-archive-location "archive.org.gpg::* From %s")
  '(org-cycle-include-plain-lists t)
@@ -442,7 +442,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 110 :width normal))))
+ '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 100 :width normal))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(sbt:error ((t (:foreground "red"))))
@@ -454,18 +454,22 @@
 ;; MIDNIGHT
 (require 'midnight)
 
-;; ORG MODE
+;; ORG DRILL
 ;; Load org files from git rep (elpa package is broken)
 ;; Don't forget to `make autoload`
 ; (add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
 ; (add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
 (add-to-list 'load-path "~/.emacs.d/org-drill-table/")
 (require 'org-drill-table)
-(setq org-drill-learn-fraction 0.35)
-(setq org-drill-spaced-repetition-algorithm 'simple8)
+(setq org-drill-learn-fraction 0.25)
+;(setq org-drill-maximum-items-per-session 60)
+(setq org-drill-maximum-duration 25)
+(setq org-drill-spaced-repetition-algorithm 'sm5)
 (setq org-drill-add-random-noise-to-intervals-p t)
 (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
 ; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
+
+;; ORG MODE
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key "\C-ca" 'org-agenda)
 (defun my-org-mode-hook ()
@@ -797,11 +801,7 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;      (append '(("\\.asm\\'" . asm86-mode) ("\\.inc\\'" . asm86-mode))
 ;;              auto-mode-alist))
 ;;(add-hook 'asm86-mode-hook 'turn-on-font-lock)
-
-
-(add-hook 'asm-mode-hook '(lambda ()
-                            (linum-mode)
-                            ))
+;;(add-hook 'asm-mode-hook '(lambda () (linum-mode) ))
 
 ;;; Encrypting
 (require 'epa-file)

@@ -12,7 +12,7 @@ Config {
 	, commands = [ Run Cpu ["-t", "<total>%", "-L","15","-H","50","-l","green","-h","red", "-n", "yellow"] 50
 	             , Run Memory ["-t","<usedratio>%", "-L", "40", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 50
                      , Run CoreTemp ["-t", "<core0>C",
-                                     "-L", "50", "-H", "70",
+                                     "-L", "55", "-H", "80",
                                      "-l", "green", "-n", "yellow", "-h", "red"] 50
 	             , Run BatteryP ["BAT0"]
 	             ["-t", "<acstatus>",

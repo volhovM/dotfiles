@@ -16,16 +16,21 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-#  boot.loader.gummiboot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernel.sysctl = { 
-    #"vm.swappiness" = 0; 
-    "net.ipv4.ip_default_ttl" = 129;
+  boot = {
+    loader.systemd-boot.enable = true;
+    kernelPackages = pkgs.linuxPackages_latest;
+#   loader.gummiboot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    extraModprobeConfig = ''
+      options thinkpad_acpi fan_control=1
+    '';
+    kernel.sysctl = { 
+      #"vm.swappiness" = 0; 
+      "net.ipv4.ip_default_ttl" = 65;
+    };
+#   initrd.kernelModules = [ "fbcon" ];
+    initrd.luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
   };
-#  boot.initrd.kernelModules = [ "fbcon" ];
-  boot.initrd.luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
 
   hardware.trackpoint = {
     enable = true;
@@ -75,6 +80,7 @@
   };
 
   nix = {
+#    useSandbox = false;
     trustedBinaryCaches = 
       [ https://cache.nixos.org 
         https://hydra.serokell.io ];
@@ -86,7 +92,7 @@
 
 #  nix.binaryCaches = [];
   nixpkgs.config = {
-    permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
+#    permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
 #    virtualbox.enableExtensionPack = false;
     allowUnfree = false;
 #    firefox = {
@@ -103,6 +109,7 @@
     at
     autocutsel
     bc
+    bup
     chromium
     clipit
     cryptsetup
@@ -169,6 +176,7 @@
     ntfs3g
     openssl
     pandoc
+    par2cmdline # needed for bup fsck
     pass
     pavucontrol 
     pciutils
@@ -213,10 +221,7 @@
     usbutils
     utox
     vim	
-    vimprobable2
     vlc
-    w3m
-    weechat
     wirelesstools
     wget
     which
@@ -293,7 +298,8 @@
     maven
     openjdk
     perl
-    python
+    python2
+    python2Packages.tornado
     #python3
     stack
     valgrind
@@ -357,8 +363,7 @@
   services.cron.enable = true;
   services.syslogd.enable = true;
   services.cron.systemCronJobs = [
-    "*/30 * * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
-    "*/200 * * * *  volhovm sh /home/volhovm/org/backup.sh 1 > /tmp/gitautoupdatelog 2> /tmp/gitautoupdatelog.error"
+    "0 */2 * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/bupcron 2> /tmp/bupcron.error"
     "* * * * *  volhovm date > /tmp/crontest"
   ];
   services.journald.extraConfig = ''

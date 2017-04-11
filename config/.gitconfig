@@ -12,3 +12,10 @@
         program = gpg2
 [http]
         sslverify = false
+[tig]  
+        show-changes = true
+        line-graphics = utf-8
+[tig "color"] 
+        cursor = yellow red bold
+[tig "bind"] 
+        generic = P parent

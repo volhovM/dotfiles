@@ -75,6 +75,7 @@
  '(erc-nick "volhovm")
  '(haskell-interactive-popup-errors nil)
  '(haskell-interactive-types-for-show-ambiguous t)
+ '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
  '(haskell-process-log t)
  '(haskell-stylish-on-save t)
  '(inhibit-startup-screen t)
@@ -349,7 +350,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode intero idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode ghc font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -672,7 +673,9 @@ Switch projects and subprojects from STARTED back to TODO"
 
 
 ;;; HASKELL
-;(require 'haskell-interactive-mode)
+(add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
+(require 'haskell-mode-autoloads)
+(add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode-neongreen/")
 (require 'haskell-process)
 (remove-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'volhovm-haskell-mode-hook)

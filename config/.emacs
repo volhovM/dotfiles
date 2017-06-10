@@ -49,6 +49,15 @@
 
 ;;; YASNIPPET
 (yas-global-mode 1)
+
+;;; Mode line
+;(sml/setup)
+;(custom-set-variables
+; '(sml/shorten-modes t)
+; '(sml/shorten-directory t)
+; '(sml/mode-width 30)
+; '(sml/name-width 30))
+(nyan-mode t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -67,18 +76,20 @@
  '(custom-enabled-themes (quote (junio)))
  '(custom-safe-themes
    (quote
-    ("9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "46fd293ff6e2f6b74a5edf1063c32f2a758ec24a5f63d13b07a20255c074d399" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" default)))
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "46fd293ff6e2f6b74a5edf1063c32f2a758ec24a5f63d13b07a20255c074d399" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" default)))
  '(default-input-method "Agda")
  '(encourage-mode nil)
  '(erc-away-nickname "volhovm")
  '(erc-email-userid "volhovm")
  '(erc-nick "volhovm")
+ '(flyspell-issue-message-flag nil)
  '(haskell-interactive-popup-errors nil)
  '(haskell-interactive-types-for-show-ambiguous t)
  '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
  '(haskell-process-log t)
  '(haskell-stylish-on-save t)
  '(inhibit-startup-screen t)
+ '(ispell-dictionary "ru")
  '(ispell-program-name "aspell")
  '(ledger-reports
    (quote
@@ -120,7 +131,7 @@
        (org-agenda-span 5))))))
  '(org-agenda-files
    (quote
-    ("~/org/work.org" "~/org/private.org.gpg" "~/org/study.org")))
+    ("~/org/study.org" "~/org/work.org" "~/org/private.org.gpg")))
  '(org-agenda-span 10)
  '(org-archive-location "archive.org.gpg::* From %s")
  '(org-cycle-include-plain-lists t)
@@ -350,7 +361,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -394,9 +405,12 @@
  '(yas-snippet-dirs (quote ("~/.emacs.d/snippets")) nil (yasnippet)))
 
 
+;;; Automatic
+
+
+
 ;;; IDO MODE
 (ido-mode t)
-(nyan-mode t)
 
 ;;; ERC
 (require 'erc)
@@ -438,12 +452,13 @@
 
 
 ;; FONTS
+;(set-default-font "Terminus-10")
+(set-default-font "gohufont-10")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Terminus" :foundry "unknown" :slant normal :weight normal :height 100 :width normal))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(sbt:error ((t (:foreground "red"))))
@@ -483,6 +498,7 @@
   (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
   (define-key org-agenda-mode-map "l" 'evil-forward-char)
   (define-key org-agenda-mode-map "h" 'evil-backward-char))
+(setq org-agenda-ignore-drawer-properties '(effort appt))
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
 (setq org-ditaa-jar-path (expand-file-name
@@ -586,7 +602,6 @@ Switch projects and subprojects from STARTED back to TODO"
         (setq level (1- level)
               str (concat str "  ")))
       (concat str " "))))
-
 (advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
 
 
@@ -866,6 +881,23 @@ Switch projects and subprojects from STARTED back to TODO"
 
 ;;; HACK
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;;; Aspell
+(require 'ispell)
+(setq ispell-list-command "--list")
+(setq ispell-extra-args '("--sug-mode=fast"))
+(setq ispell-silently-savep t)
+(setq flyspell-persistent-highlight t)
+(global-set-key (kbd "<f8>") 'ispell-word)
+(global-set-key (kbd "C-<f8>") 'flyspell-buffer)
+(global-set-key (kbd "C-S-<f8>") 'flyspell-mode)
+(defun flyspell-check-next-highlighted-word ()
+  "Custom function to spell check next highlighted word"
+  (interactive)
+  (flyspell-goto-next-error)
+  (ispell-word)
+  )
+(global-set-key (kbd "M-<f8>") 'flyspell-check-next-highlighted-word)
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE

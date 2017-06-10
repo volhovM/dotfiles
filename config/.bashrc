@@ -44,16 +44,19 @@ function xal {
   (xautolock -disable && sleep $(($1 * 60)) && xautolock -enable)&
 }
 
+#export NIX_PATH="/home/volhovm/nixpkgsGlobal:$NIX_PATH"
 export TERM='xterm-256color'
 # export TERM='xterm'
 export EDITOR='vim'
 export BROWSER='firefox'
 export NIX_STACK='--nix'
-shopt -s histappend # don't overwrite history
-export HISTFILESIZE=-1
-export HISTSIZE=-1
+
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+
 PATH=$PATH:/home/volhovm/.local/bin
-#export NIX_PATH="/home/volhovm/nixpkgsGlobal:$NIX_PATH"
 set -o vi
 
 function __prompt_command() {

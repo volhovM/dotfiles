@@ -14,18 +14,19 @@ alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "
 alias sbuild="stack build --fast -j 2 --test --bench --no-run-tests --no-run-benchmarks"
 alias grep="grep --color=auto"
 function notify {
-  pitch=$(($RANDOM % 50 - 25))
-  rate=$(($RANDOM % 30 - 15))
-
-  notPhrase[0]="The task is over"
-  notPhrase[1]="The task was completed"
-  notPhrase[2]="Task is finished"
-  notPhrase[3]="Get back to work"
-  
-  rand=$[ $RANDOM % 4 ]
-  chosenPhrase=${notPhrase[$rand]}
-  spd-say --rate $rate --pitch $pitch "$chosenPhrase"
-
+#  pitch=$(($RANDOM % 50 - 25))
+#  rate=$(($RANDOM % 30 - 15))
+#
+#  notPhrase[0]="The task is over"
+#  notPhrase[1]="The task was completed"
+#  notPhrase[2]="Task is finished"
+#  notPhrase[3]="Get back to work"
+#
+#  rand=$[ $RANDOM % 4 ]
+#  chosenPhrase=${notPhrase[$rand]}
+#  spd-say --rate $rate --pitch $pitch "$chosenPhrase"
+ 
+  paplay ~/dotfiles/scripts/just-like-magic.ogg&
   curtime=$(date +%T)
   notify-send -u critical "$curtime Task is over"
 }

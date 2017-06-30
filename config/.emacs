@@ -116,19 +116,6 @@
                    ((:background "DarkRed")
                     (:foreground "white"))
                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
- '(org-agenda-custom-commands
-   (quote
-    (("b" "All study-related TODO's"
-      ((agenda ""
-               ((org-agenda-overriding-header "")))
-       (todo "TODO" nil)
-       (todo "STARTED" nil)
-       (todo "WAITING" nil)
-       (todo "DONE" nil))
-      ((org-agenda-files
-        (quote
-         ("~/org/study.org")))
-       (org-agenda-span 5))))))
  '(org-agenda-files
    (quote
     ("~/org/study.org" "~/org/work.org" "~/org/private.org.gpg")))
@@ -361,7 +348,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (dumb-jump ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -499,6 +486,7 @@
   (define-key org-agenda-mode-map "l" 'evil-forward-char)
   (define-key org-agenda-mode-map "h" 'evil-backward-char))
 (setq org-agenda-ignore-drawer-properties '(effort appt))
+;(run-with-idle-timer 5 nil (lambda () (org-agenda-list) (delete-window))) ; regen agenda on timer
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
 (setq org-ditaa-jar-path (expand-file-name
@@ -508,18 +496,24 @@
  '((ditaa . t)
    (ledger . t)
    (haskell . t)))
-(setq org-todo-keywords '((type "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
+(setq org-todo-keywords '((type "TD" "ST" "WT" "|" "DN" "CL")))
 (setq org-todo-keyword-faces
- '(("TODO" . "red")
+ '(
+   ("TODO" . "red")
    ("STARTED" . "yellow")
    ("WAITING" . "grey")
-   ("CANCELED" . (:foreground "blue" :weight bold))
    ("DONE" . "green")
-   ("BUG" . "red")
-   ("PROGRESS" . "yellow")
-   ("UNTESTED" . "purple")
-   ("DROPPED" . (:foreground "blue" :weight bold))
-   ("FIXED" . "green")
+   ("CANCELED" . (:foreground "blue" :weight bold))
+   ("TD" . "red")
+   ("ST" . "yellow")
+   ("WT" . "grey")
+   ("DN" . "green")
+   ("CL" . (:foreground "blue" :weight bold))
+   ; ("BUG" . "red")
+   ; ("PROGRESS" . "yellow")
+   ; ("UNTESTED" . "purple")
+   ; ("DROPPED" . (:foreground "blue" :weight bold))
+   ; ("FIXED" . "green")
    ("0" . (:background "red" :foreground "black" :weight bold))
    ("X" . "blue")
    ("-" . "blue")
@@ -898,6 +892,12 @@ Switch projects and subprojects from STARTED back to TODO"
   (ispell-word)
   )
 (global-set-key (kbd "M-<f8>") 'flyspell-check-next-highlighted-word)
+
+;;; AG search (silver-searcher)
+(global-set-key (kbd "<f7>") 'ag-project)
+(global-set-key (kbd "C-<f7>") 'ag)
+(setq ag-reuse-buffers 't)
+(setq ag-reuse-window 't)
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE

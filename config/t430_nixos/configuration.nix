@@ -1,18 +1,6 @@
 { config, pkgs, ... }:
  
-#let 
-#  packageOverrides = super: let self = pkgs; in
-#  {
-#    haskellPackages = self.haskell.packages.ghc7103.override {
-#      overrides = config.haskellPackageOverrides or (self: super: {});
-#    };
-#  };
-#myAndroidSdk = pkgs.androidenv.androidsdk {
-#    platformVersions = [ "22" ];
-#    abiVersions = [ "armeabi-v7a" ];
-#    useGoogleAPIs = true;
-#  };
-#in
+
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -32,12 +20,13 @@
     initrd.luks.devices = [ { name = "root"; device = "/dev/sda2"; preLVM = true; } ];
   };
 
-  hardware.trackpoint = {
-    enable = true;
-    emulateWheel = true;
-#    fakeButtons = true;
+  hardware = {
+    trackpoint = {
+      enable = true;
+      emulateWheel = true;
+    };
+    pulseaudio.enable = true;
   };
-  hardware.pulseaudio.enable = true;
 
   networking = {
     hostName = "avishai"; 
@@ -50,7 +39,7 @@
     firewall.allowPing = true;
     firewall.enable = false;
     networkmanager.enable = true;
-    nameservers = [ "77.88.8.8" "77.88.8.1" "8.8.8.8" "192.168.0.1" ];
+#    nameservers = [ "77.88.8.8" "77.88.8.1" "8.8.8.8" "192.168.0.1" ];
   };
 
   time.timeZone = "Europe/Moscow";
@@ -59,10 +48,6 @@
     consoleFont = "cyr-sun16";
     consoleKeyMap = "dvorak";
     defaultLocale = "en_US.UTF-8";
-#    inputMethod = {
-#      ibus.engines = with pkgs.ibus-engines; [ anthy mozc ];
-#      enabled = "ibus";
-#    };
   };
 
   virtualisation.virtualbox.host.enable = true;
@@ -95,18 +80,16 @@
 #    permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
 #    virtualbox.enableExtensionPack = false;
     allowUnfree = false;
-#    firefox = {
-#     enableGoogleTalkPlugin = true;
-#     enableAdobeFlash = true;
-#    };
   };
 
   environment.systemPackages = with pkgs; [
-#    skype
-#    teamspeak_client
     acpi
     acpid
+    aspell
+    aspellDicts.en
+    aspellDicts.ru
     at
+    ag
     autocutsel
     bc
     bup
@@ -119,9 +102,8 @@
     ditaa
     djvulibre
     efibootmgr
-    electrum
     elinks    
-    emacs
+#    emacs
     enca
     espeak
     ffmpeg
@@ -162,9 +144,7 @@
     lshw
     lsof
     manpages
-    mercurial
     microcodeIntel
-    minitube
     mkpasswd
     mplayer
     mr
@@ -175,11 +155,13 @@
     ncdu
     ntfs3g
     openssl
+    openvpn
     pandoc
     par2cmdline # needed for bup fsck
     pass
     pavucontrol 
     pciutils
+    pdftk
     pkgconfig
     postgresql
     powertop
@@ -192,7 +174,7 @@
     qtox
     rsync
     scrot
-    #scudcloud
+    scudcloud
     simplescreenrecorder
     smartmontools
     socat
@@ -219,16 +201,16 @@
     unetbootin
     unzip
     usbutils
-    utox
     vim	
     vlc
+    webfs
+    wesnoth
     wirelesstools
     wget
     which
     zathura
     zip
     zlib
-    zsh
 
     # Nix-related
     cabal2nix
@@ -236,30 +218,21 @@
     nix-prefetch-git
     nixops
     npm2nix
-    nox
     patchelf
 
     # Development
     cabal-install
-#    coq
-#    elmPackages.elm
     gcc
-#    gdb
     gmpxx
     gnome3.glade
     gnumake
     gradle
-#    haskellPackages.Agda
-#    haskellPackages.alex
     haskellPackages.haddock
     haskellPackages.hindent
     haskellPackages.hlint
 #    haskellPackages.orgstat
 #    haskellPackages.purescript
     haskellPackages.stylish-haskell
-#    (haskellPackages.stylish-haskell_0_7_1_0.override { 
-#      haskell-src-exts = haskellPackages.haskell-src-exts_1_18_2; 
-#    })
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
           attoparsec  
@@ -267,16 +240,11 @@
           Cabal
           Chart 
           Chart-cairo 
-#	   Chart-gtk
           conduit
           file-embed
           generic-deriving
-          ghc
-          ghc-mod
-          gtk2hs-buildtools
           HTTP
           lens
-          linear
           lifted-async
           monad-loops
           numbers 
@@ -286,25 +254,23 @@
           random-shuffle
           turtle
           unordered-containers
+          universum
           xmonad  
           xmonad-contrib
           zlib
         ]))
     libnotify
+    libpng
     ncurses
     nodejs
     # nodePackages.browserify
     nodePackages.webpack
-    maven
-    openjdk
     perl
     python2
-    python2Packages.tornado
-    #python3
+    # python3
     stack
     valgrind
     vimPlugins.vim-addon-nix
-    
     wireshark-qt
     yasm
 
@@ -316,9 +282,10 @@
     haskellPackages.xmobar
     kbd
     libnotify
+    lightdm
+    lightlocker
     rxvt
     rxvt_unicode
-    theme-vertex
     xautolock
     xclip
     xfontsel
@@ -326,13 +293,7 @@
     xorg.xkbprint
     xorg.xev
     xsel
-  ] 
-#  ++ [ myAndroidSdk ]
-  ;
-
-#  environment.variables = {
-#    ANDROID_HOME = "${myAndroidSdk}/libexec/android-sdk-linux";
-#  };
+  ];
 
   programs.bash = {
     enableCompletion = true;
@@ -359,94 +320,88 @@
 
 # ------ SERVICES ------
 
-
-  services.cron.enable = true;
-  services.syslogd.enable = true;
-  services.cron.systemCronJobs = [
-    "0 */2 * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/bupcron 2> /tmp/bupcron.error"
-    "* * * * *  volhovm date > /tmp/crontest"
-  ];
-  services.journald.extraConfig = ''
-    ForwardToSyslog=yes
-  '';
-  services.journald.enableHttpGateway = true;
-
-  services.openssh.enable = true;
-#  services.printing.enable = true;
-#  services.fprintd.enable = true; 
-#  security.pam.services.slimlock = {
-#    fprintAuth = true;
-#    name = "slimlock";
-#  };
-
-  services.xserver = {
-    autorun = true;
-    enable = true;
-    layout = "pl,ru";
-    xkbOptions = "grp:caps_toggle";
-    xkbVariant = "dvorak,ruu";
-    synaptics = {
-      enable = false;
-      horizontalScroll = false;
-      twoFingerScroll = true;
-    }; 
-    displayManager.sessionCommands = "sh ~/.xinitrc";
-    displayManager.slim = {
+  services = {
+    cron = {
       enable = true;
-      defaultUser = "volhovm";
+      systemCronJobs = [
+        "0 */2 * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/bupcron 2> /tmp/bupcron.error"
+        "* * * * *  volhovm date > /tmp/crontest"
+      ];
     };
-    windowManager = {
-      #bspwm.enable = true;
-      xmonad.enable = true;
-      xmonad.enableContribAndExtras = true;
+
+    openssh.enable = true;
+  
+    printing = {
+      enable = true;
+      browsing = true;
+      defaultShared = true;
     };
-    #desktopManager.xfce.enable = true;
-    deviceSection = ''
-        Option "Backlight" "intel_backlight"
+    
+#    avahi = {
+#      enable = true;
+#      publish.enable = true;
+#      publish.userServices = true;
+#    };
+
+    xserver = {
+      autorun = true;
+      enable = true;
+      layout = "pl,ru";
+      xkbOptions = "grp:caps_toggle";
+      xkbVariant = "dvorak,ruu";
+      synaptics = {
+        enable = false;
+        horizontalScroll = false;
+        twoFingerScroll = true;
+      }; 
+      displayManager.sessionCommands = "sh ~/.xinitrc";
+      displayManager.lightdm.enable = true;
+      #slimlock is broken now :(
+      #displayManager.slim = {
+      #  enable = true;
+      #  defaultUser = "volhovm";
+      #}; 
+      windowManager = {
+        #bspwm.enable = true;
+        xmonad.enable = true;
+        xmonad.enableContribAndExtras = true;
+      };
+      #desktopManager.xfce.enable = true;
+      deviceSection = ''
+          Option "Backlight" "intel_backlight"
+      '';
+    };
+
+    logind.extraConfig = ''
+      HandleLidSwitch=ignore
+      HandleHibernateKey=ignore
+      LidSwitchIgnoreInhibited=no
+      IdleAction=ignore
     '';
+  
+    acpid.enable = true;
+    tlp.enable = true;
+    ntp.enable = true;
+
+    tor = {
+      enable = true;
+      client.enable = true; 
+      torsocks.enable = true;
+    };
   };
+
+
 
 #  powerManagement = {
 #    enable = true;
 #    cpuFreqGovernor = "conservative";
 #  };
 
-  services.logind.extraConfig = ''
-    HandleLidSwitch=ignore
-    HandleHibernateKey=ignore
-    LidSwitchIgnoreInhibited=no
-    IdleAction=ignore
-  '';
-
-  services.acpid = {
-    enable = true;
-  };
-  services.tlp.enable = true;
-
-#  services.clamav = {
-#    updater.enable = true;
-#  };
-
-  services.tor = {
-    enable = true;
-    client.enable = true; 
-    torsocks.enable = true;
-  };
-  
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql;
-    authentication = "local all all ident"; 
-  };
-
-#  services.udev.extraRules = ''
-#   SUBSYSTEM=="usb", ATTR{idVendor}="18d1", MODE="0666", GROUP="plugdev"
-#  '';
-
   users.extraUsers.volhovm = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
   };
+
   users.motd = "Stay noided";
 
   # The NixOS release to be compatible with for stateful data such as databases.

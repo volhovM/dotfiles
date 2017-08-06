@@ -96,5 +96,5 @@ reports:
        - type: select 
          path: private/
 output: /home/volhovm/reps/orgstat/
-todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED ]
+todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL ]
 colorSalt: 3

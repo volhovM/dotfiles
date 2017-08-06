@@ -7,7 +7,8 @@ alias instantphoto="cd ~/pictures/screen/ && (sleep 2 && scrot -u) & timeout 3 m
 alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill ~/wallpaper.jpg; }
-function monon { xrandr --auto && xrandr --output VGA1 --primary --above LVDS1 --dpi 100; fgon; }
+function monon { xrandr --auto && xrandr --output VGA-1 --primary --above LVDS-1 --dpi 100; fgon; }
+function monondp { xrandr --auto && xrandr --output DP-1 --primary --above LVDS-1; fgon; }
 function monoff { xrandr --auto --dpi 100; fgon; }
 alias ledger="ledger -f ~/org/finances.dat"
 alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "

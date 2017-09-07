@@ -9,3 +9,4 @@
 #   - /run/current-system/sw/lib
 nix:
   enable: true
+  pure: true

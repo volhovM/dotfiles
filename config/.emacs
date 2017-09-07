@@ -80,6 +80,7 @@
  '(default-input-method "Agda")
  '(dumb-jump-mode t)
  '(encourage-mode nil)
+ '(epg-gpg-program "gpg")
  '(erc-away-nickname "volhovm")
  '(erc-email-userid "volhovm")
  '(erc-nick "volhovm")

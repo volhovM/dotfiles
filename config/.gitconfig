@@ -9,7 +9,7 @@
 [credential]
 	helper = cache --timeout=3600
 [gpg]
-        program = gpg2
+        program = gpg
 [http]
         sslverify = false
 [tig]  

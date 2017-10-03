@@ -23,7 +23,7 @@ Config {
 	             "-o", "Bat: <left>%"] 100
 	             , Run Com "sh" ["/home/volhovm/dotfiles/scripts/volumescript.sh"] "vol" 9
 	             , Run Swap ["-t", "<usedratio>%", "-H", "30", "-L", "2", "-l", "green", "-n", "yellow", "-h", "red"] 100
-	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/workstats.sh"] "workstats" 200
+	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/workstats.sh"] "workstats" 500
 	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/thisMonthExpenses.sh"] "expenses" 200
 	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/wificon.sh" ] "wificon" 10
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/pingIndicator.sh" ] "pingI" 50

@@ -10,7 +10,7 @@ function fgon { feh --bg-fill ~/wallpaper.jpg; }
 function monon { xrandr --auto && xrandr --output VGA-1 --primary --above LVDS-1 --dpi 100; fgon; }
 function monondp { xrandr --auto && xrandr --output DP-1 --primary --above LVDS-1; fgon; }
 function monoff { xrandr --auto --dpi 100; fgon; }
-alias ledger="ledger --strict -f ~/org/finances.dat"
+alias ledger="ledger --explicit --strict -f ~/org/finances.dat"
 alias nix-env-haskell="nix-env -qaP -f \"<nixpkgs>\" -A haskellPackages | grep "
 alias sbuild="stack build --fast -j 2 --test --bench --no-run-tests --no-run-benchmarks"
 alias grep="grep --color=auto"

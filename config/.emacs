@@ -120,7 +120,7 @@
                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
  '(org-agenda-files
    (quote
-    ("~/org/study.org" "~/org/work.org" "~/org/private.org.gpg")))
+    ("~/org/study.org" "~/org/work.org" "~/org/private.org")))
  '(org-agenda-span 10)
  '(org-archive-location "archive.org.gpg::* From %s")
  '(org-cycle-include-plain-lists t)

@@ -1,100 +1,90 @@
 scopes:
-  - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/work.org', '/home/volhovm/org/private.org.gpg']
+  - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/work.org', '/home/volhovm/org/private.org']
 timelineDefault:
   colWidth: 1.2
   colHeight: 1.1
 reports:
-#  # Current week
-#  - name: curWeekFull
-#    type: 
-#      type: timeline
-#      range: week
-#      topDay: 4
-#  - name: curWeekTop
-#    type: 
-#      type: timeline
-#      range: week
-#      topDay: 4
-#    modifiers:
-#      - type: prune
-#        path: /study/
-#        depth: 1
-#      - type: prune
-#        path: /work/
-#        depth: 1
-#  - name: curWeekStudy
-#    type: 
-#      type: timeline
-#      range: week
-#      topDay: 3
-#    modifiers: 
-#      - type: select 
-#        path: study
-#      - type: prune
-#        path: /
-#        depth: 2
-#  - name: curWeekWork
-#    type: 
-#      type: timeline
-#      range: week
-#      topDay: 3
-#    modifiers: 
-#      - type: select 
-#        path: work/Serokell
-#      - type: prune
-#        path: /
-#        depth: 2
-#  - name: curWeekPrivate
-#    type: 
-#      type: timeline
-#      range: week
-#      topDay: 5
-#    modifiers: 
-#      - type: select 
-#        path: private/Living the life
-   # Previous week
-   - name: prevWeekFull
-     type: 
-       type: timeline
-       range: week-1
-   - name: prevWeekTop
-     type: 
-       type: timeline
-       range: week-1
-     modifiers:
-       - type: prune
-         path: /study/
-         depth: 1
-       - type: prune
-         path: /work/
-         depth: 1
-   - name: prevWeekStudy
-     type: 
-       type: timeline
-       range: week-1
-     modifiers: 
-       - type: select 
-         path: study/
-       - type: prune
-         path: /
-         depth: 3
-   - name: prevWeekWork
-     type: 
-       type: timeline
-       range: week-1
-     modifiers: 
-       - type: select 
-         path: work/Serokell
-       - type: prune
-         path: /
-         depth: 2
-   - name: prevWeekPrivate
-     type: 
-       type: timeline
-       range: week-1
-     modifiers: 
-       - type: select 
-         path: private/
-output: /home/volhovm/reps/orgstat/
+  # Previous week
+  - name: prevWeek
+    range: week-1
+  - name: prevWeekTop
+    range: week-1
+    modifiers:
+      - type: prune
+        path: /study/
+        depth: 1
+      - type: prune
+        path: /work/
+        depth: 1
+  - name: prevWeekStudy
+    range: week-1
+    modifiers: 
+      - type: select 
+        path: study/
+      - type: prune
+        path: /
+        depth: 3
+  - name: prevWeekWork
+    range: week-1
+    modifiers: 
+      - type: select 
+        path: work/Serokell
+      - type: prune
+        path: /
+        depth: 2
+  - name: prevWeekPrivate
+    range: week-1
+    modifiers: 
+      - type: select 
+        path: private/
+
+  # Statistics
+  - name: thisWeekA1
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: A1
+  - name: thisWeekA2
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: A2
+  - name: thisWeekA3
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: A3
+  - name: thisWeekI
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: I
+  - name: thisWeekWork
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: work
+  - name: thisWeekStudy
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: study
+  - name: thisWeekE
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: E
+outputs:
+#  - name: prevWeekTimeline
+#    report: prevWeek
+#    type: timeline
+  - name: curWeekStats
+    type: summary
+    template: "%thisWeekWork%<fc=#429942>/</fc>%thisWeekStudy% %thisWeekA1%<fc=#429942>/</fc>%thisWeekA2%<fc=#429942>/</fc>%thisWeekA3% %thisWeekI%<fc=#429942>/</fc>%thisWeekE%"
+  - name: curWeekStatsBlock
+    type: block
+    report: thisWeekA1
+
+outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL ]
 colorSalt: 3

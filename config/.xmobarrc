@@ -20,7 +20,7 @@ Config {
 	             "-l", "red", "-h", "green", "-n", "yellow",
 	             "--", "-O", "<fc=green>*</fc> Bat:<left>% <fc=green>*</fc>",
 	             "-i", "<fc=#0088FF>Full</fc>",
-	             "-o", "Bat: <left>%"] 100
+	             "-o", "Bat:<left>%"] 100
 	             , Run Com "sh" ["/home/volhovm/dotfiles/scripts/volumescript.sh"] "vol" 9
 	             , Run Swap ["-t", "<usedratio>%", "-H", "30", "-L", "2", "-l", "green", "-n", "yellow", "-h", "red"] 100
 	             , Run Com "cat" [ "/home/volhovm/curWeekStats.txt"] "stats" 500
@@ -29,15 +29,15 @@ Config {
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/pingIndicator.sh" ] "pingI" 50
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/curlIndicator.sh" ] "curlI" 50
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/curTask.sh" ] "curOrgTask" 50
-	             , Run Date "%a %b %_d %V.%Y %H:%M:%S" "date" 10
- 	             , Run DiskIO [("/", "<read> <write>"), ("sdb1", "<total>")] [] 10
+	             , Run Date "%b %_d w%V %H:%M:%S" "date" 10
+-- 	             , Run DiskIO [("/", "<read> <write>"), ("sdb1", "<total>")] [] 10
 	             , Run Kbd [ ("us(dvorak)" , "us")
 	              	       , ("ru"         , "ru") ]
 	             , Run StdinReader
 	             ]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = " %stats% <fc=#429942>|</fc> %expenses% <fc=#429942>|</fc> %curOrgTask% <fc=#429942>|</fc> %StdinReader% }{ %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu% <fc=#429942>/</fc> %memory% <fc=#429942>/</fc> %swap% <fc=#429942>/</fc> %coretemp% <fc=#429942>/</fc> %diskio% <fc=#429942>|</fc> %vol% <fc=#429942>| *</fc> <fc=#EE4444>%date%</fc> <fc=#429942>*</fc>  "
+	, template = " %stats% <fc=#429942>|</fc> %expenses% <fc=#429942>|</fc> %curOrgTask% <fc=#429942>|</fc> %StdinReader% }{ %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu%<fc=#429942>/</fc>%memory%<fc=#429942>/</fc>%swap%<fc=#429942>/</fc>%coretemp% <fc=#429942>|</fc> %vol% <fc=#429942>|</fc> <fc=#EE4444>%date%</fc> "
 }
 
 --Config {

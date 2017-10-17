@@ -18,9 +18,9 @@ Config {
 	             ["-t", "<acstatus>",
 	             "-L", "15", "-H", "70",
 	             "-l", "red", "-h", "green", "-n", "yellow",
-	             "--", "-O", "<fc=green>*</fc> Bat:<left>% <fc=green>*</fc>",
+	             "--", "-O", "<fc=green>*</fc> B:<left>% <fc=green>*</fc>",
 	             "-i", "<fc=#0088FF>Full</fc>",
-	             "-o", "Bat:<left>%"] 100
+	             "-o", "B:<left>%"] 100
 	             , Run Com "sh" ["/home/volhovm/dotfiles/scripts/volumescript.sh"] "vol" 9
 	             , Run Swap ["-t", "<usedratio>%", "-H", "30", "-L", "2", "-l", "green", "-n", "yellow", "-h", "red"] 100
 	             , Run Com "cat" [ "/home/volhovm/curWeekStats.txt"] "stats" 500

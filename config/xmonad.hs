@@ -62,7 +62,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff03), spawn "light -U 10")
 
          -- lock&sleep
-    , ((0,                 0x1008ff41), spawn "systemctl suspend") -- light-locker takes care of lock
+    , ((0,                 0x1008ff81), spawn "systemctl suspend") -- light-locker takes care of lock
 
          -- locking
     , ((0,                 0x1008ff2d), spawn myLockCmd)

@@ -5,6 +5,7 @@ dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # $1 filename, $2 real path
 function makeLink {
   rm $2
+  mkdir -p "$(dirname "$2")"
   ln -s $dir/$1 $2
 }
 
@@ -24,3 +25,4 @@ makeLink "./.bashrc" ~/.bashrc
 mkdir -p ~/.stack
 makeLink "./config.yaml" ~/.stack/config.yaml
 makeLink "./.orgstat.yaml" ~/.orgstat.yaml
+makeLink "./.Xresources" ~/.Xresources

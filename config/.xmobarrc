@@ -14,7 +14,7 @@ Config {
                      , Run CoreTemp ["-t", "<core0>C",
                                      "-L", "55", "-H", "80",
                                      "-l", "green", "-n", "yellow", "-h", "red"] 50
-	             , Run BatteryP ["BAT!"]
+	             , Run BatteryP ["BAT1"]
 	             ["-t", "<acstatus>",
 	             "-L", "15", "-H", "70",
 	             "-l", "red", "-h", "green", "-n", "yellow",

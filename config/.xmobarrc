@@ -29,7 +29,7 @@ Config {
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/pingIndicator.sh" ] "pingI" 50
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/curlIndicator.sh" ] "curlI" 50
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/curTask.sh" ] "curOrgTask" 50
-	             , Run Date "%b %_d w%V %H:%M:%S" "date" 10
+	             , Run Date "%a %b %_d w%V %H:%M:%S" "date" 10
 -- 	             , Run DiskIO [("/", "<read> <write>"), ("sdb1", "<total>")] [] 10
 	             , Run Kbd [ ("us(dvorak)" , "us")
 	              	       , ("ru"         , "ru") ]

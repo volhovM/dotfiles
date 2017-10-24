@@ -18,11 +18,13 @@
   hardware = {
     trackpoint = {
       enable = true;
+      sensitivity = 200;
+      speed = 120;
       emulateWheel = true;
     };
     pulseaudio = {
       enable = true;
-      package = pkgs.pulseaudioFull;
+#      package = pkgs.pulseaudioFull;
     };
   };
 
@@ -330,6 +332,11 @@
 
     openssh.enable = true;
   
+#    physlock = {
+#      enable = true;
+#      lockOn.extraTargets = [ "display-manager.service" ];
+#    };
+
     printing = {
       enable = true;
       browsing = true;
@@ -350,7 +357,11 @@
       xkbVariant = "dvorak,ruu"; 
       libinput.enable = true;
       displayManager.sessionCommands = "sh ~/.xinitrc";
-      displayManager.lightdm.enable = true;
+      #displayManager.lightdm.enable = true;
+      displayManager.slim = {
+        enable = true;
+        defaultUser = "volhovm";
+      };
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
@@ -389,6 +400,23 @@
 
   users.motd = "Stay noided";
 
+
+#  systemd.services."screenlocker" = {
+#    description = "Automatic screen locker";
+##    before = [ "sleep.target" "suspend.target" ];
+#    serviceConfig = {
+#      User = "volhovm";
+#      Type = "oneshot";
+#      Environment = ["DISPLAY=:0.0" 
+##                     "SLIM_CFGFILE=${pkgs.slim}/etc/slim.conf" 
+##                     "SLIM_THEMESDIR=${pkgs.slim}/share/slim/themes"
+#                    ];
+##      ExecStart = "${pkgs.slim}/bin/slimlock";
+#      ExecStart = "${pkgs.xlockmore}/bin/xlock";
+#    };
+#    wantedBy = [ "suspend.target" "sleep.target" ];
+#  };
+ 
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "17.09";
 

@@ -5,6 +5,9 @@ thunderbird&
 telegram-desktop&
 dunst&
 xset r rate 200 40
+xset m 3 3
+xinput --set-prop "TPPS/2 IBM TrackPoint" "Device Accel Profile" 
+xinput --set-prop "TPPS/2 IBM TrackPoint" "Device Accel Velocity Scaling" 
 autocutsel -selection CLIPBOARD -fork
 autocutsel -selection PRIMARY -fork
 light-locker --lock-on-suspend&

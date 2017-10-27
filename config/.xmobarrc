@@ -9,8 +9,8 @@ Config {
 	, fgColor = "#9FC6CC"
 	--       , fgColor = "#5993C2"
 	, position = TopW L 100
-	, commands = [ Run Cpu ["-t", "<total>%", "-L","15","-H","50","-l","green","-h","red", "-n", "yellow"] 50
-	             , Run Memory ["-t","<usedratio>%", "-L", "40", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 50
+	, commands = [ Run Cpu ["-t", "<total>%", "-L","15","-H","50","-l","green","-h","red", "-n", "yellow"] 10
+	             , Run Memory ["-t","<usedratio>%", "-L", "40", "-H", "80", "-n", "yellow", "-l", "green", "-h", "red"] 10
                      , Run CoreTemp ["-t", "<core0>C",
                                      "-L", "55", "-H", "80",
                                      "-l", "green", "-n", "yellow", "-h", "red"] 50
@@ -21,7 +21,7 @@ Config {
 	             "--", "-O", "<fc=green>*</fc> B:<left>% <fc=green>*</fc>",
 	             "-i", "<fc=#0088FF>Full</fc>",
 	             "-o", "B:<left>%"] 100
-	             , Run Com "sh" ["/home/volhovm/dotfiles/scripts/volumescript.sh"] "vol" 9
+	             , Run Com "sh" ["/home/volhovm/dotfiles/scripts/volumescript.sh"] "vol" 10
 	             , Run Swap ["-t", "<usedratio>%", "-H", "30", "-L", "2", "-l", "green", "-n", "yellow", "-h", "red"] 100
 	             , Run Com "cat" [ "/home/volhovm/curWeekStats.txt"] "stats" 500
 	             , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/thisMonthExpenses.sh"] "expenses" 200
@@ -31,8 +31,8 @@ Config {
 	 	     , Run Com "sh" [ "/home/volhovm/dotfiles/scripts/curTask.sh" ] "curOrgTask" 50
 	             , Run Date "%a %b %_d w%V %H:%M:%S" "date" 10
 -- 	             , Run DiskIO [("/", "<read> <write>"), ("sdb1", "<total>")] [] 10
-	             , Run Kbd [ ("us(dvorak)" , "us")
-	              	       , ("ru"         , "ru") ]
+	             , Run Kbd [ ("pl(dvorak)" , "us")
+	              	       , ("ru(ruu)"    , "ru") ]
 	             , Run StdinReader
 	             ]
 	, sepChar = "%"

@@ -282,7 +282,8 @@ defaults = defaultConfig {
         -- hooks, layouts
         layoutHook         = myLayout,
         manageHook         = myManageHook,
-        startupHook        = myStartupHook
+        startupHook        = myStartupHook,
+        logHook            = pure ()
         }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.

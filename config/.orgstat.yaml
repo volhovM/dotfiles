@@ -83,7 +83,9 @@ outputs:
     template: "%thisWeekWork%<fc=#429942>/</fc>%thisWeekStudy% %thisWeekA1%<fc=#429942>/</fc>%thisWeekA2%<fc=#429942>/</fc>%thisWeekA3% %thisWeekI%<fc=#429942>/</fc>%thisWeekE%"
   - name: curWeekStatsBlock
     type: block
-    report: thisWeekWork
+    unicode: false
+    maxLength: 30
+    report: thisWeekA1
 
 outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL ]

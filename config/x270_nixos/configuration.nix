@@ -17,9 +17,7 @@
 
   hardware = {
     trackpoint = {
-      enable = true;
-      sensitivity = 200;
-      speed = 120;
+      enable = false; 
       emulateWheel = true;
     };
     pulseaudio = {
@@ -205,6 +203,7 @@
     unzip
     usbutils
     vim	
+    vimPlugins.vim-nix
     vlc
     webfs
     wesnoth
@@ -355,7 +354,17 @@
       layout = "pl,ru";
       xkbOptions = "grp:caps_toggle";
       xkbVariant = "dvorak,ruu"; 
-      libinput.enable = true;
+      libinput.enable = false;
+      # x270 has synaptics touchpad, so let's use related drivers :shrug:
+      synaptics = {
+        enable = true;
+        twoFingerScroll = true;
+        # sadly, palm detection with synaptics doesn't work, so i 
+        # just disable touchpad at all.
+        additionalOptions = ''
+          Option "TouchpadOff" "1"
+        '';
+      };
       displayManager.sessionCommands = "sh ~/.xinitrc";
       #displayManager.lightdm.enable = true;
       displayManager.slim = {
@@ -391,6 +400,8 @@
       client.enable = true; 
       torsocks.enable = true;
     };
+
+    tlp.enable = true;
   };
 
   users.extraUsers.volhovm = {

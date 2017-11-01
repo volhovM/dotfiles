@@ -252,9 +252,14 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 myBar = "xmobar"
 --
 -- -- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = const "" -- xmobarColor "#FFAB00" "" . wrap "<" ">"
-                , ppVisible = const ""
-                , ppHidden  = const "" }
+myPP = xmobarPP { ppOutput  = const $ pure ()
+                , ppCurrent = xmobarColor "#FFDC4E" "" . wrap "<" ">"
+                , ppVisible = xmobarColor "#5c4e12" "" . wrap "[" "]"
+                , ppSep     = ""
+                , ppWsSep   = " "
+                , ppLayout  = const ""
+                , ppHidden  = const "" 
+                , ppTitle   = const ""}
 --
 -- -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)

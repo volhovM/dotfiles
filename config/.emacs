@@ -78,7 +78,6 @@
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "46fd293ff6e2f6b74a5edf1063c32f2a758ec24a5f63d13b07a20255c074d399" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" default)))
  '(default-input-method "Agda")
- '(dumb-jump-mode t)
  '(encourage-mode nil)
  '(epg-gpg-program "gpg")
  '(erc-away-nickname "volhovm")
@@ -90,6 +89,7 @@
  '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
  '(haskell-process-log t)
  '(haskell-stylish-on-save t)
+ '(haskell-tags-on-save t)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "ru")
  '(ispell-program-name "aspell")
@@ -135,7 +135,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (dumb-jump ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -480,6 +480,11 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; HASKELL
 (add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
 (require 'haskell-mode-autoloads)
+(add-to-list 'load-path "~/code/dumb-jump/")
+(require 'dumb-jump)
+(setq dumb-jump-mode t)
+(setq dumb-jump-force-searcher 'ag)
+(setq dumb-jump-fallback-search nil)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode-neongreen/")
 (require 'haskell-process)
 (remove-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -503,6 +508,7 @@ Switch projects and subprojects from STARTED back to TODO"
         haskell-indentation-layout-offset 4
         haskell-indentation-left-offset 4
         haskell-indentation-ifte-offset 4))
+
 
 
 ;;; WHITESPACE
@@ -697,3 +703,6 @@ Switch projects and subprojects from STARTED back to TODO"
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE
+
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))

@@ -1,5 +1,7 @@
 scopes:
   - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/work.org', '/home/volhovm/org/private.org']
+  - name: test
+    paths: ['/home/volhovm/code/orgstat/test.org']
 timelineDefault:
   colWidth: 1.2
   colHeight: 1.1
@@ -74,6 +76,9 @@ reports:
     modifiers:
       - type: filterbytag
         tag: E
+  - name: testReport
+    range: month
+    scope: test
 outputs:
 #  - name: prevWeekTimeline
 #    report: prevWeek
@@ -85,7 +90,7 @@ outputs:
     type: block
     unicode: true
     maxLength: 60
-    report: thisWeekA1
+    report: testReport
 
 outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL ]

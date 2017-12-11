@@ -1,11 +1,9 @@
 { config, pkgs, ... }:
  
-
 {
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
-#    kernelPackages = pkgs.linuxPackages_latest;
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernel.sysctl = { 
@@ -18,22 +16,24 @@
   hardware = {
     trackpoint = {
       enable = false; 
+      speed = 220;
+      sensitivity = 220;
       emulateWheel = true;
     };
     pulseaudio = {
       enable = true;
-#      package = pkgs.pulseaudioFull;
+      package = pkgs.pulseaudioFull;
     };
+    bluetooth.enable = true;
   };
 
   networking = {
     hostName = "keshet"; 
-#    extraHosts = ''
-#      127.0.0.1 local.host
-#      127.0.0.1 2-ch.ru
-#      127.0.0.1 2ch.hk
-#      127.0.0.1 2ch.pm
-#    '';
+    extraHosts = ''
+      127.0.0.1 2-ch.ru
+      127.0.0.1 2ch.hk
+      127.0.0.1 2ch.pm
+    '';
     firewall.allowPing = true;
     firewall.enable = false;
     networkmanager.enable = true;
@@ -79,10 +79,9 @@
 
 #  nix.binaryCaches = [];
   nixpkgs.config = {
-#    permittedInsecurePackages = [ "webkitgtk-2.4.11" ];
 #    virtualbox.enableExtensionPack = false;
     allowUnfree = false;
-    allowBroken = true;
+    allowBroken = false;
   };
 
   environment.systemPackages = with pkgs; [
@@ -131,6 +130,7 @@
     grub2
     grub2_efi
     hdparm
+    hledger
     htop
     httpie
     imagemagick
@@ -192,7 +192,6 @@
     tdesktop
     tcpdump
     teeworlds
-    # texLiveFull # Moved to nix-env (rebuilds every time, it hurts)
     thunderbird
     tmux
     torbrowser
@@ -224,17 +223,15 @@
 
     # Development
     cabal-install
+    coq
     gcc
     gmpxx
-#    gnome3.glade
     gnumake
     gradle
-#    haskellPackages.haddock
-#    haskellPackages.Agda
+    haskellPackages.Agda
     haskellPackages.hindent
     haskellPackages.hlint
 #    haskellPackages.orgstat
-#    haskellPackages.purescript
     haskellPackages.stylish-haskell
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
@@ -263,11 +260,9 @@
     libnotify
     libpng
     nodejs
-    # nodePackages.browserify
     nodePackages.webpack
     perl
     python2
-    # python3
     stack
     vimPlugins.vim-addon-nix
     wireshark-qt
@@ -331,42 +326,20 @@
 
     openssh.enable = true;
   
-#    physlock = {
-#      enable = true;
-#      lockOn.extraTargets = [ "display-manager.service" ];
-#    };
-
     printing = {
       enable = true;
       browsing = true;
       defaultShared = true;
     };
    
-#    avahi = {
-#      enable = true;
-#      publish.enable = true;
-#      publish.userServices = true;
-#    };
-
     xserver = {
       autorun = true;
       enable = true;
       layout = "pl,ru";
       xkbOptions = "grp:caps_toggle";
       xkbVariant = "dvorak,ruu"; 
-      libinput.enable = false;
-      # x270 has synaptics touchpad, so let's use related drivers :shrug:
-      synaptics = {
-        enable = true;
-        twoFingerScroll = true;
-        # sadly, palm detection with synaptics doesn't work, so i 
-        # just disable touchpad at all.
-        additionalOptions = ''
-          Option "TouchpadOff" "1"
-        '';
-      };
+      libinput.enable = true;
       displayManager.sessionCommands = "sh ~/.xinitrc";
-      #displayManager.lightdm.enable = true;
       displayManager.slim = {
         enable = true;
         defaultUser = "volhovm";

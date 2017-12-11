@@ -13,13 +13,14 @@
     initrd.luks.devices = [ { name = "root"; device = "/dev/nvme0n1p2"; preLVM = true; } ];
   };
 
-  hardware = {
-    trackpoint = {
-      enable = false; 
-      speed = 220;
-      sensitivity = 220;
-      emulateWheel = true;
-    };
+ hardware = {
+     # It's overriden by libinput anyway.
+#    trackpoint = {
+#      enable = true; 
+#      speed = 10;
+#      sensitivity = 10;
+##      emulateWheel = true;
+#    };
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
@@ -338,12 +339,24 @@
       layout = "pl,ru";
       xkbOptions = "grp:caps_toggle";
       xkbVariant = "dvorak,ruu"; 
+      # Libinput can't handle trackpoint normally, though it works better 
+      # with touchpad that synaptics.
       libinput.enable = true;
+      # Synaptics is crap. It doesn't support palm detection for touchpad. 
+      # It steals middle button. 
+      synaptics.enable = false;
       displayManager.sessionCommands = "sh ~/.xinitrc";
       displayManager.slim = {
         enable = true;
         defaultUser = "volhovm";
       };
+#      config = ''
+#        Section "InputClass"
+#          Identifier     "Disable libinput for TrackPoint"
+#          MatchProduct   "TPPS/2 IBM TrackPoint"
+#          Driver         "evdev"
+#        EndSection
+#      '';
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;

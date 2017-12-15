@@ -16,4 +16,4 @@
 # taken from here: 
 # https://www.reddit.com/r/emacs/comments/5gkf33/show_clocking_time_of_current_task_to_file/
 
-cat ~/.orgtask | xargs  # maybe restrict length also? ..
+echo "$(cat ~/.orgtask)" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'

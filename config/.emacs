@@ -89,7 +89,7 @@
  '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
  '(haskell-process-log t)
  '(haskell-stylish-on-save t)
- '(haskell-tags-on-save t)
+ '(haskell-tags-on-save nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary "ru")
  '(ispell-program-name "aspell")

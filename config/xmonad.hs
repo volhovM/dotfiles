@@ -58,8 +58,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff17), spawn myMusPlayerNext)
 
          -- brightness
-    , ((0,                 0x1008ff02), spawn "light -A 10")
-    , ((0,                 0x1008ff03), spawn "light -U 10")
+    , ((0,                 0x1008ff02), spawn "light -A 5")
+    , ((0,                 0x1008ff03), spawn "light -U 5")
 
          -- lock&sleep
     , ((0,                 0x1008ff81), spawn "slimlock & (sleep 0.5 && systemctl suspend)") 

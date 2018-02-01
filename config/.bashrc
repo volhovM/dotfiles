@@ -53,8 +53,8 @@ export BROWSER='firefox'
 export NIX_STACK='--nix'
 
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
-export HISTSIZE=100000                   # big big history
-export HISTFILESIZE=100000               # big big history
+export HISTSIZE=1000000                  # big big history
+export HISTFILESIZE=1000000              # big big history
 shopt -s histappend                      # append to history, don't overwrite it
 
 PATH=$PATH:/home/volhovm/.local/bin

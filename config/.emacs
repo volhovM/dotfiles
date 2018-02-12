@@ -252,7 +252,6 @@
 (add-to-list 'load-path "~/.emacs.d/org-drill-table/")
 (require 'org-drill-table)
 (setq org-drill-learn-fraction 0.25)
-;(setq org-drill-maximum-items-per-session 60)
 (setq org-drill-maximum-duration 25)
 (setq org-drill-spaced-repetition-algorithm 'sm5)
 (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
@@ -323,6 +322,7 @@
 (setq org-clock-persist-query-resume nil)
 (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
 (setq org-clock-report-include-clocking-task t)
+(setq org-duration-format (quote h:mm))
 (setq org-file-apps '(
   (auto-mode . emacs)
   ("\\.pdf\\'" . "zathura %s")
@@ -508,7 +508,16 @@ Switch projects and subprojects from STARTED back to TODO"
         haskell-indentation-layout-offset 4
         haskell-indentation-left-offset 4
         haskell-indentation-ifte-offset 4))
-
+; ghc 8.2 relevant
+(setq haskell-process-args-ghci
+      '("-ferror-spans" "-fshow-loaded-modules"))
+(setq haskell-process-args-cabal-repl
+      '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
+(setq haskell-process-args-stack-ghci
+      '("--ghci-options=-ferror-spans -fshow-loaded-modules"
+        "--no-build" "--no-load"))
+(setq haskell-process-args-cabal-new-repl
+      '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
 
 
 ;;; WHITESPACE

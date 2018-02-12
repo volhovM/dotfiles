@@ -14,6 +14,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.NoBorders
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.SimpleFloat
+import XMonad.Hooks.EwmhDesktops
 
 import Data.Monoid
 import System.Exit
@@ -246,7 +247,7 @@ myStartupHook = setWMName "LG3D"
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
+main = xmonad . ewmh =<< statusBar myBar myPP toggleStrutsKey defaults
 
 -- Command to launch the bar.
 myBar = "xmobar"

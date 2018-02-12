@@ -26,3 +26,4 @@ mkdir -p ~/.stack
 makeLink "./config.yaml" ~/.stack/config.yaml
 makeLink "./.orgstat.yaml" ~/.orgstat.yaml
 makeLink "./.Xresources" ~/.Xresources
+makeLink "./categorize.cfg" ~/.arbtt/categorize.cfg

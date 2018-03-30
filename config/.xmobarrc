@@ -1,7 +1,8 @@
 Config {
 	-- fonts may not differ from terminus 8 (or fixed?) set by default
 	-- xmobar must me built with 'xft' use flag to get nice fonts
-	font = "xft:Terminus-8"
+	font = "xft:Gohufont-8"
+	--font = "xft:Terminus-8"
 	--font = "-*-terminus-*-*-*-*-13-*-*-*-*-*-*-u"
 	--font = "-*-terminus-medium-*-*-*-14-*-*-*-*-*-*-u"
 	--font = "xft:Ubuntu:size=8"

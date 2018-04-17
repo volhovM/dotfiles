@@ -35,7 +35,7 @@ myWorkspaces    = ["1", "2", "3", "4", "5", "6", "7", "8"]
 myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
 makeScreen = "scrot -s ~/screen.png"
-myDmenu = "dmenu_run -fn \"Gohufont-10:normal\""
+myDmenu = "dmenu_run -fn \"Terminus-10:normal\""
 myLockCmd = "dm-tool lock" -- return to slimlock when it works in nixpkgs
 
 ------------------------------------------------------------------------
@@ -216,7 +216,7 @@ myLayout =
 myTabbedTheme :: Theme
 myTabbedTheme = defaultTheme {
                    --fontName = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
-                   fontName="xft:Gohufont:pixelsize=10",
+                   fontName="xft:Terminus:pixelsize=10",
                    inactiveColor="#222C30",
                    --inactiveTextColor="#9FC6CC",
                    activeColor="#9FC6CC",

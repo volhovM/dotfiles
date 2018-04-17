@@ -5,8 +5,7 @@ URxvt*transpararent:                  false
 URxvt*inheritPixmap:                  true
 URxvt*shading:                        0
 URxvt*scrollWithBuffer:               true
-#URxvt.font:                           xft:terminus:size=10
-URxvt.font:                           xft:gohufont:size=10
+URxvt.font: xft:terminus:size=10
 URxvt.background: #020202
 URxvt.foreground: #EEEEEE
 Rxvt*scrollBar:                      false

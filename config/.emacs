@@ -524,6 +524,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (require 'whitespace)
 (setq whitespace-line-column 100)
 (add-hook 'c++-mode-hook 'whitespace-mode)
+(add-hook 'tuareg-mode-hook 'whitespace-mode)
 ;(add-hook 'scala-mode 'whitespace-mode)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 

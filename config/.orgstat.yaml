@@ -9,6 +9,8 @@ reports:
   # Previous week
   - name: prevWeek
     range: week-1
+  - name: prevMonth
+    range: month-1
   - name: prevWeekTop
     range: week-1
     modifiers:
@@ -80,9 +82,12 @@ reports:
     range: month
     scope: test
 outputs:
-#  - name: prevWeekTimeline
-#    report: prevWeek
-#    type: timeline
+  - name: prevWeekTimeline
+    report: prevWeek
+    type: timeline
+  - name: prevMonthTimeline
+    report: prevMonth
+    type: timeline
   - name: curWeekStats
     type: summary
     template: "%thisWeekWork%<fc=#429942>/</fc>%thisWeekStudy% %thisWeekA1%<fc=#429942>/</fc>%thisWeekA2%<fc=#429942>/</fc>%thisWeekA3% %thisWeekI%<fc=#429942>/</fc>%thisWeekE%"

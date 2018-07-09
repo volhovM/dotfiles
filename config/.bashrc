@@ -60,6 +60,9 @@ shopt -s histappend                      # append to history, don't overwrite it
 PATH=$PATH:/home/volhovm/.local/bin
 set -o vi
 
+# TODO it's a very sick hack, see https://github.com/NixOS/nixpkgs/issues/38017
+rm -rf ~/.cache/fontconfig/ &> /dev/null
+
 function __prompt_command() {
     local EXIT="$?"             # This needs to be first
 

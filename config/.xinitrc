@@ -18,6 +18,9 @@ if [[ "$(whoami)" == "volhovm" ]]; then
   arbtt-capture&
   xautolock -locker "if ! pgrep slimlock; then slimlock; fi" -time 1 -notify 10 -notifier "notify-send 'locking screen in 10s'" -detectsleep -resetsaver &
 
+  # TODO that's for telegram, but this solution is far from optimal.
+  ssh -D9001 -C -f -N metajoin.de
+
   (while true; do cd ~/code/orgstat; stack exec orgstat -- --select-output curWeekStats --output-dir ~/; sleep 120; done)&
   (while true; do notify-send -u low "  Concentrate  "; sleep $((60*75)); done)&
   (while true; do sh ~/dotfiles/scripts/lowBattery.sh; sleep 90; done)&

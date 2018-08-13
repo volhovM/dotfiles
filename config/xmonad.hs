@@ -7,20 +7,20 @@
 --
 
 import XMonad
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.SetWMName(setWMName)
 import XMonad.Actions.GridSelect
-import XMonad.Layout.Tabbed
-import XMonad.Layout.NoBorders
-import XMonad.Layout.SimplestFloat
-import XMonad.Layout.SimpleFloat
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.SetWMName (setWMName)
+import XMonad.Layout.NoBorders
+import XMonad.Layout.SimpleFloat
+import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Tabbed
 
 import Data.Monoid
 import System.Exit
 
-import qualified XMonad.StackSet as W
 import qualified Data.Map as M
+import qualified XMonad.StackSet as W
 
 myMusPlayerNext = "deadbeef --next"
 myMusPlayerPlay = "deadbeef --play-pause"
@@ -63,7 +63,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff03), spawn "light -U 5")
 
          -- lock&sleep
-    , ((0,                 0x1008ff81), spawn "slimlock & (sleep 0.5 && systemctl suspend)") 
+    , ((0,                 0x1008ff81), spawn "slimlock & (sleep 0.5 && systemctl suspend)")
 
          -- locking
     , ((0,                 0x1008ff2d), spawn myLockCmd)
@@ -193,8 +193,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
              -- you may also bind events to the mouse scroll wheel (button1 and button5)
     ]
 
-myLayout = 
-    smartBorders $ 
+myLayout =
+    smartBorders $
         tiled ||| Mirror tiled
               ||| Full
               ||| tabbed shrinkText myTabbedTheme
@@ -248,6 +248,7 @@ myStartupHook = setWMName "LG3D"
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = xmonad . ewmh =<< statusBar myBar myPP toggleStrutsKey defaults
+--main = xmonad . ewmh =<< xmobar defaults
 
 -- Command to launch the bar.
 myBar = "xmobar"
@@ -259,7 +260,7 @@ myPP = xmobarPP { ppOutput  = const $ pure ()
                 , ppSep     = ""
                 , ppWsSep   = " "
                 , ppLayout  = const ""
-                , ppHidden  = const "" 
+                , ppHidden  = const ""
                 , ppTitle   = const ""}
 --
 -- -- Key binding to toggle the gap for the bar.
@@ -289,7 +290,7 @@ defaults = defaultConfig {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         startupHook        = myStartupHook,
-        logHook            = pure ()
+        logHook            = pure () -- dynamicLogWithPP $ myPP
         }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.

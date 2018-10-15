@@ -135,7 +135,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -338,7 +338,7 @@
   (with-temp-file "~/.orgtask"
     (if (org-clocking-p)
         (insert (org-clock-get-clock-string))
-        (insert "No active clock"))))
+        (insert "<fc=#ff0000>###### NO ACTIVE CLOCK ######</fc>"))))
 (run-with-timer 0 15 'current-task-to-status)
 
 (defun bh/is-project-p ()
@@ -480,7 +480,7 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; HASKELL
 (add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
 (require 'haskell-mode-autoloads)
-(add-to-list 'load-path "~/code/dumb-jump/")
+;(add-to-list 'load-path "~/code/dumb-jump/")
 (require 'dumb-jump)
 (setq dumb-jump-mode t)
 (setq dumb-jump-force-searcher 'ag)

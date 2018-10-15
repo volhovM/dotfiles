@@ -3,16 +3,13 @@ scopes:
   - name: test
     paths: ['/home/volhovm/code/orgstat/test.org']
 timelineDefault:
+  legend: false
   colWidth: 1.2
   colHeight: 1.1
 reports:
-  # Previous week
-  - name: prevWeek
-    range: week-1
-  - name: prevMonth
-    range: month-1
-  - name: prevWeekTop
-    range: week-1
+  # For timeline
+  - name: thisWeekTop
+    range: week
     modifiers:
       - type: prune
         path: /study/
@@ -20,27 +17,6 @@ reports:
       - type: prune
         path: /work/
         depth: 1
-  - name: prevWeekStudy
-    range: week-1
-    modifiers: 
-      - type: select 
-        path: study/
-      - type: prune
-        path: /
-        depth: 3
-  - name: prevWeekWork
-    range: week-1
-    modifiers: 
-      - type: select 
-        path: work/Serokell
-      - type: prune
-        path: /
-        depth: 2
-  - name: prevWeekPrivate
-    range: week-1
-    modifiers: 
-      - type: select 
-        path: private/
 
   # Statistics
   - name: thisWeekA1
@@ -82,21 +58,18 @@ reports:
     range: month
     scope: test
 outputs:
-  - name: prevWeekTimeline
-    report: prevWeek
+  - name: thisWeekTimeline
+    report: thisWeekTop
     type: timeline
-  - name: prevMonthTimeline
-    report: prevMonth
-    type: timeline
-  - name: curWeekStats
+  - name: thisWeekStats
     type: summary
     template: "%thisWeekWork%<fc=#429942>/</fc>%thisWeekStudy% %thisWeekA1%<fc=#429942>/</fc>%thisWeekA2%<fc=#429942>/</fc>%thisWeekA3% %thisWeekI%<fc=#429942>/</fc>%thisWeekE%"
-  - name: curWeekStatsBlock
+  - name: thisWeekStatsBlock
     type: block
     unicode: true
     maxLength: 60
     report: testReport
 
 outputDir: /home/volhovm/code/orgstat/
-todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL ]
+todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL, DN ]
 colorSalt: 3

@@ -290,7 +290,7 @@ defaults = defaultConfig {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         startupHook        = myStartupHook,
-        logHook            = pure () -- dynamicLogWithPP $ myPP
+        logHook            = dynamicLogWithPP $ myPP
         }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.

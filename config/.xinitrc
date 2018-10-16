@@ -26,7 +26,7 @@ if [[ "$(whoami)" == "volhovm" ]]; then
       stack exec orgstat -- --output thisWeekStats --output thisWeekTimeline --output-dir ~/; 
       convert -density 200 ~/thisWeekTimeline.svg ~/thisWeekTimeline.png;
       rm ~/thisWeekTimeline.svg;
-      feh --bg-max ~/thisWeekTimeline.png;
+      feh --bg-color "#0f0a0f" --bg-max ~/thisWeekTimeline.png;
       sleep 300; 
    done)&
   (while true; do notify-send -u low "  Concentrate  "; sleep $((60*75)); done)&

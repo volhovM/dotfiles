@@ -711,6 +711,16 @@ Switch projects and subprojects from STARTED back to TODO"
 (setq ag-reuse-buffers 't)
 (setq ag-reuse-window 't)
 
+;;; Cryptoverif
+(add-to-list 'load-path "~/.emacs.d/cryptoverif/")
+(setq auto-mode-alist
+      (cons '("\\.cv[l]?$" . cryptoverif-mode)
+      (cons '("\\.ocv[l]?$" . cryptoverifo-mode) auto-mode-alist)))
+(autoload 'cryptoverif-mode
+    "cryptoverif" "Major mode for editing CryptoVerif code." t)
+(autoload 'cryptoverifo-mode
+    "cryptoverif" "Major mode for editing CryptoVerif code." t)
+
 (provide '.emacs)
 ;;; .emacs ENDS HERE
 

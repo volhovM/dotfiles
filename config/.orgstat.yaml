@@ -6,6 +6,7 @@ timelineDefault:
   legend: false
   colWidth: 1.2
   colHeight: 1.1
+  background: "#ffffff"
 reports:
   # For timeline
   - name: thisWeekTop
@@ -17,6 +18,11 @@ reports:
       - type: prune
         path: /work/
         depth: 1
+  - name: thisWeekProductive
+    range: week
+    modifiers:
+      - type: filterbytag
+        tags: [A1, A2, I]
 
   # Statistics
   - name: thisWeekA1
@@ -59,7 +65,7 @@ reports:
     scope: test
 outputs:
   - name: thisWeekTimeline
-    report: thisWeekTop
+    report: thisWeekProductive
     type: timeline
   - name: thisWeekStats
     type: summary

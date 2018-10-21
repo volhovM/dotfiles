@@ -77,7 +77,7 @@ function __prompt_command() {
 
     local ps_date="${col_grey}$(date +'%H:%M:%S')${col0}"
     local ps_whoami="${col_green}[\u@\h]${col0}"
-    local ps_lambda="${col_purple}ξ> ${col0}"
+    local ps_lambda="${col_purple}ї> ${col0}"
     local ps_path="${col_purple}\w${col0}"
     if [ $EXIT != 0 ]; then
         ps_excode="${col_red}{$EXIT}${col0} "   

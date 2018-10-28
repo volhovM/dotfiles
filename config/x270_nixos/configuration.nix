@@ -11,21 +11,26 @@
       "net.ipv4.ip_default_ttl" = 65;
     };
     initrd.luks.devices = [ { name = "root"; device = "/dev/nvme0n1p2"; preLVM = true; } ];
+    extraModprobeConfig = ''
+      options thinkpad_acpi fan_control=1
+    '';
   };
 
  hardware = {
-     # It's overriden by libinput anyway.
-#    trackpoint = {
-#      enable = true; 
-#      speed = 10;
-#      sensitivity = 10;
-##      emulateWheel = true;
-#    };
+    # It's overriden by libinput anyway.
+    trackpoint = {
+      enable = true; 
+      speed = 120;
+      sensitivity = 120;
+      emulateWheel = true;
+    };
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
     };
     bluetooth.enable = true;
+    sane.enable = true;
+    sane.brscan4.netDevices = { dimq = { ip = "192.168.0.104"; model="MFP-M17fw-kek"; }; };
   };
 
   networking = {
@@ -38,18 +43,20 @@
     firewall.allowPing = true;
     firewall.enable = false;
     networkmanager.enable = true;
-    nameservers = [ "77.88.8.8" "77.88.8.1" "8.8.8.8" "192.168.0.1" ];
+    #wicd.enable = true;
+    nameservers = [ "8.8.8.8" "77.88.8.8" "77.88.8.1" "192.168.0.1" ];
   };
 
-  time.timeZone = "Europe/Moscow";
+  time.timeZone = "Europe/Paris";
 
   i18n = {
     consoleFont = "cyr-sun16";
     consoleKeyMap = "dvorak";
-    defaultLocale = "en_US.UTF-8";
+    #defaultLocale = "en_GB.UTF-8";
+    defaultLocale = "en_IE.UTF-8";
   };
 
-  virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enable = true;
 
   fonts = {
     enableFontDir = true;
@@ -65,34 +72,36 @@
   };
 
   nix = {
-#    useSandbox = false;
-    trustedBinaryCaches = [ 
+    binaryCaches = [ 
       https://cache.nixos.org 
-      https://hydra.serokell.io 
-      https://hydra.iohk.io
+      https://serokell.cachix.org
     ];
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "hydra.serokell.io-1:he7AKwJKKiOiy8Sau9sPcso9T/PmlVNxcnNpRgcFsps="
-      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      "serokell.cachix.org-1:5DscEJD6c1dD1Mc/phTIbs13+iW22AVbx0HqiSb+Lq8="
     ];
+    trustedUsers = [ "root" "volhovm" ];
   };
 
 #  nix.binaryCaches = [];
   nixpkgs.config = {
 #    virtualbox.enableExtensionPack = false;
-    allowUnfree = false;
+    allowUnfree = true;
     allowBroken = false;
   };
 
   environment.systemPackages = with pkgs; [
+    skype
+
     acpi
     acpid
+    alsaUtils
     aspell
     aspellDicts.en
     aspellDicts.ru
     at
     ag
+    audacity
     autocutsel
     bc
     bup
@@ -144,7 +153,7 @@
     libjpeg
     libreoffice
     libressl 
-    linuxPackages.virtualbox
+    # linuxPackages.virtualbox
     lshw
     lsof
     manpages
@@ -160,12 +169,13 @@
     ntfs3g
     openssl
     openvpn
+    p7zip
     pandoc
     par2cmdline # needed for bup fsck
     pass
     pavucontrol 
     pciutils
-    #pdftk
+    pdftk
     pkgconfig
     postgresql
     powertop
@@ -190,12 +200,12 @@
     sshpass
     syslinux
     sysstat
-    tdesktop
+    #tdesktop
     tcpdump
     teeworlds
     thunderbird
     tmux
-    torbrowser
+    #torbrowser
     traceroute
     transmission_gtk
     tree
@@ -216,7 +226,6 @@
 
     # Nix-related
     cabal2nix
-    nix-repl
     nix-prefetch-git
     nixops
     npm2nix
@@ -226,9 +235,9 @@
     cabal-install
     coq
     gcc
+    gdb
     gmpxx
     gnumake
-    gradle
     haskellPackages.Agda
     haskellPackages.hindent
     haskellPackages.hlint
@@ -238,13 +247,9 @@
         [ aeson
           attoparsec  
           base64-bytestring
-          Cabal
-          Chart 
-          Chart-cairo 
           conduit
           file-embed
           generic-deriving
-          HTTP
           lens
           lifted-async
           monad-loops
@@ -258,6 +263,8 @@
           universum
           zlib
         ]))
+    haskellPackages.weeder
+    haskellPackages.hpack
     libnotify
     libpng
     nodejs
@@ -274,7 +281,6 @@
     feh
     inotify-tools
     haskellPackages.xmobar
-    taffybar
     kbd
     libnotify
     lightdm
@@ -297,7 +303,7 @@
     '';
     shellAliases = { 
       where = "type -P"; 
-      l = "ls -lh"; 
+      l = "ls --color=tty"; 
       ll = "ls -alh"; 
       ls = "ls --color=tty"; 
       restart = "systemctl restart"; 
@@ -313,7 +319,6 @@
   programs.light.enable = true;
   programs.ssh.startAgent= true;
 
-
 # ------ SERVICES ------
 
   services = {
@@ -325,27 +330,39 @@
       ];
     };
 
+    openvpn.servers = {
+      metajoinVPN = { 
+        config = '' config /home/volhovm/reps/private/volhovm.ovpn ''; 
+        autoStart = false;
+      };
+    };
+
     openssh.enable = true;
   
     printing = {
       enable = true;
       browsing = true;
       defaultShared = true;
+      drivers = [ pkgs.hplipWithPlugin ];
     };
    
     xserver = {
       autorun = true;
       enable = true;
+
       layout = "pl,ru";
       xkbOptions = "grp:caps_toggle";
       xkbVariant = "dvorak,ruu"; 
+
       # Libinput can't handle trackpoint normally, though it works better 
       # with touchpad that synaptics.
-      libinput.enable = true;
+      libinput.enable = false;
       # Synaptics is crap. It doesn't support palm detection for touchpad. 
       # It steals middle button. 
       synaptics.enable = false;
+
       displayManager.sessionCommands = "sh ~/.xinitrc";
+      #displayManager.lightdm = {
       displayManager.slim = {
         enable = true;
         defaultUser = "volhovm";
@@ -361,7 +378,6 @@
         enable = true;
         enableContribAndExtras = true;
         extraPackages = hsPkgs: [ 
-          hsPkgs.taffybar 
           hsPkgs.xmobar
           hsPkgs.xmonad-contrib
         ];
@@ -388,6 +404,38 @@
     };
 
     tlp.enable = true;
+
+#    thermald.enable = true;
+# new nixos seems to work fine w/o it, at 45 degrees fan doesn't work
+    thinkfan = {
+      enable = true;
+#      levels = ''
+#        (0,     0,      50)
+#        (1,     50,     53)
+#        (2,     52,     55)
+#        (4,     50,     61)
+#        (5,     52,     63)
+#        (6,     56,     65)
+#        (7,     60,     85)
+#        (127,   80,     32767)
+#      '';
+
+      levels = ''
+        (0, 0, 70)
+        (1, 60, 70)
+        (3, 68, 77)
+        (5, 76, 82)
+        (7, 80, 32767)
+      '';
+
+      # Other sensors:
+      # hwmon /sys/devices/virtual/hwmon/hwmon0/temp1_input (0,0,10)
+      sensors = ''
+        hwmon /sys/devices/virtual/hwmon/hwmon1/temp1_input (0,0,10)
+        hwmon /sys/devices/virtual/hwmon/hwmon2/temp1_input (0,0,10)
+      '';
+    };
+    
   };
 
   users.extraUsers.volhovm = {

@@ -42,9 +42,9 @@
 
 ;;; EVIL MODE
 ;; It's built from sources because main repo was failing (just a regular thing...)
-(add-to-list 'load-path "~/.emacs.d/evil/")
+;;(add-to-list 'load-path "~/.emacs.d/evil/")
 (require 'evil)
-(evil-mode 1)
+(evil-mode t)
 (setq evil-want-C-i-jump nil)
 
 ;;; YASNIPPET
@@ -135,7 +135,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -263,7 +263,12 @@
 (defun my-org-mode-hook ()
   "Hook for org mode."
   (turn-on-auto-fill)
-  (local-set-key (kbd "C-c C-x C-k") 'org-resolve-clocks))
+  (local-set-key (kbd "C-c C-x C-k") 'org-resolve-clocks)
+  (local-set-key (kbd "C-c C-i") 'org-clock-in)
+  (local-set-key (kbd "C-c C-o") 'org-clock-out)
+  (define-key org-mode-map (kbd "C-c C-x C-o") nil)
+  (local-set-key (kbd "C-c C-x C-o") 'org-open-at-point)
+  )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."
   (define-key org-agenda-mode-map "j" 'org-agenda-next-line)

@@ -4,7 +4,7 @@ alias noise="play -n -c1 synth whitenoise band -n 100 20 band -n 50 20 gain +25 
 alias gdb="gdb --tui"
 alias screenshot="cd ~/pictures/screen/ && scrot -s"
 alias instantphoto="cd ~/pictures/screen/ && (sleep 2 && scrot -u) & timeout 3 mplayer tv:// -tv driver=v4l2:width=640:height=480:device=/dev/video0 -fps 32 && cd -"
-alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
+alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap && xset r rate 200 40'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill ~/wallpaper.jpg; }
 function monon { xrandr --auto && xrandr --output HDMI2 --primary --above eDP1; fgon; }

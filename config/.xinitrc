@@ -31,4 +31,7 @@ if [[ "$(whoami)" == "volhovm" ]]; then
    done)&
   (while true; do notify-send -u low "  Concentrate  "; sleep $((60*75)); done)&
   (while true; do sh ~/dotfiles/scripts/lowBattery.sh; sleep 90; done)&
+ 
+  # Dropbox is terrible so it sometimes just dies. I have no idea TBH.
+  (while true; dropbox start; sleep 120; done)&
 fi

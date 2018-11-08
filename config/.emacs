@@ -46,6 +46,9 @@
 (require 'evil)
 (evil-mode t)
 (setq evil-want-C-i-jump nil)
+; jump-back is useless, I use it to open org-links instead
+(eval-after-load "evil-maps"
+  (define-key evil-motion-state-map "\C-o" nil))
 
 ;;; YASNIPPET
 (yas-global-mode 1)
@@ -128,9 +131,7 @@
  '(org-habit-following-days 2)
  '(org-habit-graph-column 47)
  '(org-habit-preceding-days 18)
- '(org-modules
-   (quote
-    (org-bbdb org-bibtex org-docview org-gnus org-habit org-info org-irc org-mhe org-rmail org-w3m org-drill)))
+ '(org-modules (quote (org-habit org-drill)))
  '(org-startup-truncated nil)
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
@@ -227,7 +228,7 @@
 
 ;; FONTS
 ;(set-default-font "Terminus-10")
-(set-default-font "gohufont-10")
+(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -263,11 +264,11 @@
 (defun my-org-mode-hook ()
   "Hook for org mode."
   (turn-on-auto-fill)
-  (local-set-key (kbd "C-c C-x C-k") 'org-resolve-clocks)
+  (local-set-key (kbd "C-c C-k") 'org-resolve-clocks)
   (local-set-key (kbd "C-c C-i") 'org-clock-in)
   (local-set-key (kbd "C-c C-o") 'org-clock-out)
-  (define-key org-mode-map (kbd "C-c C-x C-o") nil)
-  (local-set-key (kbd "C-c C-x C-o") 'org-open-at-point)
+  (local-set-key (kbd "C-c C-j") 'org-clock-goto)
+  (local-set-key (kbd "C-o") 'org-open-at-point)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."

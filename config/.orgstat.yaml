@@ -8,58 +8,43 @@ timelineDefault:
   colHeight: 1.1
   background: "#ffffff"
 reports:
-  # For timeline
-  - name: thisWeekTop
-    range: week
-    modifiers:
-      - type: prune
-        path: /study/
-        depth: 1
-      - type: prune
-        path: /work/
-        depth: 1
   - name: thisWeekProductive
     range: week
     modifiers:
       - type: filterbytag
-        tags: [A1, A2, I]
+        tags: [study,work,H]
 
   # Statistics
-  - name: thisWeekA1
-    range: week
-    modifiers:
-      - type: filterbytag
-        tag: A1
-  - name: thisWeekA2
-    range: week
-    modifiers:
-      - type: filterbytag
-        tag: A2
-  - name: thisWeekA3
-    range: week
-    modifiers:
-      - type: filterbytag
-        tag: A3
-  - name: thisWeekI
-    range: week
-    modifiers:
-      - type: filterbytag
-        tag: I
-  - name: thisWeekWork
-    range: week
-    modifiers:
-      - type: filterbytag
-        tag: work
   - name: thisWeekStudy
     range: week
     modifiers:
       - type: filterbytag
         tag: study
+  - name: thisWeekWork
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: work
+  - name: thisWeekA
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: A
+  - name: thisWeekH
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: H
   - name: thisWeekE
     range: week
     modifiers:
       - type: filterbytag
         tag: E
+  - name: thisWeekI
+    range: week
+    modifiers:
+      - type: filterbytag
+        tag: I
   - name: testReport
     range: month
     scope: test
@@ -69,7 +54,7 @@ outputs:
     type: timeline
   - name: thisWeekStats
     type: summary
-    template: "%thisWeekWork%<fc=#429942>/</fc>%thisWeekStudy% %thisWeekA1%<fc=#429942>/</fc>%thisWeekA2%<fc=#429942>/</fc>%thisWeekA3% %thisWeekI%<fc=#429942>/</fc>%thisWeekE%"
+    template: "w%thisWeekWork%<fc=#429942>/</fc>s%thisWeekStudy%<fc=#429942>/</fc>h%thisWeekH% i%thisWeekI% a%thisWeekA%<fc=#429942>/</fc>e%thisWeekE%"
   - name: thisWeekStatsBlock
     type: block
     unicode: true

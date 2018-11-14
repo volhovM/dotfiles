@@ -33,5 +33,5 @@ if [[ "$(whoami)" == "volhovm" ]]; then
   (while true; do sh ~/dotfiles/scripts/lowBattery.sh; sleep 90; done)&
  
   # Dropbox is terrible so it sometimes just dies. I have no idea TBH.
-  (while true; dropbox start; sleep 120; done)&
+  (while true; do dropbox start; sleep 120; done)&
 fi

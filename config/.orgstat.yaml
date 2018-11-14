@@ -12,19 +12,19 @@ reports:
     range: week
     modifiers:
       - type: filterbytag
-        tags: [study,work,H]
+        tags: [s,w,H]
 
   # Statistics
   - name: thisWeekStudy
     range: week
     modifiers:
       - type: filterbytag
-        tag: study
+        tag: s
   - name: thisWeekWork
     range: week
     modifiers:
       - type: filterbytag
-        tag: work
+        tag: w
   - name: thisWeekA
     range: week
     modifiers:

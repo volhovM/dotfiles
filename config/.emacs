@@ -76,6 +76,7 @@
  '(browse-url-generic-program "firefox")
  '(clean-buffer-list-delay-general 2)
  '(column-number-mode t)
+ '(compilation-scroll-output t)
  '(custom-enabled-themes (quote (junio)))
  '(custom-safe-themes
    (quote

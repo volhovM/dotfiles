@@ -15,7 +15,7 @@ if [[ "$(whoami)" == "volhovm" ]]; then
   thunderbird&
   telegram-desktop&
   dunst&
-  arbtt-capture&
+  # arbtt-capture&
   xautolock -locker "if ! pgrep slimlock; then slimlock; fi" -time 1 -notify 10 -notifier "notify-send 'locking screen in 10s'" -detectsleep -resetsaver &
 
   # TODO that's for telegram, but this solution is far from optimal.

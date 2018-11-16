@@ -91,8 +91,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    skype
-
     acpi
     acpid
     alsaUtils
@@ -105,6 +103,7 @@
     autocutsel
     bc
     bup
+    blueman
     chromium
     clipit
     cryptsetup
@@ -113,8 +112,11 @@
     dhcpcd
     ditaa
     djvulibre
+    dropbox-cli # Oh i hate it
     efibootmgr
     elinks    
+    electrum
+    evince
     emacs
     enca
     espeak
@@ -133,10 +135,12 @@
     gnupg1compat
     gnuplot
     gnutls
+    google-play-music-desktop-player
     gparted
     gptfdisk
     gtypist
     gqview
+    graphviz
     grub2
     grub2_efi
     hdparm
@@ -158,6 +162,7 @@
     lsof
     manpages
     microcodeIntel
+    mendeley
     mkpasswd
     mplayer
     mr
@@ -220,7 +225,7 @@
     wirelesstools
     wget
     which
-    zathura
+    # zathura
     zip
     zlib
 
@@ -292,15 +297,20 @@
     xfontsel
     xorg.xmodmap
     xorg.xkbprint
+    xorg.xbacklight
     xorg.xev
     xsel
+
+    # Tex (for org-drill)
+    # (texlive.combine {
+    #   inherit (texlive) 
+    #   scheme-small
+    #   dvipng;
+    # })
   ];
 
   programs.bash = {
     enableCompletion = true;
-    shellInit = ''
-      set -o vi
-    '';
     shellAliases = { 
       where = "type -P"; 
       l = "ls --color=tty"; 
@@ -343,7 +353,7 @@
       enable = true;
       browsing = true;
       defaultShared = true;
-      drivers = [ pkgs.hplipWithPlugin ];
+#      drivers = [ pkgs.hplipWithPlugin ];
     };
    
     xserver = {

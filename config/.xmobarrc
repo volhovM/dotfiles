@@ -37,7 +37,7 @@ Config {
 	             ]
 	, sepChar = "%"
 	, alignSep = "}{"
-	, template = " %stats% <fc=#429942>|</fc> %expenses% <fc=#429942>|</fc> %curOrgTask% }{ %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu%<fc=#429942>/</fc>%memory%<fc=#429942>/</fc>%swap%<fc=#429942>/</fc>%coretemp% <fc=#429942>|</fc> %vol% <fc=#429942>|</fc> <fc=#EE4444>%date%</fc> "
+	, template = " %stats% <fc=#429942>|</fc> %expenses% <fc=#429942>|</fc> %curOrgTask% %StdinReader% }{ %wificon% %pingI% %curlI% <fc=#429942>|</fc> %kbd% <fc=#429942>|</fc> %battery% <fc=#429942>|</fc> %cpu%<fc=#429942>/</fc>%memory%<fc=#429942>/</fc>%swap%<fc=#429942>/</fc>%coretemp% <fc=#429942>|</fc> %vol% <fc=#429942>|</fc> <fc=#EE4444>%date%</fc> "
 }
 
 --Config {

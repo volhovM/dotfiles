@@ -31,7 +31,7 @@ myFocusFollowsMouse = False
 myClickJustFocuses = False
 myBorderWidth   = 1
 myModMask       = mod4Mask
-myWorkspaces    = ["1", "2", "3", "4", "5", "6", "7", "8"]
+myWorkspaces    = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
 makeScreen = "scrot -s ~/screen.png"
@@ -255,8 +255,8 @@ myBar = "xmobar"
 --
 -- -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppOutput  = const $ pure ()
-                , ppCurrent = xmobarColor "#FFDC4E" "" . wrap "<" ">"
-                , ppVisible = xmobarColor "#5c4e12" "" . wrap "[" "]"
+                , ppCurrent = const ""
+                , ppVisible = const ""
                 , ppSep     = ""
                 , ppWsSep   = " "
                 , ppLayout  = const ""

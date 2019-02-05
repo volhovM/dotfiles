@@ -2,12 +2,7 @@
 ;;; Commentary:
 ;;;.emacs settings
 
-;;; Code:
 (require 'package)
-
-;(setq package-list '(haskell-mode nyan-mode nlinum flycheck
-;                     unicode-fonts org-drill-table sublime-themes
-;                     undo-tree idris-mode))
 
 (setq package-archives '(
                          ;("gnu" . "http://elpa.gnu.org/packages/")
@@ -22,45 +17,6 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-; install the missing packages
-;(dolist (package package-list)
-;  (unless (package-installed-p package)
-;    (package-install package)))
-
-
-;(defun volhovm-save-some-buffers ()
-;(interactive)
-;  (save-some-buffers 'no-confirm (lambda ()
-;    (cond
-;      ((and buffer-file-name (equal buffer-file-name abbrev-file-name)))
-;      ((and buffer-file-name (eq major-mode 'latex-mode)))
-;      ((and buffer-file-name (eq major-mode 'markdown-mode)))
-;      ((and buffer-file-name (eq major-mode 'emacs-lisp-mode)))
-;      ((and buffer-file-name (derived-mode-p 'org-mode)))))))
-;
-;(global-set-key (kbd "C-x s") 'volhovm-save-some-buffers)
-
-;;; EVIL MODE
-;; It's built from sources because main repo was failing (just a regular thing...)
-;;(add-to-list 'load-path "~/.emacs.d/evil/")
-(require 'evil)
-(evil-mode t)
-(setq evil-want-C-i-jump nil)
-; jump-back is useless, I use it to open org-links instead
-(eval-after-load "evil-maps"
-  (define-key evil-motion-state-map "\C-o" nil))
-
-;;; YASNIPPET
-(yas-global-mode 1)
-
-;;; Mode line
-;(sml/setup)
-;(custom-set-variables
-; '(sml/shorten-modes t)
-; '(sml/shorten-directory t)
-; '(sml/mode-width 30)
-; '(sml/name-width 30))
-(nyan-mode t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -110,7 +66,6 @@
      ("account" "ledger -f %(ledger-file) reg %(account)"))))
  '(linum-format (quote dynamic))
  '(menu-bar-mode nil)
- '(midnight-mode t nil (midnight))
  '(nyan-animate-nyancat t)
  '(nyan-bar-length 15)
  '(nyan-cat-face-number 1)
@@ -137,7 +92,7 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
-    (evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((eval c-set-offset
@@ -177,13 +132,27 @@
  '(sr-speedbar-default-width 30)
  '(sr-speedbar-right-side nil)
  '(tool-bar-mode nil)
+ '(whitespace-style
+   (quote
+    (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))
  '(yas-indent-line (quote fixed))
  '(yas-snippet-dirs (quote ("~/.emacs.d/snippets")) nil (yasnippet)))
 
+;;; EVIL MODE
+;; It's built from sources because main repo was failing (just a regular thing...)
+;;(add-to-list 'load-path "~/.emacs.d/evil/")
+(require 'evil)
+(evil-mode t)
+(setq evil-want-C-i-jump nil)
+; jump-back is useless, I use it to open org-links instead
+(eval-after-load "evil-maps"
+  (define-key evil-motion-state-map "\C-o" nil))
 
-;;; Automatic
+;;; YASNIPPET
+(yas-global-mode 1)
 
-
+;;; Mode line
+(nyan-mode t)
 
 ;;; IDO MODE
 (ido-mode t)
@@ -241,16 +210,9 @@
  '(whitespace-hspace ((t (:foreground "gray22"))))
  '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
  '(whitespace-space ((t (:foreground "gray20"))))
- '(whitespace-tab ((t (:foreground "dim gray")))))
-
-;; MIDNIGHT
-(require 'midnight)
+ '(whitespace-tab ((t (:foreground "gray25")))))
 
 ;; ORG DRILL
-;; Load org files from git rep (elpa package is broken)
-;; Don't forget to `make autoload`
-; (add-to-list 'load-path "~/.emacs.d/org/mode/lisp")
-; (add-to-list 'load-path "~/.emacs.d/org-mode/contrib/lisp" t)
 (add-to-list 'load-path "~/.emacs.d/org-drill-table/")
 (require 'org-drill-table)
 (setq org-drill-learn-fraction 0.25)
@@ -301,11 +263,6 @@
    ("WT" . "grey")
    ("DN" . "green")
    ("CL" . (:foreground "blue" :weight bold))
-   ; ("BUG" . "red")
-   ; ("PROGRESS" . "yellow")
-   ; ("UNTESTED" . "purple")
-   ; ("DROPPED" . (:foreground "blue" :weight bold))
-   ; ("FIXED" . "green")
    ("0" . (:background "red" :foreground "black" :weight bold))
    ("X" . "blue")
    ("-" . "blue")
@@ -346,6 +303,7 @@
     (if (org-clocking-p)
         (insert (org-clock-get-clock-string))
         (insert "<fc=#ff0000>###### NO ACTIVE CLOCK ######</fc>"))))
+        ;(insert "no clocking!"))))
 (run-with-timer 0 15 'current-task-to-status)
 
 (defun bh/is-project-p ()
@@ -402,6 +360,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
 
 
+;;; Latex
 (require 'ox-latex)
 (setq org-latex-listings t)
 
@@ -412,86 +371,21 @@ Switch projects and subprojects from STARTED back to TODO"
     (format "%% Org-mode is exporting headings to %s levels.\n"
             depth)))
 (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+;; List of additional LaTeX packages
+;; (add-to-list 'org-export-latex-packages-alist '("" "cmap" t))
+;; (add-to-list 'org-export-latex-packages-alist '("english,russian" "babel" t))
 
 
-;;; Originally taken from Bruno Tavernier: http://thread.gmane.org/gmane.emacs.orgmode/31150/focus=31432
-;;; but adapted to use latexmk 4.20 or higher.
-;(defun my-auto-tex-cmd ()
-;  "When exporting from .org with latex, automatically run latex,
-;     pdflatex, or xelatex as appropriate, using latexmk."
-;  (let ((texcmd)))
-;  ;; default command: oldstyle latex via dvi
-;  (setq texcmd "latexmk -dvi -pdfps -quiet %f")
-;  ;; pdflatex -> .pdf
-;  (if (string-match "LATEX_CMD: pdflatex" (buffer-string))
-;      (setq texcmd "latexmk -pdf -quiet %f"))
-;  ;; xelatex -> .pdf
-;  (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-;      (setq texcmd "latexmk -pdflatex=xelatex -pdf -quiet %f"))
-;  ;; LaTeX compilation command
-;  (setq org-latex-to-pdf-process (list texcmd)))
-;
-;(add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-cmd)
-;
-;
-;;; Specify default packages to be included in every tex file, whether pdflatex or xelatex
-;(setq org-latex-packages-alist
-;      '(("" "graphicx" t)
-;            ("" "longtable" nil)
-;            ("" "float" nil)))
-;
-;(defun my-auto-tex-parameters ()
-;      "Automatically select the tex packages to include."
-;      ;; default packages for ordinary latex or pdflatex export
-;      (setq org-latex-default-packages-alist
-;            '(("AUTO" "inputenc" t)
-;              ("T1"   "fontenc"   t)
-;              (""     "fixltx2e"  nil)
-;              (""     "wrapfig"   nil)
-;              (""     "soul"      t)
-;              (""     "textcomp"  t)
-;              (""     "marvosym"  t)
-;              (""     "wasysym"   t)
-;              (""     "latexsym"  t)
-;              (""     "amssymb"   t)
-;              (""     "hyperref"  nil)))
-;
-;      ;; Packages to include when xelatex is used
-;      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-;          (setq org-latex-default-packages-alist
-;                '(("" "fontspec" t)
-;                  ("" "xunicode" t)
-;                  ("" "url" t)
-;                  ("" "rotating" t)
-;                  ("american" "babel" t)
-;                  ("babel" "csquotes" t)
-;                  ("" "soul" t)
-;                  ("xetex" "hyperref" nil)
-;                  )))
-;
-;      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-;          (setq org-latex-classes
-;                (cons '("article"
-;                        "\\documentclass[11pt,article,oneside]{memoir}"
-;                        ("\\section{%s}" . "\\section*{%s}")
-;                        ("\\subsection{%s}" . "\\subsection*{%s}")
-;                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-;                        ("\\paragraph{%s}" . "\\paragraph*{%s}")
-;                        ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-;                      org-latex-classes))))
-;
-;(add-hook 'org-export-latex-after-initial-vars-hook 'my-auto-tex-parameters)
-
-
-
-;;; HASKELL
-(add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
-(require 'haskell-mode-autoloads)
-;(add-to-list 'load-path "~/code/dumb-jump/")
+;;; Dumb-jump
 (require 'dumb-jump)
 (setq dumb-jump-mode t)
 (setq dumb-jump-force-searcher 'ag)
 (setq dumb-jump-fallback-search nil)
+
+
+;;; Haskell
+(add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
+(require 'haskell-mode-autoloads)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode-neongreen/")
 (require 'haskell-process)
 (remove-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -500,7 +394,6 @@ Switch projects and subprojects from STARTED back to TODO"
   "Func for haskell-mode hook."
   (local-set-key (kbd "C-c C-g") 'haskell-session-change-target)
   (interactive-haskell-mode)
-; (intero-mode)
   (whitespace-mode)
   (haskell-auto-insert-module-template)
   (volhovm-haskell-style)
@@ -548,14 +441,20 @@ Switch projects and subprojects from STARTED back to TODO"
 (require 'cc-mode)
 (global-set-key (kbd "<f11>") 'recompile) ;; kind of cool
 (defun my-c++-mode-hook ()
-  (setq c-basic-offset 4)
-  (c-set-offset 'substatement-open 0)
+  (setq c-basic-offset 4
+        tab-width 4
+        indent-tabs-mode t)
+;  (c-set-offset 'substatement-open 0)
  ; (linum-mode) ;; lags a lot because of it
   )
+
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
-(setq c-default-style "gnu"
-          c-basic-offset 4)
+;(setq c-default-style "gnu"
+;          c-basic-offset 4)
+(setq-default c-basic-offset 4
+              tab-width 4
+              indent-tabs-mode t)
 (require 'font-lock)
 
 (defun --copy-face (new-face face)
@@ -613,18 +512,6 @@ Switch projects and subprojects from STARTED back to TODO"
 (add-to-list 'load-path "~/.emacs.d/agda-input/")
 (require 'agda-input)
 
-;; List of additional LaTeX packages
-;; (add-to-list 'org-export-latex-packages-alist '("" "cmap" t))
-;; (add-to-list 'org-export-latex-packages-alist '("english,russian" "babel" t))
-
-;;; DISABLING MOUSE
-;;(dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
-;;             [mouse-2] [down-mouse-2] [drag-mouse-2] [double-mouse-2] [triple-mouse-2]
-;;             [mouse-3] [down-mouse-3] [drag-mouse-3] [double-mouse-3] [triple-mouse-3]
-;;             [mouse-4] [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
-;;             [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
-;;  (global-unset-key k))
-
 ;;;;; ASM86
 ;;(setq make-backup-files nil)
 ;;(autoload 'asm86-mode "~/.emacs.d/asm86-mode.el")
@@ -644,35 +531,9 @@ Switch projects and subprojects from STARTED back to TODO"
       kept-old-versions 2
       version-control t)
 
-;;; Flycheck
-;(add-hook 'after-init-hook #'global-flycheck-mode)
-;(add-hook 'text-mode-hook 'turn-on-auto-fill)
-;(eval-after-load 'flycheck
-;  '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
-
 ;;; Java
 (add-hook 'java-mode-hook '(lambda () (whitespace-mode)))
 
-
-;;;; Scala
-;(unless (package-installed-p 'scala-mode2)
-;  (package-refresh-contents) (package-install 'scala-mode2))
-;(unless (package-installed-p 'sbt-mode)
-;  (package-refresh-contents) (package-install 'sbt-mode))
-;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-;(add-hook 'sbt-mode-hook '(lambda ()
-;                            (setq compilation-skip-threshold 1)
-;                            (local-set-key (kbd "C-a") 'comint-bol)
-;                            (local-set-key (kbd "M-RET") 'comint-accumulate)
-;                            ))
-;(add-hook 'scala-mode-hook '(lambda ()
-;                              (local-set-key (kbd "<C-f7>") 'sbt-find-definitions)
-;                              (local-set-key (kbd "C-c C-l") 'sbt-run-previous-command)
-;                              (local-set-key (kbd "RET") 'newline-and-indent)
-;                              (local-set-key (kbd "<backtab>") 'scala-indent:indent-with-reluctant-strategy)
-;                              (whitespace-mode)
-;                              (show-paren-mode)
-;))
 
 ;;; Proof General
 (load-file "~/.emacs.d/ProofGeneral/generic/proof-site.el")
@@ -728,8 +589,20 @@ Switch projects and subprojects from STARTED back to TODO"
 (autoload 'cryptoverifo-mode
     "cryptoverif" "Major mode for editing CryptoVerif code." t)
 
+;;; Proverif
+(add-to-list 'load-path "~/.emacs.d/proverif/")
+(setq auto-mode-alist
+             (cons '("\\.horn$" . proverif-horn-mode)
+             (cons '("\\.horntype$" . proverif-horntype-mode)
+             (cons '("\\.pv$" . proverif-pv-mode)
+             (cons '("\\.pi$" . proverif-pi-mode) auto-mode-alist)))))
+(autoload 'proverif-pv-mode "proverif" "Major mode for editing ProVerif code." t)
+(autoload 'proverif-pi-mode "proverif" "Major mode for editing ProVerif code." t)
+(autoload 'proverif-horn-mode "proverif" "Major mode for editing ProVerif code." t)
+(autoload 'proverif-horntype-mode "proverif" "Major mode for editing ProVerif code." t)
+
 (provide '.emacs)
 ;;; .emacs ENDS HERE
 
-(load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+;(load-file (let ((coding-system-for-read 'utf-8))
+;                (shell-command-to-string "agda-mode locate")))

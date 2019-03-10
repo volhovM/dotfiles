@@ -66,6 +66,7 @@
      ("account" "ledger -f %(ledger-file) reg %(account)"))))
  '(linum-format (quote dynamic))
  '(menu-bar-mode nil)
+ '(midnight-mode t nil (midnight))
  '(nyan-animate-nyancat t)
  '(nyan-bar-length 15)
  '(nyan-cat-face-number 1)
@@ -88,6 +89,7 @@
  '(org-habit-graph-column 47)
  '(org-habit-preceding-days 18)
  '(org-modules (quote (org-habit org-drill)))
+ '(org-pretty-entities t)
  '(org-startup-truncated nil)
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
@@ -136,7 +138,7 @@
    (quote
     (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))
  '(yas-indent-line (quote fixed))
- '(yas-snippet-dirs (quote ("~/.emacs.d/snippets")) nil (yasnippet)))
+ '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
 
 ;;; EVIL MODE
 ;; It's built from sources because main repo was failing (just a regular thing...)
@@ -195,6 +197,18 @@
              "\""))))
 (add-hook 'erc-text-matched-hook 'erc-global-notify)
 
+;; DIRED
+(local-set-key (kbd "C-o") 'dired-to-shell-command)
+(setq dired-guess-shell-alist-user
+      '(("\\.pdf\\'" "zathura")
+        ("\\.doc\\'" "libreoffice")
+        ("\\.docx\\'" "libreoffice")
+        ("\\.ppt\\'" "libreoffice")
+        ("\\.pptx\\'" "libreoffice")
+        ("\\.xls\\'" "libreoffice")
+        ("\\.xlsx\\'" "libreoffice")
+        ("\\.jpg\\'" "gqview")
+        ("\\.png\\'" "gqview")))
 
 ;; FONTS
 ;(set-default-font "Terminus-10")
@@ -206,6 +220,7 @@
  ;; If there is more than one, they won't work right.
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
+ '(org-column ((t (:background "#260826" :strike-through nil :underline nil :slant normal :weight normal))))
  '(sbt:error ((t (:foreground "red"))))
  '(whitespace-hspace ((t (:foreground "gray22"))))
  '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
@@ -289,6 +304,7 @@
 (setq org-duration-format (quote h:mm))
 (setq org-file-apps '(
   (auto-mode . emacs)
+  (directory . "urxvt -cd %s")
   ("\\.pdf\\'" . "zathura %s")
   ("\\.djvu\\'" . "zathura %s")
   ("\\.ps\\'" . "zathura %s")
@@ -358,6 +374,26 @@ Switch projects and subprojects from STARTED back to TODO"
               str (concat str "  ")))
       (concat str " "))))
 (advice-add 'org-clocktable-indent-string :override #'my-org-clocktable-indent-string)
+
+;; Stolen from here:
+;; https://emacs.stackexchange.com/questions/5389/correcting-and-maintaining-org-mode-hyperlinks
+(defun org-check-broken-links ()
+  "Searches current buffer for file: links, and reports the broken ones."
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (let (file-links)
+      (while (re-search-forward org-bracket-link-analytic-regexp nil t)
+        (if (not (file-exists-p (match-string-no-properties 3)))
+            (setq file-links
+                  (cons (match-string-no-properties 0)
+                        file-links))))
+      (get-buffer-create "broken-links")
+      (switch-to-buffer-other-window (get-buffer "broken-links"))
+      (print
+       (concat "Warning: broken links in this file:\n"
+               (mapconcat #'identity file-links "\n"))
+       (get-buffer "broken-links")))))
 
 
 ;;; Latex

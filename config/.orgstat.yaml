@@ -1,12 +1,10 @@
 scopes:
   - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/work.org', '/home/volhovm/org/private.org']
-  - name: test
-    paths: ['/home/volhovm/code/orgstat/test.org']
 timelineDefault:
+  colorSalt: 3
   legend: false
   colWidth: 1.2
   colHeight: 1.1
-  background: "#ffffff"
 reports:
   - name: thisWeekProductive
     range: week
@@ -45,22 +43,22 @@ reports:
     modifiers:
       - type: filterbytag
         tag: I
-  - name: testReport
-    range: month
-    scope: test
 outputs:
   - name: thisWeekTimeline
     report: thisWeekProductive
     type: timeline
   - name: thisWeekStats
     type: summary
-    template: "w%thisWeekWork%<fc=#429942>/</fc>s%thisWeekStudy%<fc=#429942>/</fc>h%thisWeekH% i%thisWeekI% a%thisWeekA%<fc=#429942>/</fc>e%thisWeekE%"
+#    template: "w%thisWeekWork%<fc=#429942>/</fc>s%thisWeekStudy%<fc=#429942>/</fc>h%thisWeekH% i%thisWeekI% a%thisWeekA%<fc=#429942>/</fc>e%thisWeekE%"
+    template: "s%thisWeekStudy% h%thisWeekH% <fc=#355254>a%thisWeekA% e%thisWeekE%</fc>"
   - name: thisWeekStatsBlock
     type: block
-    unicode: true
-    maxLength: 60
     report: testReport
+  - name: mixedScript
+    type: script
+    inline: "echo '$thisWeekH/$thisWeekA' > ~/kekMem.txt"
+    reports: [thisWeekH]
+
 
 outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL, DN ]
-colorSalt: 3

@@ -78,10 +78,24 @@
                    ((:background "DarkRed")
                     (:foreground "white"))
                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
+ '(org-agenda-deadline-leaders (quote ("" "%-2d d:" "%2d d. ago:")))
  '(org-agenda-files
    (quote
     ("~/org/study.org" "~/org/work.org" "~/org/private.org")))
+ '(org-agenda-prefix-format
+   (quote
+    ((agenda . " %i %-10:c% t% s")
+     (todo . " %i %-10:c")
+     (tags . " %i %-10:c")
+     (search . " %i %-10:c"))))
+ '(org-agenda-scheduled-leaders (quote ("" "%-2dx: ")))
  '(org-agenda-span 10)
+ '(org-agenda-time-grid
+   (quote
+    ((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     "" "------------------------------")))
+ '(org-agenda-use-time-grid t)
  '(org-archive-location "archive.org.gpg::* From %s")
  '(org-cycle-include-plain-lists t)
  '(org-habit-completed-glyph 42)
@@ -220,6 +234,8 @@
  ;; If there is more than one, they won't work right.
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
+ '(org-agenda-date ((t (:inherit org-agenda-structure :underline "gray23"))))
+ '(org-agenda-structure ((t (:foreground "LightSkyBlue"))))
  '(org-column ((t (:background "#260826" :strike-through nil :underline nil :slant normal :weight normal))))
  '(sbt:error ((t (:foreground "red"))))
  '(whitespace-hspace ((t (:foreground "gray22"))))

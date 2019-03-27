@@ -31,6 +31,9 @@
     bluetooth.enable = true;
     sane.enable = true;
     sane.brscan4.netDevices = { dimq = { ip = "192.168.0.104"; model="MFP-M17fw-kek"; }; };
+
+    # opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau  ];
+    opengl.enable = true;
   };
 
   networking = {
@@ -86,7 +89,7 @@
 #  nix.binaryCaches = [];
   nixpkgs.config = {
 #    virtualbox.enableExtensionPack = false;
-    allowUnfree = true;
+    allowUnfree = false;
     allowBroken = false;
   };
 
@@ -112,7 +115,6 @@
     dhcpcd
     ditaa
     djvulibre
-    dropbox-cli # Oh i hate it
     efibootmgr
     elinks    
     electrum
@@ -162,7 +164,6 @@
     lsof
     manpages
     microcodeIntel
-    mendeley
     mkpasswd
     mplayer
     mr
@@ -170,6 +171,7 @@
     ms-sys
     mtr
     mutt
+    nextcloud-client
     ncdu
     ntfs3g
     openssl
@@ -187,7 +189,6 @@
     ppp
     pptp
     psmisc
-    python35Packages.glances
     pv
     qemu
     qtox
@@ -214,6 +215,7 @@
     traceroute
     transmission_gtk
     tree
+    tty-clock
     unetbootin
     unzip
     usbutils
@@ -225,7 +227,7 @@
     wirelesstools
     wget
     which
-    # zathura
+    zathura
     zip
     zlib
 
@@ -238,15 +240,15 @@
 
     # Development
     cabal-install
+    cmake
+    cryptoverif
     coq
     gcc
     gdb
     gmpxx
     gnumake
-    haskellPackages.Agda
     haskellPackages.hindent
     haskellPackages.hlint
-#    haskellPackages.orgstat
     haskellPackages.stylish-haskell
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
@@ -264,8 +266,9 @@
           random
           random-shuffle
           turtle
+ 	  tidal
           unordered-containers
-          universum
+#          universum
           zlib
         ]))
     haskellPackages.weeder
@@ -275,8 +278,11 @@
     nodejs
     nodePackages.webpack
     perl
-    python2
+    proverif
+    python3
+    sage
     stack
+    valgrind
     vimPlugins.vim-addon-nix
     wireshark-qt
 
@@ -300,13 +306,6 @@
     xorg.xbacklight
     xorg.xev
     xsel
-
-    # Tex (for org-drill)
-    # (texlive.combine {
-    #   inherit (texlive) 
-    #   scheme-small
-    #   dvipng;
-    # })
   ];
 
   programs.bash = {
@@ -359,6 +358,8 @@
     xserver = {
       autorun = true;
       enable = true;
+
+      videoDrivers = [ "intel" ];
 
       layout = "pl,ru";
       xkbOptions = "grp:caps_toggle";
@@ -438,11 +439,13 @@
         (7, 80, 32767)
       '';
 
-      # Other sensors:
-      # hwmon /sys/devices/virtual/hwmon/hwmon0/temp1_input (0,0,10)
+      ## Other sensors:
+      #  hwmon /sys/devices/virtual/hwmon/hwmon0/temp1_input (0,0,10)
+      #  hwmon /sys/devices/virtual/hwmon/hwmon1/temp1_input (0,0,10)
+      #hwmon /sys/devices/virtual/thermal/thermal_zone3/hwmon2/temp1_input
       sensors = ''
-        hwmon /sys/devices/virtual/hwmon/hwmon1/temp1_input (0,0,10)
-        hwmon /sys/devices/virtual/hwmon/hwmon2/temp1_input (0,0,10)
+         hwmon /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
+         hwmon /sys/devices/virtual/thermal/thermal_zone1/hwmon1/temp1_input
       '';
     };
     

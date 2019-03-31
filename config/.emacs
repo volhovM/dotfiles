@@ -480,9 +480,6 @@ Switch projects and subprojects from STARTED back to TODO"
 ;(add-hook 'scala-mode 'whitespace-mode)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-;;; SPEEDBAR
-(set 'speedbar-update-flag nil)
-
 ;;; C
 (add-hook 'makefile-mode-hook (lambda()
                                 (whitespace-toggle-options '(tabs))))
@@ -652,6 +649,12 @@ Switch projects and subprojects from STARTED back to TODO"
 (autoload 'proverif-pi-mode "proverif" "Major mode for editing ProVerif code." t)
 (autoload 'proverif-horn-mode "proverif" "Major mode for editing ProVerif code." t)
 (autoload 'proverif-horntype-mode "proverif" "Major mode for editing ProVerif code." t)
+
+;;; Tidal
+;(add-to-list 'load-path "~/code/Tidal/")
+;(require 'tidal)
+(setq tidal-interpreter "/run/current-system/sw/bin/ghci")
+(setq tidal-boot-script-path "/home/volhovm/code/Tidal/BootTidal.hs")
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE

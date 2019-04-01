@@ -27,6 +27,7 @@
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
+      daemon.config = { realtime-scheduling = "yes"; };
     };
     bluetooth.enable = true;
     sane.enable = true;
@@ -105,6 +106,7 @@
     audacity
     autocutsel
     bc
+    binutils-unwrapped
     bup
     blueman
     chromium
@@ -184,6 +186,7 @@
     pciutils
     pdftk
     pkgconfig
+    poppler_utils # pdfimages
     postgresql
     powertop
     ppp
@@ -312,9 +315,9 @@
     enableCompletion = true;
     shellAliases = { 
       where = "type -P"; 
-      l = "ls --color=tty"; 
+      ls = "ls --color=tty --group-directories-first"; 
       ll = "ls -alh"; 
-      ls = "ls --color=tty"; 
+      l = "ls --color=tty "; 
       restart = "systemctl restart"; 
       start = "systemctl start"; 
       status = "systemctl status";  	
@@ -327,6 +330,15 @@
 
   programs.light.enable = true;
   programs.ssh.startAgent= true;
+
+  security = {
+    rtkit.enable = true;
+    sudo.enable = true;
+    pam.loginLimits = 
+      [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
+        { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
+      ];
+  };
 
 # ------ SERVICES ------
 
@@ -445,19 +457,20 @@
       #hwmon /sys/devices/virtual/thermal/thermal_zone3/hwmon2/temp1_input
       sensors = ''
          hwmon /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
-         hwmon /sys/devices/virtual/thermal/thermal_zone1/hwmon1/temp1_input
+         hwmon /sys/devices/virtual/thermal/thermal_zone1/hwmon2/temp1_input
       '';
     };
     
   };
 
-  users.extraUsers.volhovm = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+  users = {
+    extraUsers.volhovm = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "networkmanager" "audio" "disk" "storage" "realtime" ];
+    };
+    motd = "Stay noided";
+    groups = { realtime = { }; };
   };
-
-  users.motd = "Stay noided";
-
 
 #  systemd.services."screenlocker" = {
 #    description = "Automatic screen locker";

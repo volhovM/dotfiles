@@ -36,7 +36,7 @@ myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
 makeScreen = "scrot -s ~/screen.png"
 myDmenu = "dmenu_run -fn \"Terminus-10:normal\""
-myLockCmd = "dm-tool lock" -- return to slimlock when it works in nixpkgs
+myLockCmd = "slimlock" 
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -63,10 +63,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff03), spawn "xbacklight -dec 5")
 
          -- lock&sleep
-    , ((0,                 0x1008ff81), spawn "slimlock & (sleep 0.5 && systemctl suspend)")
+    , ((0,                 0x1008ff81), spawn (myLockCmd ++ " & (sleep 0.5 && systemctl suspend)"))
 
          -- locking
-    , ((0,                 0x1008ff2d), spawn myLockCmd)
+    , ((0,                 0x1008ff94), spawn myLockCmd)
 
           -- org mode files
     , ((modm,              0x6f), spawn "emacs ~/org/private.org")

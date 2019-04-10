@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
- 
+
 {
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    kernel.sysctl = { 
-      #"vm.swappiness" = 0; 
+    kernel.sysctl = {
+      #"vm.swappiness" = 0;
       "net.ipv4.ip_default_ttl" = 65;
     };
     initrd.luks.devices = [ { name = "root"; device = "/dev/nvme0n1p2"; preLVM = true; } ];
@@ -19,7 +19,7 @@
  hardware = {
     # It's overriden by libinput anyway.
     trackpoint = {
-      enable = true; 
+      enable = true;
       speed = 120;
       sensitivity = 120;
       emulateWheel = true;
@@ -38,7 +38,7 @@
   };
 
   networking = {
-    hostName = "keshet"; 
+    hostName = "keshet";
     extraHosts = ''
       127.0.0.1 2-ch.ru
       127.0.0.1 2ch.hk
@@ -47,7 +47,6 @@
     firewall.allowPing = true;
     firewall.enable = false;
     networkmanager.enable = true;
-    #wicd.enable = true;
     nameservers = [ "8.8.8.8" "77.88.8.8" "77.88.8.1" "192.168.0.1" ];
   };
 
@@ -56,11 +55,8 @@
   i18n = {
     consoleFont = "cyr-sun16";
     consoleKeyMap = "dvorak";
-    #defaultLocale = "en_GB.UTF-8";
     defaultLocale = "en_IE.UTF-8";
   };
-
-  # virtualisation.virtualbox.host.enable = true;
 
   fonts = {
     enableFontDir = true;
@@ -71,13 +67,13 @@
       source-code-pro
       fira-mono
       fira-code
-      gohufont 
+      gohufont
    ];
   };
 
   nix = {
-    binaryCaches = [ 
-      https://cache.nixos.org 
+    binaryCaches = [
+      https://cache.nixos.org
       https://serokell.cachix.org
     ];
     binaryCachePublicKeys = [
@@ -89,18 +85,13 @@
 
 #  nix.binaryCaches = [];
   nixpkgs.config = {
-#    virtualbox.enableExtensionPack = false;
     allowUnfree = false;
     allowBroken = false;
   };
 
   environment.systemPackages = with pkgs; [
     acpi
-    acpid
     alsaUtils
-    aspell
-    aspellDicts.en
-    aspellDicts.ru
     at
     ag
     audacity
@@ -110,19 +101,16 @@
     bup
     blueman
     chromium
-    clipit
     cryptsetup
     deadbeef
-    deluge
-    dhcpcd
-    ditaa
     djvulibre
     efibootmgr
-    elinks    
+    elinks
     electrum
     evince
     emacs
     enca
+    exiftool
     espeak
     ffmpeg
     file
@@ -130,7 +118,6 @@
     ffmpeg-full
     gimp
     git
-    gitAndTools.gitAnnex
     gitAndTools.git-extras
     gitAndTools.tig
     gitinspector
@@ -147,7 +134,6 @@
     graphviz
     grub2
     grub2_efi
-    hdparm
     hledger
     htop
     httpie
@@ -157,18 +143,17 @@
     iptables
     iw
     jmtpfs
+    jack2
     ledger
     libjpeg
     libreoffice
-    libressl 
-    # linuxPackages.virtualbox
+    libressl
     lshw
     lsof
     manpages
     microcodeIntel
     mkpasswd
     mplayer
-    mr
     mosh
     ms-sys
     mtr
@@ -176,25 +161,20 @@
     nextcloud-client
     ncdu
     ntfs3g
-    openssl
     openvpn
     p7zip
     pandoc
     par2cmdline # needed for bup fsck
     pass
-    pavucontrol 
+    pavucontrol
     pciutils
     pdftk
     pkgconfig
     poppler_utils # pdfimages
     postgresql
     powertop
-    ppp
-    pptp
-    psmisc
     pv
-    qemu
-    qtox
+    qjackctl
     rsync
     scrot
     scudcloud
@@ -202,19 +182,14 @@
     smartmontools
     socat
     sox
-    speechd
     speedcrunch
     speedtest-cli
-    sslh
-    sshpass
+    supercollider
     syslinux
     sysstat
-    #tdesktop
     tcpdump
-    teeworlds
     thunderbird
     tmux
-    #torbrowser
     traceroute
     transmission_gtk
     tree
@@ -222,17 +197,15 @@
     unetbootin
     unzip
     usbutils
-    vim	
+    vim
     vimPlugins.vim-nix
     vlc
     webfs
-    wesnoth
     wirelesstools
     wget
     which
     zathura
     zip
-    zlib
 
     # Nix-related
     cabal2nix
@@ -245,17 +218,15 @@
     cabal-install
     cmake
     cryptoverif
-    coq
     gcc
     gdb
-    gmpxx
     gnumake
     haskellPackages.hindent
     haskellPackages.hlint
     haskellPackages.stylish-haskell
     (haskellPackages.ghcWithPackages (p: with p;
         [ aeson
-          attoparsec  
+          attoparsec
           base64-bytestring
           conduit
           file-embed
@@ -263,7 +234,7 @@
           lens
           lifted-async
           monad-loops
-          numbers 
+          numbers
           normaldistribution
           permutation
           random
@@ -277,12 +248,10 @@
     haskellPackages.weeder
     haskellPackages.hpack
     libnotify
-    libpng
-    nodejs
-    nodePackages.webpack
+    opam
     perl
-    proverif
     python3
+    ruby
     sage
     stack
     valgrind
@@ -298,7 +267,6 @@
     kbd
     libnotify
     lightdm
-    lightlocker
     rxvt
     rxvt_unicode
     xautolock
@@ -313,18 +281,18 @@
 
   programs.bash = {
     enableCompletion = true;
-    shellAliases = { 
-      where = "type -P"; 
-      ls = "ls --color=tty --group-directories-first"; 
-      ll = "ls -alh"; 
-      l = "ls --color=tty "; 
-      restart = "systemctl restart"; 
-      start = "systemctl start"; 
-      status = "systemctl status";  	
-      stop = "systemctl stop"; 
-      mv = "mv -v"; 
-      rm = "rm -v"; 
-      cp = "cp -v"; 
+    shellAliases = {
+      where = "type -P";
+      ls = "ls --color=tty --group-directories-first";
+      ll = "ls -alh";
+      l = "ls --color=tty ";
+      restart = "systemctl restart";
+      start = "systemctl start";
+      status = "systemctl status";
+      stop = "systemctl stop";
+      mv = "mv -v";
+      rm = "rm -v";
+      cp = "cp -v";
     };
   };
 
@@ -334,7 +302,7 @@
   security = {
     rtkit.enable = true;
     sudo.enable = true;
-    pam.loginLimits = 
+    pam.loginLimits =
       [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
         { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
       ];
@@ -352,21 +320,21 @@
     };
 
     openvpn.servers = {
-      metajoinVPN = { 
-        config = '' config /home/volhovm/reps/private/volhovm.ovpn ''; 
+      metajoinVPN = {
+        config = '' config /home/volhovm/reps/private/volhovm.ovpn '';
         autoStart = false;
       };
     };
 
     openssh.enable = true;
-  
+
     printing = {
       enable = true;
       browsing = true;
       defaultShared = true;
 #      drivers = [ pkgs.hplipWithPlugin ];
     };
-   
+
     xserver = {
       autorun = true;
       enable = true;
@@ -375,32 +343,24 @@
 
       layout = "pl,ru";
       xkbOptions = "grp:caps_toggle";
-      xkbVariant = "dvorak,ruu"; 
+      xkbVariant = "dvorak,ruu";
 
-      # Libinput can't handle trackpoint normally, though it works better 
+      # Libinput can't handle trackpoint normally, though it works better
       # with touchpad that synaptics.
       libinput.enable = false;
-      # Synaptics is crap. It doesn't support palm detection for touchpad. 
-      # It steals middle button. 
+      # Synaptics is crap. It doesn't support palm detection for touchpad.
+      # It steals middle button.
       synaptics.enable = false;
 
       displayManager.sessionCommands = "sh ~/.xinitrc";
-      #displayManager.lightdm = {
       displayManager.slim = {
         enable = true;
         defaultUser = "volhovm";
       };
-#      config = ''
-#        Section "InputClass"
-#          Identifier     "Disable libinput for TrackPoint"
-#          MatchProduct   "TPPS/2 IBM TrackPoint"
-#          Driver         "evdev"
-#        EndSection
-#      '';
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
-        extraPackages = hsPkgs: [ 
+        extraPackages = hsPkgs: [
           hsPkgs.xmobar
           hsPkgs.xmonad-contrib
         ];
@@ -416,13 +376,13 @@
       LidSwitchIgnoreInhibited=no
       IdleAction=ignore
     '';
-  
+
     acpid.enable = true;
     ntp.enable = true;
 
     tor = {
       enable = true;
-      client.enable = true; 
+      client.enable = true;
       torsocks.enable = true;
     };
 
@@ -432,16 +392,6 @@
 # new nixos seems to work fine w/o it, at 45 degrees fan doesn't work
     thinkfan = {
       enable = true;
-#      levels = ''
-#        (0,     0,      50)
-#        (1,     50,     53)
-#        (2,     52,     55)
-#        (4,     50,     61)
-#        (5,     52,     63)
-#        (6,     56,     65)
-#        (7,     60,     85)
-#        (127,   80,     32767)
-#      '';
 
       levels = ''
         (0, 0, 70)
@@ -460,7 +410,7 @@
          hwmon /sys/devices/virtual/thermal/thermal_zone1/hwmon2/temp1_input
       '';
     };
-    
+
   };
 
   users = {
@@ -472,23 +422,7 @@
     groups = { realtime = { }; };
   };
 
-#  systemd.services."screenlocker" = {
-#    description = "Automatic screen locker";
-##    before = [ "sleep.target" "suspend.target" ];
-#    serviceConfig = {
-#      User = "volhovm";
-#      Type = "oneshot";
-#      Environment = ["DISPLAY=:0.0" 
-##                     "SLIM_CFGFILE=${pkgs.slim}/etc/slim.conf" 
-##                     "SLIM_THEMESDIR=${pkgs.slim}/share/slim/themes"
-#                    ];
-##      ExecStart = "${pkgs.slim}/bin/slimlock";
-#      ExecStart = "${pkgs.xlockmore}/bin/xlock";
-#    };
-#    wantedBy = [ "suspend.target" "sleep.target" ];
-#  };
- 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "17.09";
+  system.stateVersion = "19.09";
 
 }

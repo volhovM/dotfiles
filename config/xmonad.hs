@@ -63,10 +63,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff03), spawn "xbacklight -dec 5")
 
          -- lock&sleep
-    , ((0,                 0x1008ff81), spawn (myLockCmd ++ " & (sleep 0.5 && systemctl suspend)"))
+    , ((0,                 0x1008ff81), spawn (myLockCmd ++ " & (sleep 0.5 && systemctl suspend)")) -- settings
 
          -- locking
-    , ((0,                 0x1008ff94), spawn myLockCmd)
+    , ((0,                 0x1008ff59), spawn myLockCmd) -- display
 
           -- org mode files
     , ((modm,              0x6f), spawn "emacs ~/org/private.org")

@@ -233,6 +233,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
+ '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
+ '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
+ '(fstar-subp-overlay-processed-face ((t (:background "#2b0819"))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(org-agenda-date ((t (:inherit org-agenda-structure :underline "gray23"))))
  '(org-agenda-structure ((t (:foreground "LightSkyBlue"))))
@@ -655,6 +658,25 @@ Switch projects and subprojects from STARTED back to TODO"
 ;(require 'tidal)
 (setq tidal-interpreter "/run/current-system/sw/bin/ghci")
 (setq tidal-boot-script-path "/home/volhovm/code/Tidal/BootTidal.hs")
+
+;;; FStar
+(add-hook 'fstar-mode-hook
+          '(lambda () (prettify-symbols-mode -1)
+                      (whitespace-mode)))
+(setq fstar-subp-prover-args '("--include" "/home/volhovm/code/FStar/ucontrib/Platform/fst/"
+                               "--include" "/home/volhovm/code/FStar/ucontrib/Log/fst/"
+                               "--include" "/home/volhovm/code/FStar/ucontrib/CoreCrypto/fst/"))
+
+(defun my-fstar-compute-prover-args-using-make ()
+  "Construct arguments to pass to F* by calling make."
+  (with-demoted-errors "Error when constructing arg string: %S"
+    (let* ((fname (file-name-nondirectory buffer-file-name))
+       (target (concat fname "-in"))
+       (argstr (car (process-lines "make" "--quiet" target))))
+      (split-string argstr))))
+
+(setq fstar-subp-prover-args #'my-fstar-compute-prover-args-using-make)
+
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE

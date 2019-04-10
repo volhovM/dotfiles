@@ -1,13 +1,13 @@
 if [[ "$(whoami)" == "volhovm" ]]; then
   [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
   xmodmap ~/.xmodmap
-  #(sleep 2 && feh --bg-fill ~/wallpaper.jpg)&
   xset r rate 200 40
   xset m 3 3
   # evdev
   xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.4
   # libinput
   # xinput set-prop 12 "libinput Accel Speed" -0.5
+
   autocutsel -selection CLIPBOARD -fork
   autocutsel -selection PRIMARY -fork
   powertop --auto-tune

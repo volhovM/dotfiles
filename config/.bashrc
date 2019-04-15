@@ -5,8 +5,8 @@ alias gdb="gdb --tui"
 alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap && xset r rate 200 40'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill ~/wallpaper.jpg; }
-function monon { xrandr --auto && xrandr --output HDMI2 --primary --above eDP1; fgon; }
-function monoff { xrandr --auto --dpi 100; fgon; }
+function monon { xrandr --auto; xrandr --output eDP1 --primary --dpi 105; xrandr --output HDMI2 --right-of eDP1; fgon; }
+function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 105; fgon; }
 alias ledger="ledger --explicit --strict -f ~/org/finances.dat"
 alias grep="grep --color=auto"
 function notify {
@@ -50,11 +50,11 @@ function __prompt_command() {
     local ps_lambda="${col_purple}ї> ${col0}"
     local ps_path="${col_purple}\w${col0}"
     if [ $EXIT != 0 ]; then
-        ps_excode="${col_red}{$EXIT}${col0} "   
+        ps_excode="${col_red}{$EXIT}${col0} "
     else
-        ps_excode=""    
+        ps_excode=""
     fi
-    
+
     git_prompt() {
       local ref="$(git symbolic-ref -q HEAD 2>/dev/null)"
       if [ -n "$ref" ]; then
@@ -76,8 +76,8 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 # opam configuration
 test -r /home/volhovm/.opam/opam-init/init.sh && . /home/volhovm/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-#FSTAR_HOME=/nix/store/5i8a65nk4a9vp26s2w90q2jgssri29qp-fstar-master-0.9.7.0-dev/
-#KREMLIN_HOME=/nix/store/610kvh1ksd1xa0b1iy8nz912bz7fasfp-kremlin-master-0.9.6.0/
+#export FSTAR_HOME=/home/volhovm/code/FStar/
+#export KREMLIN_HOME=/home/volhovm/code/kremlin/
 
-export FSTAR_HOME=/home/volhovm/code/FStar/
-export KREMLIN_HOME=/home/volhovm/code/kremlin/
+export FSTAR_HOME=$(nix-env -q --out-path --no-name fstar-master)
+export KREMLIN_HOME=$(nix-env -q --out-path --no-name kremlin-master)

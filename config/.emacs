@@ -663,9 +663,10 @@ Switch projects and subprojects from STARTED back to TODO"
 (add-hook 'fstar-mode-hook
           '(lambda () (prettify-symbols-mode -1)
                       (whitespace-mode)))
-(setq fstar-subp-prover-args '("--include" "/home/volhovm/code/FStar/ucontrib/Platform/fst/"
-                               "--include" "/home/volhovm/code/FStar/ucontrib/Log/fst/"
-                               "--include" "/home/volhovm/code/FStar/ucontrib/CoreCrypto/fst/"))
+;(setq fstar-subp-prover-args '("--include" "/home/volhovm/code/FStar/ucontrib/Platform/fst/"
+;                               "--include" "/home/volhovm/code/FStar/ucontrib/Log/fst/"
+;                               "--include" "/home/volhovm/code/FStar/ucontrib/CoreCrypto/fst/"
+;                               ))
 
 (defun my-fstar-compute-prover-args-using-make ()
   "Construct arguments to pass to F* by calling make."

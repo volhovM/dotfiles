@@ -1,8 +1,6 @@
 if [[ "$(whoami)" == "volhovm" ]]; then
   [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
   xmodmap ~/.xmodmap
-  xset r rate 200 40
-  xset m 3 3
 
   # Laptop trackpoint
   xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.4

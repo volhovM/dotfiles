@@ -345,6 +345,9 @@
       xkbOptions = "grp:caps_toggle";
       xkbVariant = "dvorak,ruu";
 
+      autoRepeatDelay = 200;
+      autoRepeatInterval = 40;
+
       # Libinput can't handle trackpoint normally, though it works better
       # with touchpad that synaptics.
       libinput.enable = false;

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-finFile=~/org/finances.dat
+finFile=~/org/finances.txt
 
 cap=$(grep "%BUDGET%" $finFile | cut -d' ' -f3)
 

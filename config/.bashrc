@@ -2,13 +2,14 @@ set -o vi
 wallpaper=~/thisWeekTimeline.png
 alias speak="espeak -g 20mS -p 60 -a 150 -s 100"
 alias noise="play -n -c1 synth whitenoise band -n 100 20 band -n 50 20 gain +25  fade h 1 864000 1"
+alias noise2="play -n -c1 synth whitenoise band -n 200 30 band -n 50 20 gain +25 band -n 500 20 band -n 800 10 gain +10 fade h 1 864000  1"
 alias gdb="gdb --tui"
 alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill $wallpaper; }
 function monon { xrandr --auto; xrandr --output eDP1 --primary --dpi 105; xrandr --output HDMI2 --right-of eDP1; fgon; }
 function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 105; fgon; }
-alias ledger="ledger --explicit --strict -f ~/org/finances.dat"
+alias ledger="ledger --explicit --strict -f ~/org/finances.txt"
 alias grep="grep --color=auto"
 function notify {
   paplay ~/dotfiles/scripts/just-like-magic.ogg&

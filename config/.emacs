@@ -105,6 +105,7 @@
  '(org-modules (quote (org-habit org-drill)))
  '(org-pretty-entities t)
  '(org-startup-truncated nil)
+ '(org-tags-column -77)
  '(org-trello-current-prefix-keybinding "C-c o")
  '(package-selected-packages
    (quote
@@ -138,15 +139,6 @@
      (indicate-empty-lines . t))))
  '(scroll-bar-mode nil)
  '(select-enable-primary t)
- '(speedbar-after-create-hook
-   (quote
-    (speedbar-frame-reposition-smartly sr-speedbar-refresh-turn-off)))
- '(speedbar-before-popup-hook (quote (sr-speedbar-refresh-turn-off)))
- '(speedbar-default-position (quote left))
- '(speedbar-mode-hook (quote (sr-speedbar-refresh-turn-off)))
- '(speedbar-show-unknown-files t)
- '(sr-speedbar-default-width 30)
- '(sr-speedbar-right-side nil)
  '(tool-bar-mode nil)
  '(whitespace-style
    (quote
@@ -172,6 +164,9 @@
 
 ;;; IDO MODE
 (ido-mode t)
+
+;;; Frames
+(global-set-key (kbd "C-,") 'other-window)
 
 ;;; ERC
 (require 'erc)
@@ -232,6 +227,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#0c020c" :foreground "#C5C5B8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "xos4" :family "Terminus"))))
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
  '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
@@ -495,10 +491,10 @@ Switch projects and subprojects from STARTED back to TODO"
 (defun my-c++-mode-hook ()
   (setq c-basic-offset 4
         tab-width 4
-        indent-tabs-mode t)
+;        indent-tabs-mode t
 ;  (c-set-offset 'substatement-open 0)
  ; (linum-mode) ;; lags a lot because of it
-  )
+  ))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
@@ -576,12 +572,19 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; Encrypting
 (require 'epa-file)
 (epa-file-enable)
-(setq backup-directory-alist '(("." . "~/.emacs.d/.saves"))
-      backup-by-copying t
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
+
+;;; Backups
+(setq make-backup-files nil)
+;(setq backup-directory-alist `(("." . ,(concat user-emacs-directory ".saves")))
+;      backup-by-copying t
+;      delete-old-versions t
+;      kept-new-versions 6
+;      kept-old-versions 2
+;      version-control t)
+;(setq auto-save-file-name-transforms
+;  `((".*" "~/.emacs.d/.saves/" t)))
+
+
 
 ;;; Java
 (add-hook 'java-mode-hook '(lambda () (whitespace-mode)))

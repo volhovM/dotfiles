@@ -164,9 +164,11 @@
 
 ;;; IDO MODE
 (ido-mode t)
+(add-to-list 'ido-ignore-files "\.checked")
+(add-to-list 'ido-ignore-files "\.hints")
+(add-to-list 'ido-ignore-files "\.exe")
 
-;;; Frames
-(global-set-key (kbd "C-,") 'other-window)
+
 
 ;;; ERC
 (require 'erc)
@@ -231,7 +233,7 @@
  '(erc-notice-face ((t (:foreground "dim gray" :weight light))))
  '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
  '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
- '(fstar-subp-overlay-processed-face ((t (:background "#2b0819"))))
+ '(fstar-subp-overlay-processed-face ((t (:background "#071c1c"))))
  '(linum ((t (:inherit (shadow default) :background "gray19" :foreground "gray40"))))
  '(org-agenda-date ((t (:inherit org-agenda-structure :underline "gray23"))))
  '(org-agenda-structure ((t (:foreground "LightSkyBlue"))))
@@ -426,6 +428,9 @@ Switch projects and subprojects from STARTED back to TODO"
 ;; (add-to-list 'org-export-latex-packages-alist '("" "cmap" t))
 ;; (add-to-list 'org-export-latex-packages-alist '("english,russian" "babel" t))
 
+;;; Frames
+(define-key org-mode-map (kbd "C-,") nil)
+(global-set-key (kbd "C-,") 'other-window)
 
 ;;; Dumb-jump
 (require 'dumb-jump)

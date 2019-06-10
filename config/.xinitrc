@@ -17,11 +17,7 @@ if [[ "$(whoami)" == "volhovm" ]]; then
   xautolock -locker "if ! pgrep slimlock; then slimlock; fi" -time 1 -notify 10 -notifier "notify-send 'locking screen in 10s'" -detectsleep -resetsaver &
 
   (while true; do
-      cd ~/code/orgstat;
-      stack exec orgstat -- --output thisWeekStats --output thisWeekTimeline --output-dir ~/;
-      convert -density 200 ~/thisWeekTimeline.svg ~/thisWeekTimeline.png;
-      rm ~/thisWeekTimeline.svg;
-      feh --bg-color "#0f0a0f" --bg-max ~/thisWeekTimeline.png;
+      ~/dotfiles/scripts/orgstat.sh;
       sleep 300;
    done)&
   (while true; do notify-send -u low "  Concentrate  "; sleep $((60*75)); done)&

@@ -49,16 +49,14 @@ outputs:
     type: timeline
   - name: thisWeekStats
     type: summary
-#    template: "w%thisWeekWork%<fc=#429942>/</fc>s%thisWeekStudy%<fc=#429942>/</fc>h%thisWeekH% i%thisWeekI% a%thisWeekA%<fc=#429942>/</fc>e%thisWeekE%"
-    template: "s%thisWeekStudy% h%thisWeekH% <fc=#355254>a%thisWeekA% e%thisWeekE%</fc>"
+    template: "s%thisWeekStudy% h%thisWeekH% e%thisWeekE% <fc=#355254>a%thisWeekA%</fc>"
+  - name: thisWeekStatsScript
+    type: script
+    scriptPath: ~/dotfiles/scripts/orgstat_format_bar.sh
+    reports: [thisWeekStudy,thisWeekH,thisWeekA,thisWeekE]
   - name: thisWeekStatsBlock
     type: block
     report: testReport
-  - name: mixedScript
-    type: script
-    inline: "echo '$thisWeekH/$thisWeekA' > ~/kekMem.txt"
-    reports: [thisWeekH]
-
 
 outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL, DN ]

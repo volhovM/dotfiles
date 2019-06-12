@@ -19,15 +19,15 @@ function avg_col {
 
   k=$(echo "print(max(0, min(1,($val - $left)/($right - $left))) )" | python)
 
-
-  if python -c "exit(0 if $k<0.5 else 1)"; then
+  # skewed gradient
+  if python -c "exit(0 if $k<0.7 else 1)"; then
     # gradient between red and yellow
     r=255
-    g=$(echo "import math; print (math.floor(($k*2)*255))" | python)
+    g=$(echo "import math; print (math.floor(($k/0.7)*255))" | python)
     b=0
   else
     # between yellow and green
-    r=$(echo "import math; print (255 - math.floor(($k-0.5)*2*255))" | python)
+    r=$(echo "import math; print (255 - math.floor((($k-0.7)/0.3)*255))" | python)
     g=255
     b=0
   fi
@@ -44,7 +44,7 @@ function avg_col {
 daynum=$(date +%u)
 
 # This is how much I should have achieved up to this day
-sRateHigh=$(echo "print (40 * ($daynum/7))" | python)
+sRateHigh=$(echo "print (35 * (($daynum if $daynum <= 6 else 6)/6))" | python)
 hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 

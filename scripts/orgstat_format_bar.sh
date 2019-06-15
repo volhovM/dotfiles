@@ -10,6 +10,15 @@ function convert_from {
   echo $( echo "print ($a + $b/60)" | python )
 }
 
+function convert_to {
+  a0=$(python -c "import math; print(math.floor($1))")
+  b=$(printf '%02d' $(python -c "import math; print(math.floor(($1 - $a0)*60))"))
+  a=$(printf '%02d' $a0)
+
+  echo "$a:$b"
+}
+
+
 # first 6 arguments are r1g1b1 r2g2b2, 7th and 8th arguments are limits, 9th is value
 function avg_col {
 
@@ -17,7 +26,10 @@ function avg_col {
   right=$2
   val=$3
 
-  k=$(echo "print(max(0, min(1,($val - $left)/($right - $left))) )" | python)
+  val=$(python -c "print(min($right, max($val, $left)))")
+  k=$(python -c "print(($val - $left)/($right - $left))")
+
+  if [ $4 == "1" ]; then k=$(python -c "print(1-$k)"); fi
 
   # skewed gradient
   if python -c "exit(0 if $k<0.7 else 1)"; then
@@ -43,16 +55,35 @@ function avg_col {
 
 daynum=$(date +%u)
 
+thisWeekUniNum=$(convert_from $thisWeekUni)
+thisWeekHNum=$(convert_from $thisWeekH)
+thisWeekENum=$(convert_from $thisWeekE)
+
+todayUniNum=$(convert_from $todayUni)
+todayHNum=$(convert_from $todayH)
+todayENum=$(convert_from $todayE)
+
+prevUniNum=$( python -c "print($thisWeekUniNum - $todayUniNum)" )
+prevHNum=$( python -c "print($thisWeekHNum - $todayHNum)" )
+prevENum=$( python -c "print($thisWeekENum - $todayENum)" )
+
+echo $prevUniNum
+echo $prevHNum
+echo $prevENum
+
 # This is how much I should have achieved up to this day
 sRateHigh=$(echo "print (35 * (($daynum if $daynum <= 6 else 6)/6))" | python)
 hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 
-sColor=$(avg_col 0 $sRateHigh $(convert_from $thisWeekStudy) )
-hColor=$(avg_col 0 $hRateHigh $(convert_from $thisWeekH) )
-thisWeekENum=$(convert_from $thisWeekE)
-eColor=$(avg_col 0 $eRateHigh $(python -c "print ($eRateHigh - $thisWeekENum)") )
+echo $sRateHigh
+echo $hRateHigh
+echo $eRateHigh
 
-str="<fc=$sColor>s$thisWeekStudy</fc> <fc=$hColor>h$thisWeekH</fc> <fc=$eColor>e$thisWeekE</fc> <fc=#355254>a$thisWeekA</fc>"
+sColor=$(avg_col $prevUniNum $sRateHigh $thisWeekUniNum 0 )
+hColor=$(avg_col $prevHNum $hRateHigh $thisWeekHNum 0 )
+eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
+
+str="<fc=$sColor>u$thisWeekUni</fc>/$(convert_to $sRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=$eColor>e$thisWeekE</fc>/$(convert_to $eRateHigh) <fc=#355254>a$thisWeekA</fc>"
 
 echo $str > ~/thisWeekStats.txt

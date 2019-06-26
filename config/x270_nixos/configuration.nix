@@ -1,5 +1,9 @@
-{ config, pkgs, ... }:
+{ config, options, lib, pkgs, ... }:
 
+#let pkgs = import /home/volhovm/code/nixpkgs {};
+#    config = pkgs.config;
+#    lib = pkgs.lib;
+#    options = pkgs.options; in
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -303,10 +307,22 @@
   security = {
     rtkit.enable = true;
     sudo.enable = true;
-    pam.loginLimits =
-      [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
-        { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
-      ];
+
+    pam.services = {
+      login.limits =
+        [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
+          { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
+        ];
+      login.text =
+        lib.mkDefault (lib.mkAfter ''
+          auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
+          account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
+        '');
+      common-auth.text =
+        lib.mkDefault (lib.mkAfter "auth optional pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
+      common-account.text =
+        lib.mkDefault (lib.mkAfter "account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
+    };
   };
 
 # ------ SERVICES ------

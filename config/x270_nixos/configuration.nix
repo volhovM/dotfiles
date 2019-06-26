@@ -245,8 +245,8 @@
 #          universum
           zlib
         ]))
-    haskellPackages.weeder
-    haskellPackages.hpack
+#    haskellPackages.weeder
+#    haskellPackages.hpack
     libnotify
     opam
     perl
@@ -277,6 +277,7 @@
     xorg.xbacklight
     xorg.xev
     xsel
+    xsecurelock
   ];
 
   programs.bash = {
@@ -404,13 +405,10 @@
         (7, 80, 32767)
       '';
 
-      ## Other sensors:
-      #  hwmon /sys/devices/virtual/hwmon/hwmon0/temp1_input (0,0,10)
-      #  hwmon /sys/devices/virtual/hwmon/hwmon1/temp1_input (0,0,10)
-      #hwmon /sys/devices/virtual/thermal/thermal_zone3/hwmon2/temp1_input
       sensors = ''
-         hwmon /sys/devices/virtual/thermal/thermal_zone0/hwmon0/temp1_input
-         hwmon /sys/devices/virtual/thermal/thermal_zone1/hwmon2/temp1_input
+         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp2_input
+         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input
       '';
     };
 

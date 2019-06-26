@@ -36,7 +36,7 @@ myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
 makeScreen = "scrot -s ~/screen.png"
 myDmenu = "dmenu_run -fn \"Terminus-10:normal\""
-myLockCmd = "slimlock" 
+myLockCmd = "xsecurelock"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.

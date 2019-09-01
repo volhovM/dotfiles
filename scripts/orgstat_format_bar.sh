@@ -1,4 +1,3 @@
-
 # converts from a:b to a + b/60
 function convert_from {
   IFS=":" read a b <<< $(echo $1)
@@ -27,7 +26,7 @@ function avg_col {
   val=$3
 
   val=$(python -c "print(min($right, max($val, $left)))")
-  k=$(python -c "print(($val - $left)/($right - $left))")
+  k=$(python -c "print(($val - $left)/($right - $left) if $right != $left else 1)")
 
   if [ $4 == "1" ]; then k=$(python -c "print(1-$k)"); fi
 
@@ -73,9 +72,9 @@ echo $prevENum
 
 # This is how much I should have achieved up to this day
 sD=7
-sRateHigh=$(echo "print (40 * (($daynum if $daynum <= $sD else $sD)/$sD))" | python)
-hRateHigh=$(echo "print (15 * ($daynum/7))" | python)
-eRateHigh=$(echo "print (15 * ($daynum/7))" | python)
+sRateHigh=$(echo "print (20 * (($daynum if $daynum <= $sD else $sD)/$sD))" | python)
+hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
+eRateHigh=$(echo "print (18 * ($daynum/7))" | python)
 
 echo $sRateHigh
 echo $hRateHigh

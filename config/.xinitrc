@@ -13,6 +13,7 @@ if [[ "$(whoami)" == "volhovm" ]]; then
 
   thunderbird&
   telegram-desktop&
+  nextcloud&
   dunst&
 #  xautolock -locker "if ! pgrep slimlock; then slimlock; fi" -time 1 -notify 10 -notifier "notify-send 'locking screen in 10s'" -detectsleep -resetsaver &
   xautolock -locker xsecurelock -time 1 -notify 10 -notifier "notify-send 'locking screen in 10s'" -detectsleep -resetsaver &

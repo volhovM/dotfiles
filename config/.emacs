@@ -140,6 +140,8 @@
  '(scroll-bar-mode nil)
  '(select-enable-primary t)
  '(tool-bar-mode nil)
+ '(undo-outer-limit 20000000)
+ '(undo-strong-limit 15000000)
  '(whitespace-style
    (quote
     (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))

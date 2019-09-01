@@ -54,6 +54,7 @@
     nameservers = [ "8.8.8.8" "77.88.8.8" "77.88.8.1" "192.168.0.1" ];
   };
 
+#  time.timeZone = "Europe/Moscow";
   time.timeZone = "Europe/Paris";
 
   i18n = {
@@ -192,6 +193,7 @@
     syslinux
     sysstat
     tcpdump
+    #tdesktop
     thunderbird
     tmux
     traceroute

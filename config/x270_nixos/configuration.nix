@@ -55,12 +55,14 @@
   };
 
 #  time.timeZone = "Europe/Moscow";
-  time.timeZone = "Europe/Paris";
+#  time.timeZone = "Europe/Paris";
+  time.timeZone = "Europe/London";
 
   i18n = {
     consoleFont = "cyr-sun16";
     consoleKeyMap = "dvorak";
-    defaultLocale = "en_IE.UTF-8";
+    #defaultLocale = "en_IE.UTF-8";
+    defaultLocale = "en_GB.UTF-8";
   };
 
   fonts = {
@@ -217,7 +219,6 @@
     cabal2nix
     nix-prefetch-git
     nixops
-    npm2nix
     patchelf
 
     # Development

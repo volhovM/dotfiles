@@ -54,36 +54,36 @@ function avg_col {
 
 daynum=$(date +%u)
 
-thisWeekUniNum=$(convert_from $thisWeekUni)
+thisWeekMNum=$(convert_from $thisWeekM)
 thisWeekHNum=$(convert_from $thisWeekH)
 thisWeekENum=$(convert_from $thisWeekE)
 
-todayUniNum=$(convert_from $todayUni)
+todayMNum=$(convert_from $todayM)
 todayHNum=$(convert_from $todayH)
 todayENum=$(convert_from $todayE)
 
-prevUniNum=$( python -c "print($thisWeekUniNum - $todayUniNum)" )
+prevMNum=$( python -c "print($thisWeekMNum - $todayMNum)" )
 prevHNum=$( python -c "print($thisWeekHNum - $todayHNum)" )
 prevENum=$( python -c "print($thisWeekENum - $todayENum)" )
 
-echo $prevUniNum
+echo $prevMNum
 echo $prevHNum
 echo $prevENum
 
 # This is how much I should have achieved up to this day
-sD=7
-sRateHigh=$(echo "print (20 * (($daynum if $daynum <= $sD else $sD)/$sD))" | python)
-hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
+sD=6
+sRateHigh=$(echo "print (35 * (($daynum if $daynum <= $sD else $sD)/$sD))" | python)
+hRateHigh=$(echo "print (15 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (18 * ($daynum/7))" | python)
 
 echo $sRateHigh
 echo $hRateHigh
 echo $eRateHigh
 
-sColor=$(avg_col $prevUniNum $sRateHigh $thisWeekUniNum 0 )
+sColor=$(avg_col $prevMNum $sRateHigh $thisWeekMNum 0 )
 hColor=$(avg_col $prevHNum $hRateHigh $thisWeekHNum 0 )
 eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
-str="<fc=$sColor>u$thisWeekUni</fc>/$(convert_to $sRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=$eColor>e$thisWeekE</fc>/$(convert_to $eRateHigh) <fc=#355254>a$thisWeekA</fc>"
+str="<fc=$sColor>u$thisWeekM</fc>/$(convert_to $sRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=$eColor>e$thisWeekE</fc>/$(convert_to $eRateHigh) <fc=#355254>a$thisWeekA</fc>"
 
 echo $str > ~/thisWeekStats.txt

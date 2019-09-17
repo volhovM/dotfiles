@@ -13,11 +13,11 @@ reports:
         tags: [s,w,H]
 
   # Statistics
-  - name: thisWeekUni
+  - name: thisWeekM
     range: week
     modifiers:
       - type: filterbytag
-        tag: uni
+        tag: M
   - name: thisWeekA
     range: week
     modifiers:
@@ -34,11 +34,11 @@ reports:
       - type: filterbytag
         tag: E
 
-  - name: todayUni
+  - name: todayM
     range: day
     modifiers:
       - type: filterbytag
-        tag: uni
+        tag: M
   - name: todayA
     range: day
     modifiers:
@@ -62,11 +62,11 @@ outputs:
     type: timeline
   - name: thisWeekStats
     type: summary
-    template: "s%thisWeekUni% h%thisWeekH% e%thisWeekE% <fc=#355254>a%thisWeekA%</fc>"
+    template: "s%thisWeekM% h%thisWeekH% e%thisWeekE% <fc=#355254>a%thisWeekA%</fc>"
   - name: thisWeekStatsScript
     type: script
     scriptPath: ~/dotfiles/scripts/orgstat_format_bar.sh
-    reports: [thisWeekUni,thisWeekH,thisWeekA,thisWeekE,todayUni,todayH,todayA,todayE]
+    reports: [thisWeekM,thisWeekH,thisWeekA,thisWeekE,todayM,todayH,todayA,todayE]
   - name: thisWeekStatsBlock
     type: block
     report: testReport

@@ -588,8 +588,8 @@ Switch projects and subprojects from STARTED back to TODO"
 ;      kept-new-versions 6
 ;      kept-old-versions 2
 ;      version-control t)
-;(setq auto-save-file-name-transforms
-;  `((".*" "~/.emacs.d/.saves/" t)))
+(setq auto-save-file-name-transforms
+  `((".*" "~/.emacs.d/.saves/" t)))
 
 
 

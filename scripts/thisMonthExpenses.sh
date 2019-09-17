@@ -4,7 +4,7 @@ finFile=~/org/finances.txt
 
 cap=$(grep "%BUDGET%" $finFile | cut -d' ' -f3)
 
-amount=$(ledger -f $finFile b Expenses -X EUR --cost -p "this month" --collapse | tr '\n' ' ' | sed -E "s/Expenses//g;s/ EUR//g" | xargs)
+amount=$(ledger -f $finFile b Expenses -X GBP --cost -p "this month" --collapse | tr '\n' ' ' | sed -E "s/Expenses//g;s/ GBP//g" | xargs)
 [ -z "$amount" ] && amount="0"
 days=$(cal $(date +"%m %Y") | awk 'NF {DAYS = $NF}; END {print DAYS}')
 curday=$(date +"%d" | sed 's/^0*//')

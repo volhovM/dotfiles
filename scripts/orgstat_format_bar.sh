@@ -73,8 +73,8 @@ echo $prevENum
 # This is how much I should have achieved up to this day
 sD=6
 sRateHigh=$(echo "print (35 * (($daynum if $daynum <= $sD else $sD)/$sD))" | python)
-hRateHigh=$(echo "print (15 * ($daynum/7))" | python)
-eRateHigh=$(echo "print (18 * ($daynum/7))" | python)
+hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
+eRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 
 echo $sRateHigh
 echo $hRateHigh

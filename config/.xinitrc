@@ -3,9 +3,9 @@ if [[ "$(whoami)" == "volhovm" ]]; then
   xmodmap ~/.xmodmap
 
   # Laptop trackpoint
-  xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.4
+  #xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.4
   # Keyboard trackpoint
-  xinput set-prop 14 "Device Accel Constant Deceleration" 0.5
+  #xinput set-prop 14 "Device Accel Constant Deceleration" 0.5
 
   autocutsel -selection CLIPBOARD -fork
   autocutsel -selection PRIMARY -fork

@@ -22,12 +22,12 @@
 
  hardware = {
     # It's overriden by libinput anyway.
-    trackpoint = {
-      enable = true;
-      speed = 120;
-      sensitivity = 120;
-      emulateWheel = true;
-    };
+    #trackpoint = {
+    #  enable = true;
+    #  speed = 120;
+    #  sensitivity = 120;
+    #  emulateWheel = true;
+    #};
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
@@ -391,6 +391,20 @@
       deviceSection = ''
           Option "Backlight" "intel_backlight"
       '';
+     #Option "Device Accel Constant Deceleration" "0.4"
+          #Option "AccelerationDenominator" "1"
+          #Option "AccelerationThreshold" "4"
+      inputClassSections = [''
+          Identifier "TPPS/2 IBM TrackPoint"
+          Driver "evdev"
+          MatchDevicePath "/dev/input/event*"
+          Option "ConstantDeceleration" "0.4"
+          Option "EmulateWheel" "true"
+          Option "EmulateWheelButton" "2"
+          Option "Emulate3Buttons" "false"
+          Option "XAxisMapping" "6 7"
+          Option "YAxisMapping" "4 5"
+      ''];
     };
 
     logind.extraConfig = ''

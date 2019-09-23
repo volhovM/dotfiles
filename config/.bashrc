@@ -21,6 +21,15 @@ function xal {
   (xautolock -disable && sleep $(($1 * 60)) && xautolock -enable)&
 }
 
+function syncseagate {
+  sudo cryptsetup luksOpen /dev/sda1 seagate0
+  sudo mount /dev/mapper/seagate0 /mnt/seagate0
+  sudo ~/dotfiles/scripts/mountdrive.sh /dev/sda1 seagate0
+  ~/reps/fullsync.sh
+  sudo umount /mnt/seagate0
+  sudo cryptsetup luksClose seagate0
+}
+
 #export NIX_PATH="/home/volhovm/nixpkgsGlobal:$NIX_PATH"
 export TERM='xterm-256color'
 export EDITOR='vim'

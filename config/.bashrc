@@ -9,7 +9,7 @@ alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill $wallpaper; }
 function monon { xrandr --auto; xrandr --output eDP1 --dpi 105; xrandr --output HDMI2 --primary  --above eDP1; fgon; }
 function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 105; fgon; }
-alias ledger="ledger --explicit --strict -f ~/org/finances.txt"
+alias ledger="ledger --explicit --strict -f ~/org/finances.txt --price-db ~/org/prices.db"
 alias grep="grep --color=auto"
 function notify {
   paplay ~/dotfiles/scripts/just-like-magic.ogg&
@@ -24,7 +24,6 @@ function xal {
 function syncseagate {
   sudo cryptsetup luksOpen /dev/sda1 seagate0
   sudo mount /dev/mapper/seagate0 /mnt/seagate0
-  sudo ~/dotfiles/scripts/mountdrive.sh /dev/sda1 seagate0
   ~/reps/fullsync.sh
   sudo umount /mnt/seagate0
   sudo cryptsetup luksClose seagate0

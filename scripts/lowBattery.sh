@@ -1,4 +1,4 @@
-battery_level=`acpi -b | grep -P -o '[0-9]+(?=%)'`
+battery_level=$((`acpi -b | grep -P -o '[0-9]+(?=%)'` + 1))
 discharging=`acpi -b | grep Discharging`
 if [ ! -z "$discharging" ]; then
   if [ $battery_level -le 3 ]

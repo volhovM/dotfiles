@@ -7,7 +7,9 @@ alias gdb="gdb --tui"
 alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill $wallpaper; }
-function monon { xrandr --auto; xrandr --output eDP1 --dpi 105; xrandr --output HDMI2 --primary  --above eDP1; fgon; }
+function mononraw { xrandr --auto; xrandr --output eDP1 --dpi 105; xrandr --output HDMI2 --primary "$1" eDP1; fgon; }
+function monontop { mononraw "--above"; }
+function mononright { mononraw "--right-of"; }
 function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 105; fgon; }
 alias ledger="ledger --explicit --strict -f ~/org/finances.txt --price-db ~/org/prices.db"
 alias grep="grep --color=auto"

@@ -6,11 +6,13 @@ timelineDefault:
   colWidth: 1.2
   colHeight: 1.1
 reports:
+  - name: thisWeekAll
+    range: week
   - name: thisWeekProductive
     range: week
     modifiers:
       - type: filterbytag
-        tags: [s,w,H]
+        tags: [M,H]
 
   # Statistics
   - name: thisWeekM
@@ -67,9 +69,11 @@ outputs:
     type: script
     scriptPath: ~/dotfiles/scripts/orgstat_format_bar.sh
     reports: [thisWeekM,thisWeekH,thisWeekA,thisWeekE,todayM,todayH,todayA,todayE]
+
+  # For debug
   - name: thisWeekStatsBlock
     type: block
-    report: testReport
+    report: thisWeekProductive
 
 outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL, DN ]

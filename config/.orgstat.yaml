@@ -67,6 +67,7 @@ outputs:
     template: "s%thisWeekM% h%thisWeekH% e%thisWeekE% <fc=#355254>a%thisWeekA%</fc>"
   - name: thisWeekStatsScript
     type: script
+    interpreter: "/bin/env sh"
     scriptPath: ~/dotfiles/scripts/orgstat_format_bar.sh
     reports: [thisWeekM,thisWeekH,thisWeekA,thisWeekE,todayM,todayH,todayA,todayE]
 

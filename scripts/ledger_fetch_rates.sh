@@ -3,7 +3,7 @@
 # From https://www.convalesco.org/articles/2016/11/01/fetching-ledger-exchange-rates.html
 
 base_currency=GBP
-exchange_currencies=(EUR RUB HRK USD SGD KRW JPY)
+exchange_currencies=(EUR RUB HRK USD SGD KRW JPY CHF)
 prices_db="/home/volhovm/org/prices.db"
 
 # Fetch today's currency exchange rates from Fixer.io

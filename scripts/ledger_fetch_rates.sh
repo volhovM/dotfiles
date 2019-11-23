@@ -2,6 +2,8 @@
 
 # From https://www.convalesco.org/articles/2016/11/01/fetching-ledger-exchange-rates.html
 
+set -e
+
 base_currency=GBP
 exchange_currencies=(EUR RUB HRK USD SGD KRW JPY CHF)
 prices_db="/home/volhovm/org/prices.db"

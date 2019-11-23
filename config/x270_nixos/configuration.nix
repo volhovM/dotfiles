@@ -130,7 +130,7 @@
     gitinspector
     gitstats
     gnupg
-    gnupg1compat
+    #gnupg1compat
     gnuplot
     gnutls
     google-play-music-desktop-player
@@ -151,6 +151,7 @@
     iw
     jmtpfs
     jack2
+    jq
     ledger
     libjpeg
     libreoffice
@@ -259,7 +260,7 @@
     perl
     python3
     ruby
-    sage
+    #sage
     stack
     valgrind
     vimPlugins.vim-addon-nix
@@ -307,6 +308,12 @@
   programs.light.enable = true;
   programs.ssh.startAgent= true;
 
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = false;
+    pinentryFlavor = "qt";
+  };
+
   security = {
     rtkit.enable = true;
     sudo.enable = true;
@@ -347,6 +354,8 @@
     };
 
     openssh.enable = true;
+
+    gnome3.gnome-keyring.enable = true;
 
     printing = {
       enable = true;

@@ -5,17 +5,17 @@
 [core]
 	editor = vim
 [commit]
-        gpgsign = true
+        gpgsign = false
 [credential]
 	helper = cache --timeout=3600
 [gpg]
         program = gpg
 [http]
         sslverify = false
-[tig]  
+[tig]
         show-changes = true
         line-graphics = utf-8
-[tig "color"] 
+[tig "color"]
         cursor = yellow red bold
-[tig "bind"] 
+[tig "bind"]
         generic = P parent

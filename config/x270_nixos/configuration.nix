@@ -13,6 +13,7 @@
     kernel.sysctl = {
       #"vm.swappiness" = 0;
       "net.ipv4.ip_default_ttl" = 65;
+      "kernel.sysrq" = 1;
     };
     initrd.luks.devices = [ { name = "root"; device = "/dev/nvme0n1p2"; preLVM = true; } ];
     extraModprobeConfig = ''
@@ -385,10 +386,10 @@
       synaptics.enable = false;
 
       displayManager.sessionCommands = "sh ~/.xinitrc";
-      displayManager.slim = {
-        enable = true;
-        defaultUser = "volhovm";
-      };
+      #displayManager.lightDm = {
+      #  enable = true;
+      #  defaultUser = "volhovm";
+      #};
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;

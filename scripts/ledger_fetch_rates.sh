@@ -4,20 +4,16 @@
 
 set -e
 
-base_currency=GBP
-exchange_currencies=(EUR RUB HRK USD SGD KRW JPY CHF)
 prices_db="/home/volhovm/org/prices.db"
+exchange_currencies=(GBP RUB HRK USD SGD KRW JPY CHF UAH)
 
-# Fetch today's currency exchange rates from Fixer.io
-fetch_data() {
-  local -r base=$1 currency=$2
-  curl -s https://api.exchangeratesapi.io/latest\?base=$base_currency | jq .rates."$currency"
-}
+all_currencies=$(curl -s http://data.fixer.io/latest\?access_key=$(cat ~/.fixerapikey))
 
 echo "" >> "$prices_db"
 for i in "${exchange_currencies[@]}"; do
   date=$(date "+%Y/%m/%d %H:%M:%S")
-  rate=$(fetch_data $base_currency "${i}")
-  echo "P $date $base_currency ${rate} ${i}"
-  echo "P $date $base_currency ${rate} ${i}" >> "$prices_db"
+  rate=$(echo $all_currencies | jq .rates."$i")
+  msg=$(echo "P $date EUR ${rate} ${i}")
+  echo $msg
+  echo $msg >> "$prices_db"
 done

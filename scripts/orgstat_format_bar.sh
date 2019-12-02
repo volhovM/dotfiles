@@ -14,6 +14,8 @@ function convert_to {
   b=$(printf '%02d' $(python -c "import math; print(math.floor(($1 - $a0)*60))"))
   a=$(printf '%02d' $a0)
 
+  if [ "$2" == "1" ]; then a=$(printf '%01d' $a0); fi
+
   echo "$a:$b"
 }
 
@@ -56,34 +58,41 @@ daynum=$(date +%u)
 
 thisWeekMNum=$(convert_from $thisWeekM)
 thisWeekHNum=$(convert_from $thisWeekH)
+thisWeekANum=$(convert_from $thisWeekA)
 thisWeekENum=$(convert_from $thisWeekE)
 
 todayMNum=$(convert_from $todayM)
 todayHNum=$(convert_from $todayH)
+todayANum=$(convert_from $todayA)
 todayENum=$(convert_from $todayE)
 
 prevMNum=$( python -c "print($thisWeekMNum - $todayMNum)" )
 prevHNum=$( python -c "print($thisWeekHNum - $todayHNum)" )
+prevANum=$( python -c "print($thisWeekANum - $todayANum)" )
 prevENum=$( python -c "print($thisWeekENum - $todayENum)" )
 
 echo $prevMNum
 echo $prevHNum
+echo $prevANum
 echo $prevENum
 
 # This is how much I should have achieved up to this day
-sD=7
-sRateHigh=$(echo "print (30 * (($daynum if $daynum <= $sD else $sD)/$sD))" | python)
-hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
+mD=5
+mRateHigh=$(echo "print (30 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
+hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
+aRateHigh=$(echo "print (30 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 
-echo $sRateHigh
+echo $mRateHigh
 echo $hRateHigh
+echo $aRateHigh
 echo $eRateHigh
 
-sColor=$(avg_col $prevMNum $sRateHigh $thisWeekMNum 0 )
+mColor=$(avg_col $prevMNum $mRateHigh $thisWeekMNum 0 )
 hColor=$(avg_col $prevHNum $hRateHigh $thisWeekHNum 0 )
+aColor=$(avg_col $prevANum $aRateHigh $thisWeekANum 1 )
 eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
-str="<fc=$sColor>u$thisWeekM</fc>/$(convert_to $sRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=$eColor>e$thisWeekE</fc>/$(convert_to $eRateHigh) <fc=#355254>a$thisWeekA</fc>"
+str="<fc=$mColor>u$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$(convert_to $todayANum 1)</fc> <fc=$eColor>e$(convert_to $todayENum 1)</fc>"
 
 echo $str > ~/thisWeekStats.txt

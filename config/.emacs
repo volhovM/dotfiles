@@ -266,6 +266,7 @@
   (local-set-key (kbd "C-c C-o") 'org-clock-out)
   (local-set-key (kbd "C-c C-j") 'org-clock-goto)
   (local-set-key (kbd "C-o") 'org-open-at-point)
+  (setq fill-column 75)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."
@@ -277,6 +278,7 @@
 ;(run-with-idle-timer 5 nil (lambda () (org-agenda-list) (delete-window))) ; regen agenda on timer
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
+(setq org-catch-invisible-edits 'show-and-error)
 (setq org-ditaa-jar-path (expand-file-name
           "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
 (org-babel-do-load-languages

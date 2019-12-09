@@ -80,7 +80,7 @@ echo $prevENum
 mD=5
 mRateHigh=$(echo "print (30 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
 hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
-aRateHigh=$(echo "print (30 * ($daynum/7))" | python)
+aRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 
 echo $mRateHigh

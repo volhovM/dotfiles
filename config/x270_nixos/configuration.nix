@@ -4,7 +4,24 @@
 #    config = pkgs.config;
 #    lib = pkgs.lib;
 #    options = pkgs.options; in
-{
+
+let
+  myCustomLayout = pkgs.writeText "xkb-layout" ''
+    clear control
+    clear mod1
+    !clear mod3
+    !keycode 37 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+    keycode 37 = Alt_L NoSymbol Meta_L
+    keycode 64 = Control_L NoSymbol Control_L
+    !keycode 108 = Alt_R Meta_R
+    add control = Control_L Control_R
+    add mod1 = Alt_L Meta_L
+    !add mod3 = Alt_R Meta_R
+    clear shift
+    keycode 62 = Escape NoSymbol Escape
+    keycode 107 = Menu
+  '';
+in {
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
@@ -385,7 +402,10 @@
       # It steals middle button.
       synaptics.enable = false;
 
-      displayManager.sessionCommands = "sh ~/.xinitrc";
+      displayManager.sessionCommands = ''
+        ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
+        sh ~/.xinitrc
+      '';
       #displayManager.lightDm = {
       #  enable = true;
       #  defaultUser = "volhovm";

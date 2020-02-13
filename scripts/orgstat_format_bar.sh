@@ -79,9 +79,9 @@ echo $prevENum
 # This is how much I should have achieved up to this day
 mD=5
 mRateHigh=$(echo "print (30 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
-hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
+hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 aRateHigh=$(echo "print (25 * ($daynum/7))" | python)
-eRateHigh=$(echo "print (20 * ($daynum/7))" | python)
+eRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 
 echo $mRateHigh
 echo $hRateHigh
@@ -93,6 +93,6 @@ hColor=$(avg_col $prevHNum $hRateHigh $thisWeekHNum 0 )
 aColor=$(avg_col $prevANum $aRateHigh $thisWeekANum 1 )
 eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
-str="<fc=$mColor>u$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$(convert_to $todayANum 1)</fc> <fc=$eColor>e$(convert_to $todayENum 1)</fc>"
+str="<fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
 
 echo $str > ~/thisWeekStats.txt

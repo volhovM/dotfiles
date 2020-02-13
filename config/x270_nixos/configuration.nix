@@ -1,10 +1,5 @@
 { config, options, lib, pkgs, ... }:
 
-#let pkgs = import /home/volhovm/code/nixpkgs {};
-#    config = pkgs.config;
-#    lib = pkgs.lib;
-#    options = pkgs.options; in
-
 let
   myCustomLayout = pkgs.writeText "xkb-layout" ''
     clear control
@@ -32,13 +27,17 @@ in {
       "net.ipv4.ip_default_ttl" = 65;
       "kernel.sysrq" = 1;
     };
-    initrd.luks.devices = [ { name = "root"; device = "/dev/nvme0n1p2"; preLVM = true; } ];
     extraModprobeConfig = ''
       options thinkpad_acpi fan_control=1
     '';
   };
 
- hardware = {
+  krb5 = {
+    enable = true;
+    libdefaults.default_realm = "INF.ED.AC.UK";
+  };
+
+  hardware = {
     # It's overriden by libinput anyway.
     #trackpoint = {
     #  enable = true;
@@ -52,34 +51,21 @@ in {
       daemon.config = { realtime-scheduling = "yes"; };
     };
     bluetooth.enable = true;
-    sane.enable = true;
-    sane.brscan4.netDevices = { dimq = { ip = "192.168.0.104"; model="MFP-M17fw-kek"; }; };
-
-    # opengl.extraPackages = with pkgs; [ vaapiIntel libvdpau-va-gl vaapiVdpau  ];
     opengl.enable = true;
   };
 
   networking = {
     hostName = "keshet";
-    extraHosts = ''
-      127.0.0.1 2-ch.ru
-      127.0.0.1 2ch.hk
-      127.0.0.1 2ch.pm
-    '';
     firewall.allowPing = true;
     firewall.enable = false;
     networkmanager.enable = true;
-    nameservers = [ "8.8.8.8" "77.88.8.8" "77.88.8.1" "192.168.0.1" ];
   };
 
-#  time.timeZone = "Europe/Moscow";
-#  time.timeZone = "Europe/Paris";
   time.timeZone = "Europe/London";
 
   i18n = {
     consoleFont = "cyr-sun16";
     consoleKeyMap = "dvorak";
-    #defaultLocale = "en_IE.UTF-8";
     defaultLocale = "en_GB.UTF-8";
   };
 
@@ -96,19 +82,8 @@ in {
    ];
   };
 
-  nix = {
-    binaryCaches = [
-      https://cache.nixos.org
-      https://serokell.cachix.org
-    ];
-    binaryCachePublicKeys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "serokell.cachix.org-1:5DscEJD6c1dD1Mc/phTIbs13+iW22AVbx0HqiSb+Lq8="
-    ];
-    trustedUsers = [ "root" "volhovm" ];
-  };
+  nix.trustedUsers = [ "root" "volhovm" ];
 
-#  nix.binaryCaches = [];
   nixpkgs.config = {
     allowUnfree = false;
     allowBroken = false;
@@ -148,7 +123,6 @@ in {
     gitinspector
     gitstats
     gnupg
-    #gnupg1compat
     gnuplot
     gnutls
     google-play-music-desktop-player
@@ -167,7 +141,6 @@ in {
     iotop
     iptables
     iw
-    jmtpfs
     jack2
     jq
     ledger
@@ -177,13 +150,10 @@ in {
     lshw
     lsof
     manpages
-    microcodeIntel
     mkpasswd
     mplayer
     mosh
-    ms-sys
     mtr
-    mutt
     nextcloud-client
     ncdu
     ntfs3g
@@ -214,9 +184,10 @@ in {
     syslinux
     sysstat
     tcpdump
-    #tdesktop
     thunderbird
     tmux
+    texlive.combined.scheme-full
+    #tor-browser-bundle
     traceroute
     transmission_gtk
     tree
@@ -235,15 +206,12 @@ in {
     zip
 
     # Nix-related
-    cabal2nix
     nix-prefetch-git
     nixops
     patchelf
 
     # Development
-    cabal-install
     cmake
-    cryptoverif
     gcc
     gdb
     gnumake
@@ -274,11 +242,8 @@ in {
 #    haskellPackages.weeder
 #    haskellPackages.hpack
     libnotify
-    opam
-    perl
     python3
-    ruby
-    #sage
+    sage
     stack
     valgrind
     vimPlugins.vim-addon-nix
@@ -406,10 +371,6 @@ in {
         ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
         sh ~/.xinitrc
       '';
-      #displayManager.lightDm = {
-      #  enable = true;
-      #  defaultUser = "volhovm";
-      #};
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
@@ -421,9 +382,6 @@ in {
       deviceSection = ''
           Option "Backlight" "intel_backlight"
       '';
-     #Option "Device Accel Constant Deceleration" "0.4"
-          #Option "AccelerationDenominator" "1"
-          #Option "AccelerationThreshold" "4"
       inputClassSections = [''
           Identifier "TPPS/2 IBM TrackPoint"
           Driver "evdev"

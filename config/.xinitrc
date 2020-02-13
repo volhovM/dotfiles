@@ -22,6 +22,6 @@ if [[ "$(whoami)" == "volhovm" ]]; then
       ~/dotfiles/scripts/orgstat.sh;
       sleep 300;
    done)&
-  (while true; do notify-send -u low "  Concentrate  "; sleep $((60*75)); done)&
+  (while true; do notify-send -u low "  Relax your shoulders  "; sleep $(( 60 * (20 + $RANDOM % 40) )); done)&
   (while true; do sh ~/dotfiles/scripts/lowBattery.sh; sleep 90; done)&
 fi

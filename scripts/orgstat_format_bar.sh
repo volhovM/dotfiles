@@ -77,7 +77,7 @@ echo $prevANum
 echo $prevENum
 
 # This is how much I should have achieved up to this day
-mD=5
+mD=6
 mRateHigh=$(echo "print (30 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
 hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 aRateHigh=$(echo "print (25 * ($daynum/7))" | python)

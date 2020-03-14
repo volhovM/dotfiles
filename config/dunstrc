@@ -1,13 +1,13 @@
 
 [global]
-    font = Terminus 10
+    font = 10
 
     # Allow a small subset of html markup in notifications and formats:
     #   <b>bold</b>
     #   <i>italic</i>
     #   <s>strikethrough</s>
     #   <u>underline</u>
-    #
+
     # For a complete reference see
     # <http://developer.gnome.org/pango/stable/PangoMarkupFormat.html>.
     # If markup is not allowed, those tags will be stripped out of the

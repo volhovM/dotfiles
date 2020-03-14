@@ -17,7 +17,6 @@ makeLink "./xmonad.hs" ~/.xmonad/xmonad.hs
 makeLink "./.emacs" ~/.emacs
 makeLink "./.xmodmap" ~/.xmodmap
 makeLink "./.zshrc" ~/.zshrc
-makeLink "./.mrconfig" ~/.mrconfig
 mkdir -p ~/.config/dunstrc/
 makeLink "./dunstrc" ~/.config/dunst/dunstrc
 makeLink "./.vimrc" ~/.vimrc
@@ -27,3 +26,4 @@ makeLink "./config.yaml" ~/.stack/config.yaml
 makeLink "./.orgstat.yaml" ~/.orgstat.yaml
 makeLink "./.Xresources" ~/.Xresources
 makeLink "./categorize.cfg" ~/.arbtt/categorize.cfg
+makeLink "./.stylish-haskell.yaml" ~/.stylish-haskell.yaml

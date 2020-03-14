@@ -215,7 +215,7 @@ in {
     gcc
     gdb
     gnumake
-    haskellPackages.hindent
+    #haskellPackages.hindent
     haskellPackages.hlint
     haskellPackages.stylish-haskell
     (haskellPackages.ghcWithPackages (p: with p;
@@ -230,7 +230,7 @@ in {
           monad-loops
           numbers
           normaldistribution
-          permutation
+          #permutation
           random
           random-shuffle
           turtle
@@ -312,7 +312,7 @@ in {
           account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
         '');
       common-auth.text =
-        lib.mkDefault (lib.mkAfter "auth optional pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
+        lib.mkDefault (lib.mkAfter "auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
       common-account.text =
         lib.mkDefault (lib.mkAfter "account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
     };

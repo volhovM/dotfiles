@@ -63,11 +63,11 @@ in {
 
   time.timeZone = "Europe/London";
 
-  i18n = {
-    consoleFont = "cyr-sun16";
-    consoleKeyMap = "dvorak";
-    defaultLocale = "en_GB.UTF-8";
+  console = {
+    font = "cyr-sun16";
+    keyMap = "dvorak";
   };
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   fonts = {
     enableFontDir = true;
@@ -85,7 +85,7 @@ in {
   nix.trustedUsers = [ "root" "volhovm" ];
 
   nixpkgs.config = {
-    allowUnfree = false;
+    allowUnfree = true;
     allowBroken = false;
   };
 
@@ -347,6 +347,8 @@ in {
 #      drivers = [ pkgs.hplipWithPlugin ];
     };
 
+    teamviewer.enable = true;
+
     xserver = {
       autorun = true;
       enable = true;
@@ -427,9 +429,9 @@ in {
       '';
 
       sensors = ''
-         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
-         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp2_input
-         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input
+         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input
+         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp2_input
+         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp3_input
       '';
     };
 

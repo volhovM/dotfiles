@@ -9,7 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.luks.devices = [ { name = "root"; device = "/dev/nvme0n1p2"; preLVM = true; } ];
+  boot.initrd.luks.devices = { root = { device = "/dev/nvme0n1p2"; preLVM = true; }; };
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 

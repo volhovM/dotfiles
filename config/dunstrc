@@ -1,6 +1,7 @@
 
 [global]
-    font = 10
+    font = DejaVu Sans Mono 9
+    #font = Terminus Regular 9
 
     # Allow a small subset of html markup in notifications and formats:
     #   <b>bold</b>

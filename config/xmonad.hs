@@ -216,7 +216,7 @@ myLayout =
 myTabbedTheme :: Theme
 myTabbedTheme = defaultTheme {
                    --fontName = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
-                   fontName="xft:Terminus:pixelsize=10",
+                   fontName="xft:Terminus:pixelsize=11",
                    inactiveColor="#222C30",
                    --inactiveTextColor="#9FC6CC",
                    activeColor="#9FC6CC",

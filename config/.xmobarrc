@@ -1,10 +1,10 @@
 Config {
 	-- fonts may not differ from terminus 8 (or fixed?) set by default
 	-- xmobar must me built with 'xft' use flag to get nice fonts
-	font = "xft:Terminus-8"
+	font = "xft:Terminus-9"
 	--font = "-*-terminus-*-*-*-*-13-*-*-*-*-*-*-u"
 	--font = "-*-terminus-medium-*-*-*-14-*-*-*-*-*-*-u"
-	--font = "xft:Ubuntu:size=8"
+	--font = "xft:Ubuntu:size=9"
 	, bgColor = "#222C30"
 	, fgColor = "#9FC6CC"
 	--       , fgColor = "#5993C2"
@@ -45,7 +45,7 @@ Config {
 --	, bgColor = "#222C30"
 --	, fgColor = "#9FC6CC"
 --	, position = TopW L 100
---	, commands = [ 
+--	, commands = [
 --	               Run Date "%a %b %_d %V.%Y %H:%M:%S" "date" 10
 --	             , Run StdinReader
 --	             ]

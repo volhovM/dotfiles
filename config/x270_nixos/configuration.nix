@@ -359,6 +359,8 @@ in {
       xkbOptions = "grp:caps_toggle";
       xkbVariant = "dvorak,ruu";
 
+      wacom.enable = true;
+
       autoRepeatDelay = 200;
       autoRepeatInterval = 40;
 
@@ -368,6 +370,8 @@ in {
       # Synaptics is crap. It doesn't support palm detection for touchpad.
       # It steals middle button.
       synaptics.enable = false;
+
+      dpi = 130;
 
       displayManager.sessionCommands = ''
         ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}

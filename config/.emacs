@@ -100,6 +100,7 @@
  '(org-catch-invisible-edits (quote error))
  '(org-ctrl-k-protect-subtree t)
  '(org-cycle-include-plain-lists t)
+ '(org-extend-today-until 3)
  '(org-habit-completed-glyph 42)
  '(org-habit-following-days 2)
  '(org-habit-graph-column 47)
@@ -109,6 +110,7 @@
  '(org-startup-truncated nil)
  '(org-tags-column -77)
  '(org-trello-current-prefix-keybinding "C-c o")
+ '(org-use-effective-time t)
  '(package-selected-packages
    (quote
     (latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
@@ -227,7 +229,7 @@
 
 ;; FONTS
 ;(set-default-font "Terminus-10")
-(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
+;(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -269,6 +271,8 @@
   (local-set-key (kbd "C-c C-j") 'org-clock-goto)
   (local-set-key (kbd "C-o") 'org-open-at-point)
   (setq fill-column 75)
+  (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
+  (auto-save-mode)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."

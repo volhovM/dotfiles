@@ -83,16 +83,19 @@ hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 aRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 
+mhRateHigh=$(echo "print ($mRateHigh + $hRateHigh)" | python)
+thisWeekMHNum=$(echo "print ($thisWeekHNum + $thisWeekMNum)" | python)
+
 echo $mRateHigh
 echo $hRateHigh
 echo $aRateHigh
 echo $eRateHigh
 
 mColor=$(avg_col $prevMNum $mRateHigh $thisWeekMNum 0 )
-hColor=$(avg_col $prevHNum $hRateHigh $thisWeekHNum 0 )
+mhColor=$(avg_col $(echo "print ($prevHNum + $prevMNum)" | python) $mhRateHigh $thisWeekMHNum 0 )
 aColor=$(avg_col $prevANum $aRateHigh $thisWeekANum 1 )
 eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
-str="<fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$hColor>h$thisWeekH</fc>/$(convert_to $hRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
+str="<fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$mhColor>mh$(convert_to $thisWeekMHNum)</fc>/$(convert_to $mhRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
 
 echo $str > ~/thisWeekStats.txt

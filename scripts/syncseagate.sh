@@ -1,4 +1,4 @@
-#!/bash/sh env
+#!/bin/env sh
 
 set -e
 sudo cryptsetup luksOpen /dev/sda1 seagate0

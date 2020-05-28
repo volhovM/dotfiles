@@ -10,7 +10,7 @@ function fgon { feh --bg-fill $wallpaper; }
 function mononraw { xrandr --auto; xrandr --output HDMI2 --primary "$1" eDP1; fgon; }
 function monontop { mononraw "--above"; }
 function mononright { mononraw "--right-of"; }
-function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 105; fgon; }
+function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 130; fgon; }
 alias ledger="ledger --explicit --strict -f ~/org/finances.txt --price-db ~/org/prices.db"
 alias grep="grep --color=auto"
 function notify {

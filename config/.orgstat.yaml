@@ -1,5 +1,5 @@
 scopes:
-  - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/work.org', '/home/volhovm/org/private.org']
+  - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/private.org']
 timelineDefault:
   colorSalt: 3
   legend: false
@@ -77,4 +77,4 @@ outputs:
     report: thisWeekProductive
 
 outputDir: /home/volhovm/code/orgstat/
-todoKeywords: [ TODO, STARTED, WAITING, DONE, CANCELED, TD, ST, WT, CL, DN ]
+todoKeywords: [ TD, ST, WT, CL, DN ]

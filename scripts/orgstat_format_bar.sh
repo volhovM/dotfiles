@@ -54,6 +54,18 @@ function avg_col {
   echo $col
 }
 
+function pomodoro_discr {
+  echo $(python -c "print(len(list(filter(lambda t: t >= 25, $1))))")
+}
+
+function pomodoro_cont {
+  echo $(python -c "print(sum(list(map(lambda t: t // 25, $1))))")
+}
+
+function pomodoro_rat {
+  echo $(python -c 'print("%.1f" % sum(map(lambda t: t / 25, list(filter(lambda t: t >= 25, '$1')))))')
+}
+
 daynum=$(date +%u)
 
 thisWeekMNum=$(convert_from $thisWeekM)
@@ -66,36 +78,31 @@ todayHNum=$(convert_from $todayH)
 todayANum=$(convert_from $todayA)
 todayENum=$(convert_from $todayE)
 
+# Mean?
+#todayMMean=$(python -c "import math; print(math.floor($(convert_from $todayMMean)*60))")
+#mMeanColor=$(avg_col 15 25 $todayMMean 0 )
+#echo "Focus: $todayMMean"
+
 prevMNum=$( python -c "print($thisWeekMNum - $todayMNum)" )
 prevHNum=$( python -c "print($thisWeekHNum - $todayHNum)" )
 prevANum=$( python -c "print($thisWeekANum - $todayANum)" )
 prevENum=$( python -c "print($thisWeekENum - $todayENum)" )
 
-echo $prevMNum
-echo $prevHNum
-echo $prevANum
-echo $prevENum
-
 # This is how much I should have achieved up to this day
 mD=6
-mRateHigh=$(echo "print (30 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
-hRateHigh=$(echo "print (25 * ($daynum/7))" | python)
+mRateHigh=$(echo "print (35 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
+hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
 aRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 eRateHigh=$(echo "print (25 * ($daynum/7))" | python)
 
 mhRateHigh=$(echo "print ($mRateHigh + $hRateHigh)" | python)
 thisWeekMHNum=$(echo "print ($thisWeekHNum + $thisWeekMNum)" | python)
 
-echo $mRateHigh
-echo $hRateHigh
-echo $aRateHigh
-echo $eRateHigh
-
 mColor=$(avg_col $prevMNum $mRateHigh $thisWeekMNum 0 )
 mhColor=$(avg_col $(echo "print ($prevHNum + $prevMNum)" | python) $mhRateHigh $thisWeekMHNum 0 )
 aColor=$(avg_col $prevANum $aRateHigh $thisWeekANum 1 )
 eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
-str="<fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$mhColor>mh$(convert_to $thisWeekMHNum)</fc>/$(convert_to $mhRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
+str="[<fc=#429942>$(pomodoro_rat $todayMDurationsList)</fc>] <fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$mhColor>mh$(convert_to $thisWeekMHNum)</fc>/$(convert_to $mhRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
 
 echo $str > ~/thisWeekStats.txt

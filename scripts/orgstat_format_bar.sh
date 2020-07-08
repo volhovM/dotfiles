@@ -88,12 +88,30 @@ prevHNum=$( python -c "print($thisWeekHNum - $todayHNum)" )
 prevANum=$( python -c "print($thisWeekANum - $todayANum)" )
 prevENum=$( python -c "print($thisWeekENum - $todayENum)" )
 
-# This is how much I should have achieved up to this day
-mD=6
-mRateHigh=$(echo "print (35 * (($daynum if $daynum <= $mD else $mD)/$mD))" | python)
-hRateHigh=$(echo "print (20 * ($daynum/7))" | python)
-aRateHigh=$(echo "print (25 * ($daynum/7))" | python)
-eRateHigh=$(echo "print (25 * ($daynum/7))" | python)
+# How much should have been achieved up to today. Like this:
+# mDistr=(1 1 1 1 1 0.5 0)
+# mLoad=30
+# hDistr=(1 1 1 1 1 1 1 1)
+# hLoad=20
+# aLoad=25
+# eLoad=25
+
+source ~/orgstat_targets.sh
+
+mDistrSum=0
+for e in "${mDistr[@]}"; do mDistrSum=$(echo "print($mDistrSum + $e)" | python); done
+mCurSum=0
+for i in $(seq 0 $((daynum - 1))); do mCurSum=$(echo "print($mCurSum + ${mDistr[$i]})" | python ); done
+mRateHigh=$(echo "print ($mLoad * ($mCurSum/$mDistrSum))" | python)
+
+hDistrSum=0
+for e in "${hDistr[@]}"; do hDistrSum=$(echo "print($hDistrSum + $e)" | python); done
+hCurSum=0
+for i in $(seq 0 $((daynum - 1))); do hCurSum=$(echo "print($hCurSum + ${hDistr[$i]})" | python ); done
+hRateHigh=$(echo "print ($hLoad * ($hCurSum/$hDistrSum))" | python)
+
+aRateHigh=$(echo "print ($aLoad * ($daynum/7))" | python)
+eRateHigh=$(echo "print ($eLoad * ($daynum/7))" | python)
 
 mhRateHigh=$(echo "print ($mRateHigh + $hRateHigh)" | python)
 thisWeekMHNum=$(echo "print ($thisWeekHNum + $thisWeekMNum)" | python)

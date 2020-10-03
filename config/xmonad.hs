@@ -66,7 +66,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                 0x1008ff81), spawn (myLockCmd ++ " & (sleep 0.5 && systemctl suspend)")) -- settings
 
          -- locking
-    , ((0,                 0x1008ff59), spawn myLockCmd) -- display
+    , ((0,                 0x1008ff30), spawn myLockCmd)
+
+         -- display
+    , ((0,                 0x1008ff59), spawn "sh ~/dotfiles/scripts/xrandr-auto.sh")
 
           -- org mode files
     , ((modm,              0x6f), spawn "emacs ~/org/private.org")

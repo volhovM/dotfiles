@@ -1,32 +1,27 @@
 { config, options, lib, pkgs, ... }:
 
 let
-  myCustomLayout = pkgs.writeText "xkb-layout" ''
-    clear control
-    clear mod1
-    !clear mod3
-    !keycode 37 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
-    keycode 37 = Alt_L NoSymbol Meta_L
-    keycode 64 = Control_L NoSymbol Control_L
-    !keycode 108 = Alt_R Meta_R
-    add control = Control_L Control_R
-    add mod1 = Alt_L Meta_L
-    !add mod3 = Alt_R Meta_R
-    clear shift
-    keycode 62 = Escape NoSymbol Escape
-    keycode 107 = Menu
-  '';
+  rustNightlyNixRepo = pkgs.fetchFromGitHub {
+     owner = "solson";
+     repo = "rust-nightly-nix";
+     rev = "9e09d579431940367c1f6de9463944eef66de1d4";
+     sha256 = "03zkjnzd13142yla52aqmgbbnmws7q8kn1l5nqaly22j31f125xy";
+  };
+  rustPackages = pkgs.callPackage rustNightlyNixRepo { };
+  rustcNightly = rustPackages.rustc { date = "2020-08-02"; };
+  cargoNightly = rustPackages.cargo { date = "2020-08-02"; };
 in {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./suspend.nix];
 
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernel.sysctl = {
-      #"vm.swappiness" = 0;
+      "vm.swappiness" = 5;
       "net.ipv4.ip_default_ttl" = 65;
       "kernel.sysrq" = 1;
     };
+    #kernelPackages = pkgs.linuxPackages_4_19;
     extraModprobeConfig = ''
       options thinkpad_acpi fan_control=1
     '';
@@ -89,7 +84,7 @@ in {
     allowBroken = false;
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = (with pkgs; [
     acpi
     alsaUtils
     at
@@ -99,7 +94,7 @@ in {
     bc
     binutils-unwrapped
     bup
-    blueman
+    bluedevil
     chromium
     cryptsetup
     deadbeef
@@ -122,6 +117,7 @@ in {
     gitAndTools.tig
     gitinspector
     gitstats
+    git-latexdiff
     gnupg
     gnuplot
     gnutls
@@ -175,6 +171,7 @@ in {
     scrot
     scudcloud
     simplescreenrecorder
+    signal-desktop
     smartmontools
     socat
     sox
@@ -186,6 +183,8 @@ in {
     tcpdump
     thunderbird
     tmux
+    teams
+    teamviewer
     texlive.combined.scheme-full
     #tor-browser-bundle
     traceroute
@@ -202,8 +201,10 @@ in {
     wirelesstools
     wget
     which
+    xournalpp
     zathura
     zip
+    zoom-us
 
     # Nix-related
     nix-prefetch-git
@@ -243,7 +244,7 @@ in {
 #    haskellPackages.hpack
     libnotify
     python3
-    sage
+    #sage
     stack
     valgrind
     vimPlugins.vim-addon-nix
@@ -269,7 +270,14 @@ in {
     xorg.xev
     xsel
     xsecurelock
-  ];
+  ]); # ++ [ rustcNightly cargoNightly ];
+
+  # Taken from: https://gist.github.com/ioggstream/8f380d398aef989ac455b93b92d42048
+  # To prevent suspend issues I had with USB device 0000:00:14.0 returning -16 code.
+  powerManagement = {
+    powerDownCommands = "grep XHC.*enable /proc/acpi/wakeup && echo XHC > /proc/acpi/wakeup";
+    resumeCommands = "grep XHC.*disable /proc/acpi/wakeup && echo XHC > /proc/acpi/wakeup";
+  };
 
   programs.bash = {
     enableCompletion = true;
@@ -301,32 +309,50 @@ in {
     rtkit.enable = true;
     sudo.enable = true;
 
-    pam.services = {
-      login.limits =
-        [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
-          { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
-        ];
-      login.text =
-        lib.mkDefault (lib.mkAfter ''
-          auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
-          account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
-        '');
-      common-auth.text =
-        lib.mkDefault (lib.mkAfter "auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
-      common-account.text =
-        lib.mkDefault (lib.mkAfter "account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
-    };
+    #pam.services = {
+    #  login.limits =
+    #    [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
+    #      { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
+    #    ];
+    #  #login.text =
+    #  #  lib.mkDefault (lib.mkAfter ''
+    #  #    auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
+    #  #    account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
+    #  #  '');
+    #  #common-auth.text =
+    #  #  lib.mkDefault (lib.mkAfter "auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
+    #  #common-account.text =
+    #  #  lib.mkDefault (lib.mkAfter "account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
+    #};
   };
 
 # ------ SERVICES ------
 
   services = {
+    batteryNotifier = {
+      enable = true;
+      device = "BAT1";
+      notifyCapacity = 15;
+      suspendCapacity = 5;
+    };
+
     cron = {
       enable = true;
       systemCronJobs = [
         "0 */2 * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/bupcron 2> /tmp/bupcron.error"
         "* * * * *  volhovm date > /tmp/crontest"
       ];
+    };
+
+    # Blocking out distractions, yeah.
+    dnsmasq = {
+      enable = true;
+      extraConfig = ''
+        address=/telegram.org/127.0.0.1
+        address=/2ch.hk/127.0.0.1
+        address=/instagram.com/127.0.0.1
+        address=/facebook.com/127.0.0.1
+      '';
     };
 
     openvpn.servers = {
@@ -356,7 +382,7 @@ in {
       videoDrivers = [ "intel" ];
 
       layout = "pl,ru";
-      xkbOptions = "grp:caps_toggle";
+      xkbOptions = "grp:rshift_toggle,ctrl:swap_lalt_lctl,caps:escape_shifted_capslock";
       xkbVariant = "dvorak,ruu";
 
       wacom.enable = true;
@@ -374,7 +400,6 @@ in {
       dpi = 130;
 
       displayManager.sessionCommands = ''
-        ${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}
         sh ~/.xinitrc
       '';
       windowManager.xmonad = {
@@ -418,6 +443,9 @@ in {
     };
 
     tlp.enable = true;
+    tlp.extraConfig = ''
+      USB_BLACKLIST="8087:0a2b"
+    '';
 
 #    thermald.enable = true;
 # new nixos seems to work fine w/o it, at 45 degrees fan doesn't work
@@ -432,11 +460,12 @@ in {
         (7, 80, 32767)
       '';
 
-      sensors = ''
-         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input
-         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp2_input
-         hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp3_input
-      '';
+      # Now I seem to have /proc/acpi/ibm/thermal !
+      #sensors = ''
+      #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+      #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp2_input
+      #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input
+      #'';
     };
 
   };
@@ -451,6 +480,6 @@ in {
   };
 
   # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "19.09";
+  system.stateVersion = "20.09";
 
 }

@@ -121,6 +121,7 @@ mhColor=$(avg_col $(echo "print ($prevHNum + $prevMNum)" | python) $mhRateHigh $
 aColor=$(avg_col $prevANum $aRateHigh $thisWeekANum 1 )
 eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
-str="[<fc=#429942>$(pomodoro_rat $todayMDurationsList)</fc>] <fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$mhColor>mh$(convert_to $thisWeekMHNum)</fc>/$(convert_to $mhRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
+#str="[<fc=#429942>$(pomodoro_rat $todayMDurationsList)</fc>] <fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh) <fc=$mhColor>mh$(convert_to $thisWeekMHNum)</fc>/$(convert_to $mhRateHigh) <fc=#429942>|</fc> <fc=$aColor>a$thisWeekA</fc> <fc=$eColor>e$thisWeekE</fc>"
+str="[<fc=#429942>$(pomodoro_rat $todayMDurationsList)</fc>] <fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh)"
 
 echo $str > ~/thisWeekStats.txt

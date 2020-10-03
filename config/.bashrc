@@ -7,7 +7,7 @@ alias gdb="gdb --tui"
 alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill $wallpaper; }
-function mononraw { xrandr --auto; xrandr --output HDMI2 --primary "$1" eDP1; fgon; }
+function mononraw { xrandr --auto; xrandr --output DP1 --primary "$1" eDP1; fgon; }
 function monontop { mononraw "--above"; }
 function mononright { mononraw "--right-of"; }
 function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 130; fgon; }
@@ -26,6 +26,13 @@ function xal {
 function resetswap {
   sudo swapoff -a
   sudo swapon /dev/vg/swap
+}
+
+function pdflatexfull {
+  pdflatex $1
+  bibtex -min-crossrefs=10 $1
+  pdflatex $1
+  pdflatex $1
 }
 
 #export NIX_PATH="/home/volhovm/nixpkgsGlobal:$NIX_PATH"
@@ -85,6 +92,5 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 
 #export FSTAR_HOME=/home/volhovm/code/FStar/
 #export KREMLIN_HOME=/home/volhovm/code/kremlin/
-
-export FSTAR_HOME=$(nix-env -q --out-path --no-name fstar-master)
-export KREMLIN_HOME=$(nix-env -q --out-path --no-name kremlin-master)
+#export FSTAR_HOME=$(nix-env -q --out-path --no-name fstar-master)
+#export KREMLIN_HOME=$(nix-env -q --out-path --no-name kremlin-master)

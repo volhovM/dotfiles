@@ -62,6 +62,9 @@ outputs:
   - name: thisWeekTimeline
     report: thisWeekProductive
     type: timeline
+  - name: thisWeekTimelineAll
+    report: thisWeekAll
+    type: timeline
   - name: thisWeekStats
     type: summary
     template: "s%thisWeekM% h%thisWeekH% e%thisWeekE% <fc=#355254>a%thisWeekA%</fc>"

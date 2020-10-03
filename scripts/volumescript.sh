@@ -9,7 +9,7 @@ case $vol in
   5|6)  bar='[<fc=#666666>#</fc><fc=#888888>#</fc><fc=#AAAAAA>#</fc>--]' ;;
   7|8)  bar='[<fc=#666666>#</fc><fc=#888888>#</fc><fc=#AAAAAA>#</fc><fc=#CCCCCC>#</fc>-]' ;;
   9|10) bar='[<fc=#666666>#</fc><fc=#888888>#</fc><fc=#AAAAAA>#</fc><fc=#CCCCCC>#</fc><fc=#EEEEEE>#</fc>]' ;;
-  *)    bar='[<fc=#FF0000>--M--</fc>]' ;;
+  *)    bar='[<fc=#666666>--M--</fc>]' ;;
 esac
 
 echo $bar

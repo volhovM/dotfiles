@@ -51,7 +51,7 @@
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save nil)
  '(inhibit-startup-screen t)
- '(ispell-dictionary "ru")
+ '(ispell-dictionary "en_GB-ize-w_accents")
  '(ispell-program-name "aspell")
  '(ledger-reports
    (quote
@@ -116,7 +116,8 @@
     (org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
-    ((eval c-set-offset
+    ((TeX-master . "../weakse")
+     (eval c-set-offset
            (quote access-label)
            (quote -))
      (eval c-set-offset

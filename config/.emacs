@@ -5,7 +5,7 @@
 (require 'package)
 
 (setq package-archives '(
-                         ;("gnu" . "http://elpa.gnu.org/packages/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
@@ -40,19 +40,7 @@
  '(default-input-method "Agda")
  '(encourage-mode nil)
  '(epg-gpg-program "gpg")
- '(erc-away-nickname "volhovm")
- '(erc-email-userid "volhovm")
- '(erc-nick "volhovm")
- '(flyspell-issue-message-flag nil)
- '(haskell-interactive-popup-errors nil)
- '(haskell-interactive-types-for-show-ambiguous t)
- '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
- '(haskell-process-log t)
- '(haskell-stylish-on-save t)
- '(haskell-tags-on-save nil)
  '(inhibit-startup-screen t)
- '(ispell-dictionary "en_GB-ize-w_accents")
- '(ispell-program-name "aspell")
  '(ledger-reports
    (quote
     (("debit" "ledger -f finances.dat report Assets:Debit")
@@ -67,56 +55,13 @@
  '(linum-format (quote dynamic))
  '(menu-bar-mode nil)
  '(midnight-mode t nil (midnight))
- '(nyan-animate-nyancat t)
- '(nyan-bar-length 15)
- '(nyan-cat-face-number 1)
- '(nyan-mode t)
- '(nyan-wavy-trail nil)
- '(org-agenda-clock-consistency-checks
-   (quote
-    (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
-                   ((:background "DarkRed")
-                    (:foreground "white"))
-                   :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
- '(org-agenda-deadline-leaders (quote ("" "%-2d d:" "%2d d. ago:")))
- '(org-agenda-files (quote ("~/org/study.org" "~/org/private.org")))
- '(org-agenda-prefix-format
-   (quote
-    ((agenda . " %i %-10:c% t% s")
-     (todo . " %i %-10:c")
-     (tags . " %i %-10:c")
-     (search . " %i %-10:c"))))
- '(org-agenda-scheduled-leaders (quote ("" "%-2dx: ")))
- '(org-agenda-span 10)
- '(org-agenda-time-grid
-   (quote
-    ((daily today require-timed)
-     (800 1000 1200 1400 1600 1800 2000)
-     "" "------------------------------")))
- '(org-agenda-use-time-grid t)
- '(org-archive-location "archive.org.gpg::* From %s")
- '(org-catch-invisible-edits (quote error))
- '(org-ctrl-k-protect-subtree t)
- '(org-cycle-include-plain-lists t)
- '(org-extend-today-until 3)
- '(org-habit-completed-glyph 42)
- '(org-habit-following-days 2)
- '(org-habit-graph-column 47)
- '(org-habit-preceding-days 18)
- '(org-habit-show-all-today nil)
- '(org-log-state-notes-insert-after-drawers t)
- '(org-modules (quote (org-habit org-drill)))
- '(org-pretty-entities t)
- '(org-startup-truncated nil)
- '(org-tags-column -85)
- '(org-trello-current-prefix-keybinding "C-c o")
- '(org-use-effective-time t)
  '(package-selected-packages
    (quote
-    (org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell erc-hl-nicks encourage-mode eimp cask auto-complete)))
+    (org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
-    ((TeX-master . "../weakse")
+    ((TeX-master . "../")
+     (TeX-master . "../weakse")
      (eval c-set-offset
            (quote access-label)
            (quote -))
@@ -150,12 +95,12 @@
  '(whitespace-style
    (quote
     (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))
- '(yas-indent-line (quote fixed))
- '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
+)
 
+;;;****************************************************************************************
 ;;; EVIL MODE
-;; It's built from sources because main repo was failing (just a regular thing...)
-;;(add-to-list 'load-path "~/.emacs.d/evil/")
+;;;****************************************************************************************
+
 (require 'evil)
 (evil-mode t)
 (setq evil-want-C-i-jump nil)
@@ -163,59 +108,41 @@
 (eval-after-load "evil-maps"
   (define-key evil-motion-state-map "\C-o" nil))
 
+;;;****************************************************************************************
 ;;; YASNIPPET
+;;;****************************************************************************************
+
 (yas-global-mode 1)
+(custom-set-variables
+  '(yas-indent-line (quote fixed))
+  '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
 
+;;;****************************************************************************************
 ;;; Mode line
-(nyan-mode t)
+;;;****************************************************************************************
 
+(nyan-mode t)
+(custom-set-variables
+ '(nyan-animate-nyancat t)
+ '(nyan-bar-length 15)
+ '(nyan-cat-face-number 1)
+ '(nyan-mode t)
+ '(nyan-wavy-trail nil))
+
+;;;****************************************************************************************
 ;;; IDO MODE
+;;;****************************************************************************************
+
 (ido-mode t)
 (add-to-list 'ido-ignore-files "\.checked")
 (add-to-list 'ido-ignore-files "\.hints")
 (add-to-list 'ido-ignore-files "\.exe")
 
 
-
-;;; ERC
-(require 'erc)
-(require 'tls)
-(setq erc-hide-list '("JOIN" "PART" "QUIT"))
-(setq erc-modules '(
-  autojoin
-  button
-  completion
-  fill
-  irccontrols
-  list
-  log
-  match
-  menu
-  move-to-prompt
-  netsplit
-  networks
-  noncommands
-  notifications
-  readonly
-  ring
-  stamp
-  track))
-(erc-update-modules)
-;; Notify my when someone mentions my nick.
-(require 'erc-match)
-(erc-match-mode t)
-(defun erc-global-notify (matched-type nick msg)
-  (interactive)
-  (when (eq matched-type 'current-nick)
-    (shell-command
-     (concat "notify-send -t 4000 -c \"im.received\" \""
-             (car (split-string nick "!"))
-             " mentioned your nick\" \""
-             msg
-             "\""))))
-(add-hook 'erc-text-matched-hook 'erc-global-notify)
-
+;;;****************************************************************************************
 ;; DIRED
+;;;****************************************************************************************
+
 (local-set-key (kbd "C-o") 'dired-to-shell-command)
 (setq dired-guess-shell-alist-user
       '(("\\.pdf\\'" "zathura")
@@ -249,7 +176,10 @@
  '(whitespace-space ((t (:foreground "gray20"))))
  '(whitespace-tab ((t (:foreground "gray25")))))
 
+;;;****************************************************************************************
 ;; ORG DRILL
+;;;****************************************************************************************
+
 (add-to-list 'load-path "~/.emacs.d/org-drill-table/")
 (require 'org-drill-table)
 (setq org-drill-learn-fraction 0.25)
@@ -258,7 +188,10 @@
 (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
 ; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
 
+;;;****************************************************************************************
 ;; ORG MODE
+;;;****************************************************************************************
+
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key "\C-ca" 'org-agenda)
 (defun my-org-mode-hook ()
@@ -272,6 +205,7 @@
   (setq fill-column 85)
   (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
   (auto-save-mode)
+  (define-key org-mode-map (kbd "C-c C-x C-s") nil)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."
@@ -279,66 +213,117 @@
   (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
   (define-key org-agenda-mode-map "l" 'evil-forward-char)
   (define-key org-agenda-mode-map "h" 'evil-backward-char))
-(setq org-agenda-ignore-drawer-properties '(effort appt))
-;(run-with-idle-timer 5 nil (lambda () (org-agenda-list) (delete-window))) ; regen agenda on timer
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
-(setq org-catch-invisible-edits 'show-and-error)
-(setq org-ditaa-jar-path (expand-file-name
-          "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
+
+(org-clock-persistence-insinuate)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ditaa . t)
    (ledger . t)
    (haskell . t)))
-(setq org-todo-keywords '((type "TD" "ST" "WT" "|" "DN" "CL")))
-(setq org-todo-keyword-faces
- '(
-   ("TODO" . "red")
-   ("STARTED" . "yellow")
-   ("WAITING" . "grey")
-   ("DONE" . "green")
-   ("CANCELED" . (:foreground "blue" :weight bold))
-   ("TD" . "red")
-   ("ST" . "yellow")
-   ("WT" . "grey")
-   ("DN" . "green")
-   ("CL" . (:foreground "blue" :weight bold))
-   ("0" . (:background "red" :foreground "black" :weight bold))
-   ("X" . "blue")
-   ("-" . "blue")
-   ("1" . "red3")
-   ("2" . "yellow")
-   ("3" . "green")
-   ("V" . (:background "green" :foreground "black" :weight bold))
-   ("OK" . "green")))
-(org-clock-persistence-insinuate)
-(setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
-(setq org-clock-history-length 23)
-(setq org-clock-in-resume t)
-(setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
-(setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
-(setq org-clock-into-drawer t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-clock-out-remove-zero-time-clocks t)
-(setq org-log-done t)
-(setq org-clock-out-when-done t)
-(setq org-clock-persist-query-resume nil)
-(setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
-(setq org-clock-report-include-clocking-task t)
-(setq org-duration-format (quote h:mm))
-(setq org-file-apps '(
-  (auto-mode . emacs)
-  (directory . "urxvt -cd %s")
-  ("\\.pdf\\'" . "zathura %s")
-  ("\\.djvu\\'" . "zathura %s")
-  ("\\.ps\\'" . "zathura %s")
-  ("\\.x?html?\\'" . "firefox --new-tab %s")
-))
-(define-key org-mode-map (kbd "C-c C-x C-s") nil)
+
+(require 'ox-latex)
+(setq org-latex-listings t)
+(setq org-reveal-root "file:///home/volhovm/programs/reveal.js")
+
+(defun org-export-latex-no-toc (depth)
+  (when depth
+    (format "%% Org-mode is exporting headings to %s levels.\n"
+            depth)))
+(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
+
+(custom-set-variables
+  '(org-todo-keywords '((type "TD" "ST" "WT" "|" "DN" "CL")))
+  '(org-todo-keyword-faces
+    '(
+      ("TODO" . "red")
+      ("STARTED" . "yellow")
+      ("WAITING" . "grey")
+      ("DONE" . "green")
+      ("CANCELED" . (:foreground "blue" :weight bold))
+      ("TD" . "red")
+      ("ST" . "yellow")
+      ("WT" . "grey")
+      ("DN" . "green")
+      ("CL" . (:foreground "blue" :weight bold))
+      ("0" . (:background "red" :foreground "black" :weight bold))
+      ("X" . "blue")
+      ("-" . "blue")
+      ("1" . "red3")
+      ("2" . "yellow")
+      ("3" . "green")
+      ("V" . (:background "green" :foreground "black" :weight bold))
+      ("OK" . "green")))
+  '(org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+  '(org-clock-history-length 23)
+  '(org-clock-in-resume t)
+  '(org-clock-in-switch-to-state 'bh/clock-in-to-next)
+  '(org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+  '(org-clock-into-drawer t)
+  '(org-agenda-skip-scheduled-if-done t)
+  '(org-agenda-skip-deadline-if-done t)
+  '(org-clock-out-remove-zero-time-clocks t)
+  '(org-log-done t)
+  '(org-clock-out-when-done t)
+  '(org-clock-persist-query-resume nil)
+  '(org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+  '(org-clock-report-include-clocking-task t)
+  '(org-duration-format (quote h:mm))
+  '(org-file-apps '(
+     (auto-mode . emacs)
+     (directory . "urxvt -cd %s")
+     ("\\.pdf\\'" . "zathura %s")
+     ("\\.djvu\\'" . "zathura %s")
+     ("\\.ps\\'" . "zathura %s")
+     ("\\.x?html?\\'" . "firefox --new-tab %s")
+  ))
+  '(org-agenda-clock-consistency-checks
+    (quote
+     (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
+                    ((:background "DarkRed")
+                     (:foreground "white"))
+                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
+  '(org-clock-mode-line-total 'current)
+  '(org-agenda-deadline-leaders (quote ("" "%-2d d:" "%2d d. ago:")))
+  '(org-agenda-files (quote ("~/org/study.org" "~/org/private.org")))
+  '(org-agenda-prefix-format
+    (quote
+     ((agenda . " %i %-10:c% t% s")
+      (todo . " %i %-10:c")
+      (tags . " %i %-10:c")
+      (search . " %i %-10:c"))))
+  '(org-agenda-scheduled-leaders (quote ("" "%-2dx: ")))
+  '(org-agenda-span 10)
+  '(org-agenda-time-grid
+    (quote
+     ((daily today require-timed)
+      (800 1000 1200 1400 1600 1800 2000)
+      "" "------------------------------")))
+  '(org-agenda-use-time-grid t)
+  '(org-archive-location "archive.org.gpg::* From %s")
+  '(org-catch-invisible-edits (quote error))
+  '(org-ctrl-k-protect-subtree t)
+  '(org-cycle-include-plain-lists t)
+  '(org-extend-today-until 3)
+  '(org-habit-completed-glyph 42)
+  '(org-habit-following-days 2)
+  '(org-habit-graph-column 47)
+  '(org-habit-preceding-days 18)
+  '(org-habit-show-all-today nil)
+  '(org-log-state-notes-insert-after-drawers t)
+  '(org-modules (quote (org-habit org-drill)))
+  '(org-pretty-entities t)
+  '(org-startup-truncated nil)
+  '(org-tags-column -85)
+  '(org-trello-current-prefix-keybinding "C-c o")
+  '(org-use-effective-time t)
+  '(org-agenda-ignore-drawer-properties '(effort appt))
+  '(org-catch-invisible-edits 'show-and-error)
+  '(org-ditaa-jar-path (expand-file-name "~/.emacs.d/elpa/contrib/scripts/ditaa.jar")))
+
+
 ; dumping current task info into file
-(setq org-clock-mode-line-total 'current)
 (defun current-task-to-status ()
   (interactive)
   (with-temp-file "~/.orgtask"
@@ -423,33 +408,51 @@ Switch projects and subprojects from STARTED back to TODO"
        (get-buffer "broken-links")))))
 
 
-;;; Latex
-(require 'ox-latex)
-(setq org-latex-listings t)
+;;;****************************************************************************************
+;;; Latex / auctex
+;;;****************************************************************************************
 
-(setq org-reveal-root "file:///home/volhovm/programs/reveal.js")
+;; save a file and compile it with latex
+(defun latex-immediate-compile ()
+  (interactive)
+  (save-buffer)
+  (TeX-command "LaTeX" 'TeX-master-file))
+(defun my-LaTeX-hook ()
+  (flyspell-mode)
+  (flyspell-buffer)
+  (setq fill-column 85)
+  (local-set-key (kbd "<f11>") 'latex-immediate-compile))
+(add-hook 'LaTeX-mode-hook 'my-LaTeX-hook)
 
-(defun org-export-latex-no-toc (depth)
-  (when depth
-    (format "%% Org-mode is exporting headings to %s levels.\n"
-            depth)))
-(setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
-;; List of additional LaTeX packages
-;; (add-to-list 'org-export-latex-packages-alist '("" "cmap" t))
-;; (add-to-list 'org-export-latex-packages-alist '("english,russian" "babel" t))
-
+;;;****************************************************************************************
 ;;; Frames
-(define-key org-mode-map (kbd "C-,") nil)
-(global-set-key (kbd "C-,") 'other-window)
+;;;****************************************************************************************
 
+(define-key org-mode-map (kbd "C-,") nil)
+(define-key flyspell-mode-map (kbd "C-,") nil)
+(global-set-key (kbd "C-,") 'other-window)
+(global-set-key (kbd "S-C-<right>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<left>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<up>") 'shrink-window)
+(global-set-key (kbd "S-C-<down>") 'enlarge-window)
+;;(put 'set-goal-column 'disabled nil)
+(setq-default indent-tabs-mode nil)
+;;(setq tab-stop-list (number-sequence 2 60 2))
+
+
+;;;****************************************************************************************
 ;;; Dumb-jump
+;;;****************************************************************************************
+
 (require 'dumb-jump)
 (setq dumb-jump-mode t)
 (setq dumb-jump-force-searcher 'ag)
 (setq dumb-jump-fallback-search nil)
 
-
+;;;****************************************************************************************
 ;;; Haskell
+;;;****************************************************************************************
+
 (add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
 (require 'haskell-mode-autoloads)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode-neongreen/")
@@ -484,9 +487,19 @@ Switch projects and subprojects from STARTED back to TODO"
         "--no-build" "--no-load"))
 (setq haskell-process-args-cabal-new-repl
       '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
+(custom-set-variables
+ '(haskell-interactive-popup-errors nil)
+ '(haskell-interactive-types-for-show-ambiguous t)
+ '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
+ '(haskell-process-log t)
+ '(haskell-stylish-on-save t)
+ '(haskell-tags-on-save nil))
 
 
+
+;;;****************************************************************************************
 ;;; WHITESPACE
+;;;****************************************************************************************
 (require 'whitespace)
 (setq whitespace-line-column 100)
 (add-hook 'c++-mode-hook 'whitespace-mode)
@@ -494,13 +507,17 @@ Switch projects and subprojects from STARTED back to TODO"
 ;(add-hook 'scala-mode 'whitespace-mode)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
+;;;****************************************************************************************
 ;;; C
+;;;****************************************************************************************
 (add-hook 'makefile-mode-hook (lambda()
                                 (whitespace-toggle-options '(tabs))))
 ;(add-hook 'c-mode-hook 'linum-mode)
 (add-hook 'c-mode-hook 'whitespace-mode)
 
+;;;****************************************************************************************
 ;;; C++
+;;;****************************************************************************************
 (require 'cc-mode)
 (global-set-key (kbd "<f11>") 'recompile) ;; kind of cool
 (defun my-c++-mode-hook ()
@@ -556,26 +573,27 @@ Switch projects and subprojects from STARTED back to TODO"
            ))
         ))
 
+;;;****************************************************************************************
 ;;; Autocomplete
+;;;****************************************************************************************
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/ac-dict")
 (ac-config-default)
 (global-auto-complete-mode t)
 ;(add-to-list 'ac-modes 'haskell-mode)
 
-;;; STUFF
-(global-set-key (kbd "S-C-<right>") 'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<left>") 'enlarge-window-horizontally)
-(global-set-key (kbd "S-C-<up>") 'shrink-window)
-(global-set-key (kbd "S-C-<down>") 'enlarge-window)
-;;(put 'set-goal-column 'disabled nil)
-(setq-default indent-tabs-mode nil)
-;;(setq tab-stop-list (number-sequence 2 60 2))
+
+
+;;;****************************************************************************************
+;;; Agda
+;;;****************************************************************************************
 
 (add-to-list 'load-path "~/.emacs.d/agda-input/")
 (require 'agda-input)
 
+;;;****************************************************************************************
 ;;;;; ASM86
+;;;****************************************************************************************
 ;;(setq make-backup-files nil)
 ;;(autoload 'asm86-mode "~/.emacs.d/asm86-mode.el")
 ;;(setq auto-mode-alist
@@ -584,11 +602,17 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;(add-hook 'asm86-mode-hook 'turn-on-font-lock)
 ;;(add-hook 'asm-mode-hook '(lambda () (linum-mode) ))
 
+;;;****************************************************************************************
 ;;; Encrypting
+;;;****************************************************************************************
+
 (require 'epa-file)
 (epa-file-enable)
 
+;;;****************************************************************************************
 ;;; Backups
+;;;****************************************************************************************
+
 (setq make-backup-files nil)
 ;(setq backup-directory-alist `(("." . ,(concat user-emacs-directory ".saves")))
 ;      backup-by-copying t
@@ -599,18 +623,24 @@ Switch projects and subprojects from STARTED back to TODO"
 (setq auto-save-file-name-transforms
   `((".*" "~/.emacs.d/.saves/" t)))
 
-
-
+;;;****************************************************************************************
 ;;; Java
+;;;****************************************************************************************
+
 (add-hook 'java-mode-hook '(lambda () (whitespace-mode)))
 
-
+;;;****************************************************************************************
 ;;; Proof General
+;;;****************************************************************************************
+
 (load-file "~/.emacs.d/ProofGeneral/generic/proof-site.el")
 (setq coq-prog-name "/run/current-system/sw/bin/coqtop")
 (setq proof-splash-enable nil)
 
+;;;****************************************************************************************
 ;;; Eshell
+;;;****************************************************************************************
+
 (require 'ansi-color)
 (require 'eshell)
 (defun eshell-handle-ansi-color ()
@@ -618,19 +648,24 @@ Switch projects and subprojects from STARTED back to TODO"
                               eshell-last-output-end))
 (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
 
+;;;****************************************************************************************
 ;;; Nix support
+;;;****************************************************************************************
+
 (autoload 'nix-mode "nix-mode" "Major mode for editing Nix expressions." t)
 (push '("\\.nix\\'" . nix-mode) auto-mode-alist)
 (push '("\\.nix\\.in\\'" . nix-mode) auto-mode-alist)
 
-;;; HACK
+;;;****************************************************************************************
+;;; Simpler yes-or-no
+;;;****************************************************************************************
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;;; Aspell
-(require 'ispell)
-(setq ispell-list-command "--list")
-(setq ispell-extra-args '("--sug-mode=fast"))
-(setq ispell-silently-savep t)
+;;;****************************************************************************************
+;;;; Spelling
+;;;****************************************************************************************
+
 (setq flyspell-persistent-highlight t)
 (global-set-key (kbd "<f8>") 'ispell-word)
 (global-set-key (kbd "C-<f8>") 'flyspell-buffer)
@@ -639,17 +674,22 @@ Switch projects and subprojects from STARTED back to TODO"
   "Custom function to spell check next highlighted word"
   (interactive)
   (flyspell-goto-next-error)
-  (ispell-word)
-  )
+  (ispell-word))
 (global-set-key (kbd "M-<f8>") 'flyspell-check-next-highlighted-word)
 
+;;;****************************************************************************************
 ;;; AG search (silver-searcher)
+;;;****************************************************************************************
+
 (global-set-key (kbd "<f7>") 'ag-project)
 (global-set-key (kbd "C-<f7>") 'ag)
 (setq ag-reuse-buffers 't)
 (setq ag-reuse-window 't)
 
+;;;****************************************************************************************
 ;;; Cryptoverif
+;;;****************************************************************************************
+
 (add-to-list 'load-path "~/.emacs.d/cryptoverif/")
 (setq auto-mode-alist
       (cons '("\\.cv[l]?$" . cryptoverif-mode)
@@ -659,7 +699,10 @@ Switch projects and subprojects from STARTED back to TODO"
 (autoload 'cryptoverifo-mode
     "cryptoverif" "Major mode for editing CryptoVerif code." t)
 
+;;;****************************************************************************************
 ;;; Proverif
+;;;****************************************************************************************
+
 (add-to-list 'load-path "~/.emacs.d/proverif/")
 (setq auto-mode-alist
              (cons '("\\.horn$" . proverif-horn-mode)
@@ -671,13 +714,19 @@ Switch projects and subprojects from STARTED back to TODO"
 (autoload 'proverif-horn-mode "proverif" "Major mode for editing ProVerif code." t)
 (autoload 'proverif-horntype-mode "proverif" "Major mode for editing ProVerif code." t)
 
+;;;****************************************************************************************
 ;;; Tidal
+;;;****************************************************************************************
+
 ;(add-to-list 'load-path "~/code/Tidal/")
 ;(require 'tidal)
 (setq tidal-interpreter "/run/current-system/sw/bin/ghci")
 (setq tidal-boot-script-path "/home/volhovm/code/Tidal/BootTidal.hs")
 
+;;;****************************************************************************************
 ;;; FStar
+;;;****************************************************************************************
+
 (add-hook 'fstar-mode-hook
           '(lambda () (prettify-symbols-mode -1)
                       (whitespace-mode)))
@@ -696,6 +745,10 @@ Switch projects and subprojects from STARTED back to TODO"
 
 (setq fstar-subp-prover-args #'my-fstar-compute-prover-args-using-make)
 
+;;;****************************************************************************************
+;;; Filling and un-filling the paragraph
+;;;****************************************************************************************
+
 ;;; Opposite of M-q wrapping paragraph.
 ;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
 (defun unfill-paragraph (&optional region)
@@ -705,10 +758,60 @@ Switch projects and subprojects from STARTED back to TODO"
         ;; This would override `fill-column' if it's an integer.
         (emacs-lisp-docstring-fill-column t))
     (fill-paragraph nil region)))
-
-;; Handy key definition
 (define-key global-map "\M-j" 'unfill-paragraph)
 
+
+; This one works!
+; Otherwise emacs thinks a sentence ends with double space.
+; https://stackoverflow.com/questions/2456879/emacs-m-e-doesnt-work-properly-in-tex-mode
+(setq sentence-end-double-space nil)
+
+; https://pleasefindattached.blogspot.com/2011/12/emacsauctex-sentence-fill-greatly.html
+(defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
+  "Start each sentence on a new line."
+  (let ((from (ad-get-arg 0))
+        (to-marker (set-marker (make-marker) (ad-get-arg 1)))
+        tmp-end)
+    (while (< from (marker-position to-marker))
+      (forward-sentence)
+      ;; might have gone beyond to-marker --- use whichever is smaller:
+      (ad-set-arg 1 (setq tmp-end (min (point) (marker-position to-marker))))
+      ad-do-it
+      (ad-set-arg 0 (setq from (point)))
+      (unless (or
+               (bolp)
+               (looking-at "\\s *$"))
+        (LaTeX-newline)))
+    (set-marker to-marker nil)))
+(ad-activate 'LaTeX-fill-region-as-paragraph)
+
+;; From https://abizjak.github.io/emacs/2016/03/06/latex-fill-paragraph.html
+;; Works great also!
+;(defun ales/fill-paragraph (&optional P)
+;  "When called with prefix argument call `fill-paragraph'.
+;Otherwise split the current paragraph into one sentence per line."
+;  (interactive "P")
+;  (if (not P)
+;      (save-excursion
+;        (let ((fill-column 12345678)) ;; relies on dynamic binding
+;          (fill-paragraph) ;; this will not work correctly if the paragraph is
+;                           ;; longer than 12345678 characters (in which case the
+;                           ;; file must be at least 12MB long. This is unlikely.)
+;          (let ((end (save-excursion
+;                       (forward-paragraph 1)
+;                       (backward-sentence)
+;                       (point-marker))))  ;; remember where to stop
+;            (beginning-of-line)
+;            (while (progn (forward-sentence)
+;                          (<= (point) (marker-position end)))
+;              (just-one-space) ;; leaves only one space, point is after it
+;              (delete-char -1) ;; delete the space
+;              (newline)        ;; and insert a newline
+;              (LaTeX-indent-line) ;; I only use this in combination with late, so this makes sense
+;              ))))
+;    ;; otherwise do ordinary fill paragraph
+;    (fill-paragraph P)))
+;(define-key LaTeX-mode-map (kbd "M-q") 'ales/fill-paragraph)
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE

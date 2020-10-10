@@ -132,6 +132,8 @@ in {
     hledger
     htop
     httpie
+    hunspell
+    hunspellDicts.en_GB-ize
     imagemagick
     inkscape
     iotop

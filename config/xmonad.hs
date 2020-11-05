@@ -12,8 +12,6 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout.NoBorders
-import XMonad.Layout.SimpleFloat
-import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Tabbed
 
 import Data.Monoid

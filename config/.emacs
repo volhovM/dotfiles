@@ -4,8 +4,7 @@
 
 (require 'package)
 
-(setq package-archives '(
-                         ("gnu" . "http://elpa.gnu.org/packages/")
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
@@ -39,6 +38,13 @@
  '(default-input-method "Agda")
  '(encourage-mode nil)
  '(epg-gpg-program "gpg")
+ '(evil-undo-system (quote undo-tree))
+ '(haskell-interactive-popup-errors nil)
+ '(haskell-interactive-types-for-show-ambiguous t)
+ '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
+ '(haskell-process-log t)
+ '(haskell-stylish-on-save t)
+ '(haskell-tags-on-save nil)
  '(inhibit-startup-screen t)
  '(ledger-reports
    (quote
@@ -54,9 +60,100 @@
  '(linum-format (quote dynamic))
  '(menu-bar-mode nil)
  '(midnight-mode t nil (midnight))
+ '(nyan-animate-nyancat t)
+ '(nyan-bar-length 15)
+ '(nyan-cat-face-number 1)
+ '(nyan-mode t)
+ '(nyan-wavy-trail nil)
+ '(org-agenda-clock-consistency-checks
+   (quote
+    (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
+                   ((:background "DarkRed")
+                    (:foreground "white"))
+                   :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
+ '(org-agenda-deadline-leaders (quote ("" "%-2d d:" "%2d d. ago:")))
+ '(org-agenda-files (quote ("~/org/study.org" "~/org/private.org")))
+ '(org-agenda-ignore-properties (quote (effort appt)))
+ '(org-agenda-prefix-format
+   (quote
+    ((agenda . " %i %-10:c% t% s")
+     (todo . " %i %-10:c")
+     (tags . " %i %-10:c")
+     (search . " %i %-10:c"))))
+ '(org-agenda-scheduled-leaders (quote ("" "%-2dx: ")))
+ '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-skip-scheduled-if-done t)
+ '(org-agenda-span 10)
+ '(org-agenda-time-grid
+   (quote
+    ((daily today require-timed)
+     (800 1000 1200 1400 1600 1800 2000)
+     "" "------------------------------")))
+ '(org-agenda-use-time-grid t)
+ '(org-archive-location "archive.org.gpg::* From %s")
+ '(org-catch-invisible-edits (quote show-and-error))
+ '(org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+ '(org-clock-history-length 23)
+ '(org-clock-in-resume t)
+ '(org-clock-in-switch-to-state (quote bh/clock-in-to-next))
+ '(org-clock-into-drawer t)
+ '(org-clock-mode-line-total (quote current))
+ '(org-clock-out-remove-zero-time-clocks t)
+ '(org-clock-out-when-done t)
+ '(org-clock-persist-query-resume nil)
+ '(org-clock-report-include-clocking-task t)
+ '(org-ctrl-k-protect-subtree t)
+ '(org-cycle-include-plain-lists t)
+ '(org-ditaa-jar-path
+   (expand-file-name "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
+ '(org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+ '(org-duration-format (quote h:mm))
+ '(org-extend-today-until 3)
+ '(org-file-apps
+   (quote
+    ((auto-mode . emacs)
+     (directory . "urxvt -cd %s")
+     ("\\.pdf\\'" . "zathura %s")
+     ("\\.xopp\\'" . "xournalpp %s")
+     ("\\.djvu\\'" . "zathura %s")
+     ("\\.ps\\'" . "zathura %s")
+     ("\\.x?html?\\'" . "firefox --new-tab %s"))))
+ '(org-habit-completed-glyph 42)
+ '(org-habit-following-days 2)
+ '(org-habit-graph-column 47)
+ '(org-habit-preceding-days 18)
+ '(org-habit-show-all-today nil)
+ '(org-log-done t)
+ '(org-log-state-notes-insert-after-drawers t)
+ '(org-modules (quote (org-habit org-drill)))
+ '(org-pretty-entities t)
+ '(org-startup-folded t)
+ '(org-startup-truncated nil)
+ '(org-tags-column -80)
+ '(org-time-clocksum-format
+   (quote
+    (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+ '(org-todo-keyword-faces
+   (quote
+    (("TD" . "red")
+     ("ST" . "orange")
+     ("WT" . "grey")
+     ("DN" . "green3")
+     ("CL" :foreground "blue" :weight bold)
+     ("0" :background "red" :foreground "black" :weight bold)
+     ("X" . "blue")
+     ("-" . "blue")
+     ("1" . "red3")
+     ("2" . "yellow")
+     ("3" . "green")
+     ("V" :background "green" :foreground "black" :weight bold)
+     ("OK" . "green"))))
+ '(org-todo-keywords (quote ((type "TD" "ST" "WT" "|" "DN" "CL"))))
+ '(org-trello-current-prefix-keybinding "C-c o")
+ '(org-use-effective-time t)
  '(package-selected-packages
    (quote
-    (org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
+    (ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((TeX-master . "../")
@@ -94,8 +191,16 @@
  '(whitespace-style
    (quote
     (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))
-)
+ '(yas-indent-line (quote fixed))
+ '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
 
+(global-undo-tree-mode 1)
+
+;;;****************************************************************************************
+;;; DISABLE TABS
+;;;****************************************************************************************
+
+(setq-default indent-tabs-mode nil)
 
 ;;;****************************************************************************************
 ;;; THEMES
@@ -143,21 +248,14 @@
 ;;;****************************************************************************************
 
 (yas-global-mode 1)
-(custom-set-variables
-  '(yas-indent-line (quote fixed))
-  '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
+
 
 ;;;****************************************************************************************
 ;;; Mode line
 ;;;****************************************************************************************
 
 (nyan-mode t)
-(custom-set-variables
- '(nyan-animate-nyancat t)
- '(nyan-bar-length 15)
- '(nyan-cat-face-number 1)
- '(nyan-mode t)
- '(nyan-wavy-trail nil))
+
 
 ;;;****************************************************************************************
 ;;; IDO MODE
@@ -194,7 +292,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-; '(default ((t (:inherit nil :stipple nil :background "#0c020c" :foreground "#C5C5B8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "xos4" :family "Terminus"))))
  '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
  '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
  '(fstar-subp-overlay-processed-face ((t (:background "#071c1c"))))
@@ -206,18 +303,6 @@
  '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
  '(whitespace-space ((t (:foreground "gray20"))))
  '(whitespace-tab ((t (:foreground "gray25")))))
-
-;;;****************************************************************************************
-;; ORG DRILL
-;;;****************************************************************************************
-
-(add-to-list 'load-path "~/.emacs.d/org-drill-table/")
-(require 'org-drill-table)
-(setq org-drill-learn-fraction 0.25)
-(setq org-drill-maximum-duration 25)
-(setq org-drill-spaced-repetition-algorithm 'sm5)
-(setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
-; (add-hook 'org-ctrl-c-ctrl-c-hook 'org-drill-table-update)
 
 ;;;****************************************************************************************
 ;; ORG MODE
@@ -233,7 +318,7 @@
   (local-set-key (kbd "C-c C-o") 'org-clock-out)
   (local-set-key (kbd "C-c C-j") 'org-clock-goto)
   (local-set-key (kbd "C-o") 'org-open-at-point)
-  (setq fill-column 85)
+  (setq fill-column 83)
   (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
   (auto-save-mode)
   (define-key org-mode-map (kbd "C-c C-x C-s") nil)
@@ -247,12 +332,22 @@
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
 
+;; Org roam
+(setq org-roam-directory "~/org/roam")
+;(add-hook 'after-init-hook 'org-roam-mode)
+
 (org-clock-persistence-insinuate)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ditaa . t)
    (ledger . t)
    (haskell . t)))
+
+;; Org drill
+(setq org-drill-learn-fraction 0.25)
+(setq org-drill-maximum-duration 25)
+(setq org-drill-spaced-repetition-algorithm 'sm5)
+(setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
 
 (require 'ox-latex)
 (setq org-latex-listings t)
@@ -263,91 +358,6 @@
     (format "%% Org-mode is exporting headings to %s levels.\n"
             depth)))
 (setq org-export-latex-format-toc-function 'org-export-latex-no-toc)
-
-(custom-set-variables
-  '(org-todo-keywords '((type "TD" "ST" "WT" "|" "DN" "CL")))
-  '(org-todo-keyword-faces
-    '(
-      ("TD" . "red")
-      ("ST" . "orange")
-      ("WT" . "grey")
-      ("DN" . "green3")
-      ("CL" . (:foreground "blue" :weight bold))
-      ("0" . (:background "red" :foreground "black" :weight bold))
-      ("X" . "blue")
-      ("-" . "blue")
-      ("1" . "red3")
-      ("2" . "yellow")
-      ("3" . "green")
-      ("V" . (:background "green" :foreground "black" :weight bold))
-      ("OK" . "green")))
-  '(org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
-  '(org-clock-history-length 23)
-  '(org-clock-in-resume t)
-  '(org-clock-in-switch-to-state 'bh/clock-in-to-next)
-  '(org-drawers (quote ("PROPERTIES" "LOGBOOK")))
-  '(org-clock-into-drawer t)
-  '(org-agenda-skip-scheduled-if-done t)
-  '(org-agenda-skip-deadline-if-done t)
-  '(org-clock-out-remove-zero-time-clocks t)
-  '(org-log-done t)
-  '(org-clock-out-when-done t)
-  '(org-clock-persist-query-resume nil)
-  '(org-clock-auto-clock-resolution (quote when-no-clock-is-running))
-  '(org-clock-report-include-clocking-task t)
-  '(org-duration-format (quote h:mm))
-  '(org-file-apps '(
-     (auto-mode . emacs)
-     (directory . "urxvt -cd %s")
-     ("\\.pdf\\'" . "zathura %s")
-     ("\\.djvu\\'" . "zathura %s")
-     ("\\.ps\\'" . "zathura %s")
-     ("\\.x?html?\\'" . "firefox --new-tab %s")
-  ))
-  '(org-agenda-clock-consistency-checks
-    (quote
-     (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
-                    ((:background "DarkRed")
-                     (:foreground "white"))
-                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
-  '(org-clock-mode-line-total 'current)
-  '(org-agenda-deadline-leaders (quote ("" "%-2d d:" "%2d d. ago:")))
-  '(org-agenda-files (quote ("~/org/study.org" "~/org/private.org")))
-  '(org-agenda-prefix-format
-    (quote
-     ((agenda . " %i %-10:c% t% s")
-      (todo . " %i %-10:c")
-      (tags . " %i %-10:c")
-      (search . " %i %-10:c"))))
-  '(org-agenda-scheduled-leaders (quote ("" "%-2dx: ")))
-  '(org-agenda-span 10)
-  '(org-agenda-time-grid
-    (quote
-     ((daily today require-timed)
-      (800 1000 1200 1400 1600 1800 2000)
-      "" "------------------------------")))
-  '(org-agenda-use-time-grid t)
-  '(org-archive-location "archive.org.gpg::* From %s")
-  '(org-catch-invisible-edits (quote error))
-  '(org-ctrl-k-protect-subtree t)
-  '(org-cycle-include-plain-lists t)
-  '(org-extend-today-until 3)
-  '(org-habit-completed-glyph 42)
-  '(org-habit-following-days 2)
-  '(org-habit-graph-column 47)
-  '(org-habit-preceding-days 18)
-  '(org-habit-show-all-today nil)
-  '(org-log-state-notes-insert-after-drawers t)
-  '(org-modules (quote (org-habit org-drill)))
-  '(org-pretty-entities t)
-  '(org-startup-truncated nil)
-  '(org-tags-column -85)
-  '(org-trello-current-prefix-keybinding "C-c o")
-  '(org-use-effective-time t)
-  '(org-agenda-ignore-drawer-properties '(effort appt))
-  '(org-catch-invisible-edits 'show-and-error)
-  '(org-ditaa-jar-path (expand-file-name "~/.emacs.d/elpa/contrib/scripts/ditaa.jar")))
-
 
 ; dumping current task info into file
 (defun current-task-to-status ()
@@ -434,6 +444,20 @@ Switch projects and subprojects from STARTED back to TODO"
        (get-buffer "broken-links")))))
 
 
+;(defun org/timestamp-now ()
+;  "Insert string for the current time formatted like '2:34 PM' or 1507121460"
+;  (interactive)                 ; permit invocation in minibuffer
+;  ;;(insert (format-time-string "%D %-I:%M %p")))
+;  ;;(insert (format-time-string "%02y%02m%02d%02H%02M%02S")))
+;  (insert (format-time-string "%02y%02m%02d%02H%02M")))
+;
+;(defun org/timestamp-today ()
+;  "Insert string for today's date nicely formatted in American style,
+;  e.g. Sunday, September 17, 2000 or standard 17-09-2000."
+;  (interactive)       ; permit invocation in minibuffer
+;  ;;(insert (format-time-string "%A, %B %e, %Y")))
+;  (insert (format-time-string "%y-%m-%d")))
+
 ;;;****************************************************************************************
 ;;; Latex / auctex
 ;;;****************************************************************************************
@@ -445,7 +469,7 @@ Switch projects and subprojects from STARTED back to TODO"
   (TeX-command "LaTeX" 'TeX-master-file))
 (defun my-LaTeX-hook ()
   (flyspell-mode)
-  (flyspell-buffer)
+  ;(flyspell-buffer) ; too slow
   (setq fill-column 85)
   (local-set-key (kbd "<f11>") 'latex-immediate-compile))
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-hook)
@@ -461,9 +485,6 @@ Switch projects and subprojects from STARTED back to TODO"
 (global-set-key (kbd "S-C-<left>") 'enlarge-window-horizontally)
 (global-set-key (kbd "S-C-<up>") 'shrink-window)
 (global-set-key (kbd "S-C-<down>") 'enlarge-window)
-;;(put 'set-goal-column 'disabled nil)
-(setq-default indent-tabs-mode nil)
-;;(setq tab-stop-list (number-sequence 2 60 2))
 
 
 ;;;****************************************************************************************
@@ -513,19 +534,14 @@ Switch projects and subprojects from STARTED back to TODO"
         "--no-build" "--no-load"))
 (setq haskell-process-args-cabal-new-repl
       '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
-(custom-set-variables
- '(haskell-interactive-popup-errors nil)
- '(haskell-interactive-types-for-show-ambiguous t)
- '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
- '(haskell-process-log t)
- '(haskell-stylish-on-save t)
- '(haskell-tags-on-save nil))
+
 
 
 
 ;;;****************************************************************************************
 ;;; WHITESPACE
 ;;;****************************************************************************************
+
 (require 'whitespace)
 (setq whitespace-line-column 100)
 (add-hook 'c++-mode-hook 'whitespace-mode)
@@ -548,19 +564,11 @@ Switch projects and subprojects from STARTED back to TODO"
 (global-set-key (kbd "<f11>") 'recompile) ;; kind of cool
 (defun my-c++-mode-hook ()
   (setq c-basic-offset 4
-        tab-width 4
-;        indent-tabs-mode t
-;  (c-set-offset 'substatement-open 0)
- ; (linum-mode) ;; lags a lot because of it
-  ))
+  (setq tab-width 4)
+  (setq indent-tabs-mode t)))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
-;(setq c-default-style "gnu"
-;          c-basic-offset 4)
-(setq-default c-basic-offset 4
-              tab-width 4
-              indent-tabs-mode t)
 (require 'font-lock)
 
 (defun --copy-face (new-face face)
@@ -607,8 +615,6 @@ Switch projects and subprojects from STARTED back to TODO"
 (ac-config-default)
 (global-auto-complete-mode t)
 ;(add-to-list 'ac-modes 'haskell-mode)
-
-
 
 ;;;****************************************************************************************
 ;;; Agda
@@ -792,24 +798,24 @@ Switch projects and subprojects from STARTED back to TODO"
 ; https://stackoverflow.com/questions/2456879/emacs-m-e-doesnt-work-properly-in-tex-mode
 (setq sentence-end-double-space nil)
 
-; https://pleasefindattached.blogspot.com/2011/12/emacsauctex-sentence-fill-greatly.html
-(defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
-  "Start each sentence on a new line."
-  (let ((from (ad-get-arg 0))
-        (to-marker (set-marker (make-marker) (ad-get-arg 1)))
-        tmp-end)
-    (while (< from (marker-position to-marker))
-      (forward-sentence)
-      ;; might have gone beyond to-marker --- use whichever is smaller:
-      (ad-set-arg 1 (setq tmp-end (min (point) (marker-position to-marker))))
-      ad-do-it
-      (ad-set-arg 0 (setq from (point)))
-      (unless (or
-               (bolp)
-               (looking-at "\\s *$"))
-        (LaTeX-newline)))
-    (set-marker to-marker nil)))
-(ad-activate 'LaTeX-fill-region-as-paragraph)
+;; https://pleasefindattached.blogspot.com/2011/12/emacsauctex-sentence-fill-greatly.html
+;(defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
+;  "Start each sentence on a new line."
+;  (let ((from (ad-get-arg 0))
+;        (to-marker (set-marker (make-marker) (ad-get-arg 1)))
+;        tmp-end)
+;    (while (< from (marker-position to-marker))
+;      (forward-sentence)
+;      ;; might have gone beyond to-marker --- use whichever is smaller:
+;      (ad-set-arg 1 (setq tmp-end (min (point) (marker-position to-marker))))
+;      ad-do-it
+;      (ad-set-arg 0 (setq from (point)))
+;      (unless (or
+;               (bolp)
+;               (looking-at "\\s *$"))
+;        (LaTeX-newline)))
+;    (set-marker to-marker nil)))
+;(ad-activate 'LaTeX-fill-region-as-paragraph)
 
 ;; From https://abizjak.github.io/emacs/2016/03/06/latex-fill-paragraph.html
 ;; Works great also!

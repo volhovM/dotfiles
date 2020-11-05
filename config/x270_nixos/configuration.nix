@@ -56,6 +56,7 @@ in {
     networkmanager.enable = true;
   };
 
+  #time.timeZone = "Europe/Paris";
   time.timeZone = "Europe/London";
 
   console = {
@@ -134,6 +135,8 @@ in {
     httpie
     hunspell
     hunspellDicts.en_GB-ize
+    hunspellDicts.ru-ru
+    hunspellDicts.uk-ua
     imagemagick
     inkscape
     iotop
@@ -347,13 +350,13 @@ in {
     };
 
     # Blocking out distractions, yeah.
+        #address=/facebook.com/127.0.0.1
     dnsmasq = {
       enable = true;
       extraConfig = ''
-        address=/telegram.org/127.0.0.1
         address=/2ch.hk/127.0.0.1
         address=/instagram.com/127.0.0.1
-        address=/facebook.com/127.0.0.1
+        address=/telegram.org/127.0.0.1
       '';
     };
 

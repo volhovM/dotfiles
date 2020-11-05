@@ -4,13 +4,14 @@ alias speak="espeak -g 20mS -p 60 -a 150 -s 100"
 alias noise="play -n -c1 synth whitenoise band -n 100 20 band -n 50 20 gain +25  fade h 1 864000 1"
 alias noise2="play -n -c1 synth whitenoise band -n 200 30 band -n 50 20 gain +25 band -n 500 20 band -n 800 10 gain +10 fade h 1 864000  1"
 alias gdb="gdb --tui"
-alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:caps_toggle" && xmodmap ~/.xmodmap'
+alias dvorak='setxkbmap -layout pl,ru -variant dvorak,ruu -option "grp:rshift_toggle,ctrl:swap_lalt_lctl,caps:escape_shifted_capslock"'
 alias undvorak='setxkbmap us,ru'
 function fgon { feh --bg-fill $wallpaper; }
 function mononraw { xrandr --auto; xrandr --output DP1 --primary "$1" eDP1; fgon; }
 function monontop { mononraw "--above"; }
 function mononright { mononraw "--right-of"; }
 function monoff { xrandr --auto; xrandr --output eDP1 --primary; xrandr --dpi 130; fgon; }
+alias substances="gpg --batch -d -q ~/org/substances.txt.gpg | \ledger -f - "
 alias ledger="ledger --explicit --strict -f ~/org/finances.txt --price-db ~/org/prices.db"
 alias grep="grep --color=auto"
 function notify {

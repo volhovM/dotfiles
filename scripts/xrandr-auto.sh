@@ -7,9 +7,9 @@ externalConnected=$(xrandr | grep -E "^DP1 connected")
 xrandr --auto
 
 if [ -z "$externalConnected" ]; then
-  xrandr --output eDP1 --primary
+  xrandr --output eDP1 --primary --dpi 130
 else
-  xrandr --output DP1 --primary --above eDP1
+  xrandr --output DP1 --primary --above eDP1 --dpi 130
 fi
 
 feh --bg-fill ~/thisWeekTimeline.png

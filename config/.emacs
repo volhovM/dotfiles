@@ -7,6 +7,7 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
 
 ; activate all the packages (in particular autoloads)
@@ -65,6 +66,7 @@
  '(nyan-cat-face-number 1)
  '(nyan-mode t)
  '(nyan-wavy-trail nil)
+ '(olivetti-body-width 90)
  '(org-agenda-clock-consistency-checks
    (quote
     (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
@@ -153,7 +155,7 @@
  '(org-use-effective-time t)
  '(package-selected-packages
    (quote
-    (ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
+    (evil-better-visual-line olivetti ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((TeX-master . "../")
@@ -243,6 +245,12 @@
 (eval-after-load "evil-maps"
   (define-key evil-motion-state-map "\C-o" nil))
 
+(define-key evil-motion-state-map "j" 'evil-next-visual-line)
+(define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+;; Also in visual mode
+(define-key evil-visual-state-map "j" 'evil-next-visual-line)
+(define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
 ;;;****************************************************************************************
 ;;; YASNIPPET
 ;;;****************************************************************************************
@@ -265,7 +273,6 @@
 (add-to-list 'ido-ignore-files "\.checked")
 (add-to-list 'ido-ignore-files "\.hints")
 (add-to-list 'ido-ignore-files "\.exe")
-
 
 ;;;****************************************************************************************
 ;; DIRED
@@ -312,7 +319,6 @@
 (global-set-key "\C-ca" 'org-agenda)
 (defun my-org-mode-hook ()
   "Hook for org mode."
-  (turn-on-auto-fill)
   (local-set-key (kbd "C-c C-k") 'org-resolve-clocks)
   (local-set-key (kbd "C-c C-i") 'org-clock-in)
   (local-set-key (kbd "C-c C-o") 'org-clock-out)
@@ -322,6 +328,8 @@
   (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
   (auto-save-mode)
   (define-key org-mode-map (kbd "C-c C-x C-s") nil)
+  (org-indent-mode)
+  (olivetti-mode)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."

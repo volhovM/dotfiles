@@ -66,7 +66,7 @@ in {
   i18n.defaultLocale = "en_GB.UTF-8";
 
   fonts = {
-    enableFontDir = true;
+    fontDir.enable = true;
     fontconfig.enable = true;
     fonts = with pkgs; [
       unifont
@@ -122,7 +122,6 @@ in {
     gnupg
     gnuplot
     gnutls
-    google-play-music-desktop-player
     gparted
     gptfdisk
     gtypist
@@ -174,7 +173,6 @@ in {
     qjackctl
     rsync
     scrot
-    scudcloud
     simplescreenrecorder
     signal-desktop
     smartmontools
@@ -182,7 +180,6 @@ in {
     sox
     speedcrunch
     speedtest-cli
-    supercollider
     syslinux
     sysstat
     tcpdump
@@ -251,9 +248,7 @@ in {
     python3
     #sage
     stack
-    valgrind
     vimPlugins.vim-addon-nix
-    wireshark-qt
 
     # X11 related
     dunst
@@ -448,9 +443,9 @@ in {
     };
 
     tlp.enable = true;
-    tlp.extraConfig = ''
-      USB_BLACKLIST="8087:0a2b"
-    '';
+    #tlp.settings = ''
+    #  USB_BLACKLIST="8087:0a2b"
+    #'';
 
 #    thermald.enable = true;
 # new nixos seems to work fine w/o it, at 45 degrees fan doesn't work

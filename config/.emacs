@@ -155,7 +155,7 @@
  '(org-use-effective-time t)
  '(package-selected-packages
    (quote
-    (evil-better-visual-line olivetti ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
+    (adaptive-wrap evil-better-visual-line olivetti ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
  '(safe-local-variable-values
    (quote
     ((TeX-master . "../")
@@ -193,6 +193,7 @@
  '(whitespace-style
    (quote
     (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))
+ '(word-wrap t)
  '(yas-indent-line (quote fixed))
  '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
 
@@ -292,8 +293,9 @@
 
 ;; FONTS
 ;(set-default-font "Terminus-10")
-(set-default-font "Fira Code-10")
+;(set-default-font "Fira Code-10")
 ;(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
+(set-face-attribute 'default nil :font "Fira Code-10")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -324,12 +326,18 @@
   (local-set-key (kbd "C-c C-o") 'org-clock-out)
   (local-set-key (kbd "C-c C-j") 'org-clock-goto)
   (local-set-key (kbd "C-o") 'org-open-at-point)
-  (setq fill-column 83)
+  (setq fill-column 5000)
   (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
   (auto-save-mode)
   (define-key org-mode-map (kbd "C-c C-x C-s") nil)
   (org-indent-mode)
   (olivetti-mode)
+  (setq word-wrap t)
+  ; TODO this work universally, but should only affect org-mode
+  (define-key evil-motion-state-map "$" 'evil-end-of-visual-line)
+  (define-key evil-motion-state-map "0" 'evil-beginning-of-visual-line)
+  (define-key evil-visual-state-map "$" 'evil-end-of-visual-line)
+  (define-key evil-visual-state-map "0" 'evil-beginning-of-visual-line)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."
@@ -479,7 +487,10 @@ Switch projects and subprojects from STARTED back to TODO"
   (flyspell-mode)
   ;(flyspell-buffer) ; too slow
   (setq fill-column 85)
-  (local-set-key (kbd "<f11>") 'latex-immediate-compile))
+  (local-set-key (kbd "<f11>") 'latex-immediate-compile)
+  (olivetti-mode)
+  (olivetti-set-width 120)
+  )
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-hook)
 
 ;;;****************************************************************************************
@@ -681,12 +692,12 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; Eshell
 ;;;****************************************************************************************
 
-(require 'ansi-color)
-(require 'eshell)
-(defun eshell-handle-ansi-color ()
-  (ansi-color-apply-on-region eshell-last-output-start
-                              eshell-last-output-end))
-(add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
+;(require 'ansi-color)
+;(require 'eshell)
+;(defun eshell-handle-ansi-color ()
+;  (ansi-color-apply-on-region eshell-last-output-start
+;                              eshell-last-output-end))
+;(add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
 
 ;;;****************************************************************************************
 ;;; Nix support
@@ -806,24 +817,24 @@ Switch projects and subprojects from STARTED back to TODO"
 ; https://stackoverflow.com/questions/2456879/emacs-m-e-doesnt-work-properly-in-tex-mode
 (setq sentence-end-double-space nil)
 
-;; https://pleasefindattached.blogspot.com/2011/12/emacsauctex-sentence-fill-greatly.html
-;(defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
-;  "Start each sentence on a new line."
-;  (let ((from (ad-get-arg 0))
-;        (to-marker (set-marker (make-marker) (ad-get-arg 1)))
-;        tmp-end)
-;    (while (< from (marker-position to-marker))
-;      (forward-sentence)
-;      ;; might have gone beyond to-marker --- use whichever is smaller:
-;      (ad-set-arg 1 (setq tmp-end (min (point) (marker-position to-marker))))
-;      ad-do-it
-;      (ad-set-arg 0 (setq from (point)))
-;      (unless (or
-;               (bolp)
-;               (looking-at "\\s *$"))
-;        (LaTeX-newline)))
-;    (set-marker to-marker nil)))
-;(ad-activate 'LaTeX-fill-region-as-paragraph)
+; https://pleasefindattached.blogspot.com/2011/12/emacsauctex-sentence-fill-greatly.html
+(defadvice LaTeX-fill-region-as-paragraph (around LaTeX-sentence-filling)
+  "Start each sentence on a new line."
+  (let ((from (ad-get-arg 0))
+        (to-marker (set-marker (make-marker) (ad-get-arg 1)))
+        tmp-end)
+    (while (< from (marker-position to-marker))
+      (forward-sentence)
+      ;; might have gone beyond to-marker --- use whichever is smaller:
+      (ad-set-arg 1 (setq tmp-end (min (point) (marker-position to-marker))))
+      ad-do-it
+      (ad-set-arg 0 (setq from (point)))
+      (unless (or
+               (bolp)
+               (looking-at "\\s *$"))
+        (LaTeX-newline)))
+    (set-marker to-marker nil)))
+(ad-activate 'LaTeX-fill-region-as-paragraph)
 
 ;; From https://abizjak.github.io/emacs/2016/03/06/latex-fill-paragraph.html
 ;; Works great also!

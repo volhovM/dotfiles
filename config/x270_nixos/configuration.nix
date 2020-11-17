@@ -85,6 +85,13 @@ in {
     allowBroken = false;
   };
 
+  # https://github.com/nix-community/emacs-overlay
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   environment.systemPackages = (with pkgs; [
     acpi
     alsaUtils
@@ -104,7 +111,8 @@ in {
     elinks
     electrum
     evince
-    emacs
+#    emacs
+    emacsGit
     enca
     exiftool
     espeak
@@ -237,7 +245,7 @@ in {
           random
           random-shuffle
           turtle
- 	  tidal
+          tidal
           unordered-containers
 #          universum
           zlib

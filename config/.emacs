@@ -17,6 +17,7 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -27,29 +28,27 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(auth-source-save-behavior nil)
- '(browse-url-browser-function (quote browse-url-firefox))
+ '(browse-url-browser-function 'browse-url-firefox)
  '(browse-url-firefox-program "firefox")
  '(browse-url-generic-program "firefox")
  '(clean-buffer-list-delay-general 2)
  '(column-number-mode t)
  '(compilation-scroll-output t)
  '(custom-safe-themes
-   (quote
-    ("72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "c48551a5fb7b9fc019bf3f61ebf14cf7c9cdca79bcb2a4219195371c02268f11" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "46fd293ff6e2f6b74a5edf1063c32f2a758ec24a5f63d13b07a20255c074d399" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" default)))
+   '("72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "c48551a5fb7b9fc019bf3f61ebf14cf7c9cdca79bcb2a4219195371c02268f11" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "e0d42a58c84161a0744ceab595370cbe290949968ab62273aed6212df0ea94b4" "3cc2385c39257fed66238921602d8104d8fd6266ad88a006d0a4325336f5ee02" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "0c29db826418061b40564e3351194a3d4a125d182c6ee5178c237a7364f0ff12" "987b709680284a5858d5fe7e4e428463a20dfabe0a6f2a6146b3b8c7c529f08b" "46fd293ff6e2f6b74a5edf1063c32f2a758ec24a5f63d13b07a20255c074d399" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "3cd28471e80be3bd2657ca3f03fbb2884ab669662271794360866ab60b6cb6e6" default))
  '(default-input-method "Agda")
  '(encourage-mode nil)
  '(epg-gpg-program "gpg")
- '(evil-undo-system (quote undo-tree))
+ '(evil-undo-system 'undo-tree)
  '(haskell-interactive-popup-errors nil)
  '(haskell-interactive-types-for-show-ambiguous t)
- '(haskell-process-args-stack-ghci (quote ("--ghci-options=-ferror-spans" "--no-load")))
+ '(haskell-process-args-stack-ghci '("--ghci-options=-ferror-spans" "--no-load"))
  '(haskell-process-log t)
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save nil)
  '(inhibit-startup-screen t)
  '(ledger-reports
-   (quote
-    (("debit" "ledger -f finances.dat report Assets:Debit")
+   '(("debit" "ledger -f finances.dat report Assets:Debit")
      ("adjustments" "ledger -f finances.dat register adjustments")
      ("budgetOnly" "ledger -f finances.dat --budget register spendings --monthly")
      ("budgeted" "ledger -f finances.dat --add-budget --monthly register spendings")
@@ -57,8 +56,8 @@
      ("bal" "ledger -f %(ledger-file) bal")
      ("reg" "ledger -f %(ledger-file) reg")
      ("payee" "ledger -f %(ledger-file) reg @%(payee)")
-     ("account" "ledger -f %(ledger-file) reg %(account)"))))
- '(linum-format (quote dynamic))
+     ("account" "ledger -f %(ledger-file) reg %(account)")))
+ '(linum-format 'dynamic)
  '(menu-bar-mode nil)
  '(midnight-mode t nil (midnight))
  '(nyan-animate-nyancat t)
@@ -68,38 +67,36 @@
  '(nyan-wavy-trail nil)
  '(olivetti-body-width 90)
  '(org-agenda-clock-consistency-checks
-   (quote
-    (:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
+   '(:max-duration "13:00" :min-duration 0 :max-gap "0:02" :gap-ok-around nil :default-face
                    ((:background "DarkRed")
                     (:foreground "white"))
-                   :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil)))
- '(org-agenda-deadline-leaders (quote ("" "%-2d d:" "%2d d. ago:")))
- '(org-agenda-files (quote ("~/org/study.org" "~/org/private.org")))
- '(org-agenda-ignore-properties (quote (effort appt)))
+                   :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil))
+ '(org-agenda-deadline-leaders '("" "%-2d d:" "%2d d. ago:"))
+ '(org-agenda-files
+   '("~/org/study.org" "~/org/private.org" "~/org/knowledge.org" "~/org/info.org.gpg"))
+ '(org-agenda-ignore-properties '(effort appt))
  '(org-agenda-prefix-format
-   (quote
-    ((agenda . " %i %-10:c% t% s")
+   '((agenda . " %i %-10:c% t% s")
      (todo . " %i %-10:c")
      (tags . " %i %-10:c")
-     (search . " %i %-10:c"))))
- '(org-agenda-scheduled-leaders (quote ("" "%-2dx: ")))
+     (search . " %i %-10:c")))
+ '(org-agenda-scheduled-leaders '("" "%-2dx: "))
  '(org-agenda-skip-deadline-if-done t)
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-span 10)
  '(org-agenda-time-grid
-   (quote
-    ((daily today require-timed)
+   '((daily today require-timed)
      (800 1000 1200 1400 1600 1800 2000)
-     "" "------------------------------")))
+     "" "------------------------------"))
  '(org-agenda-use-time-grid t)
  '(org-archive-location "archive.org.gpg::* From %s")
- '(org-catch-invisible-edits (quote show-and-error))
- '(org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+ '(org-catch-invisible-edits 'show-and-error)
+ '(org-clock-auto-clock-resolution 'when-no-clock-is-running)
  '(org-clock-history-length 23)
  '(org-clock-in-resume t)
- '(org-clock-in-switch-to-state (quote bh/clock-in-to-next))
+ '(org-clock-in-switch-to-state 'bh/clock-in-to-next)
  '(org-clock-into-drawer t)
- '(org-clock-mode-line-total (quote current))
+ '(org-clock-mode-line-total 'current)
  '(org-clock-out-remove-zero-time-clocks t)
  '(org-clock-out-when-done t)
  '(org-clock-persist-query-resume nil)
@@ -108,18 +105,17 @@
  '(org-cycle-include-plain-lists t)
  '(org-ditaa-jar-path
    (expand-file-name "~/.emacs.d/elpa/contrib/scripts/ditaa.jar"))
- '(org-drawers (quote ("PROPERTIES" "LOGBOOK")))
- '(org-duration-format (quote h:mm))
+ '(org-drawers '("PROPERTIES" "LOGBOOK"))
+ '(org-duration-format 'h:mm)
  '(org-extend-today-until 3)
  '(org-file-apps
-   (quote
-    ((auto-mode . emacs)
+   '((auto-mode . emacs)
      (directory . "urxvt -cd %s")
      ("\\.pdf\\'" . "zathura %s")
      ("\\.xopp\\'" . "xournalpp %s")
      ("\\.djvu\\'" . "zathura %s")
      ("\\.ps\\'" . "zathura %s")
-     ("\\.x?html?\\'" . "firefox --new-tab %s"))))
+     ("\\.x?html?\\'" . "firefox --new-tab %s")))
  '(org-habit-completed-glyph 42)
  '(org-habit-following-days 2)
  '(org-habit-graph-column 47)
@@ -127,17 +123,15 @@
  '(org-habit-show-all-today nil)
  '(org-log-done t)
  '(org-log-state-notes-insert-after-drawers t)
- '(org-modules (quote (org-habit org-drill)))
+ '(org-modules '(org-habit org-drill))
  '(org-pretty-entities t)
  '(org-startup-folded t)
  '(org-startup-truncated nil)
  '(org-tags-column -80)
  '(org-time-clocksum-format
-   (quote
-    (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+   '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
  '(org-todo-keyword-faces
-   (quote
-    (("TD" . "red")
+   '(("TD" . "red")
      ("ST" . "orange")
      ("WT" . "grey")
      ("DN" . "green3")
@@ -149,55 +143,47 @@
      ("2" . "yellow")
      ("3" . "green")
      ("V" :background "green" :foreground "black" :weight bold)
-     ("OK" . "green"))))
- '(org-todo-keywords (quote ((type "TD" "ST" "WT" "|" "DN" "CL"))))
+     ("OK" . "green")))
+ '(org-todo-keywords '((type "TD" "ST" "WT" "|" "DN" "CL")))
  '(org-trello-current-prefix-keybinding "C-c o")
  '(org-use-effective-time t)
  '(package-selected-packages
-   (quote
-    (adaptive-wrap evil-better-visual-line olivetti ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete)))
+   '(visual-fill-column adaptive-wrap evil-better-visual-line olivetti ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete))
  '(safe-local-variable-values
-   (quote
-    ((TeX-master . "../")
+   '((TeX-master . "../")
      (TeX-master . "../weakse")
-     (eval c-set-offset
-           (quote access-label)
-           (quote -))
-     (eval c-set-offset
-           (quote substatement-open)
-           0)
-     (eval c-set-offset
-           (quote arglist-cont-nonempty)
-           (quote +))
-     (eval c-set-offset
-           (quote arglist-cont)
-           0)
-     (eval c-set-offset
-           (quote arglist-intro)
-           (quote +))
-     (eval c-set-offset
-           (quote inline-open)
-           0)
-     (eval c-set-offset
-           (quote defun-open)
-           0)
-     (eval c-set-offset
-           (quote innamespace)
-           0)
-     (indicate-empty-lines . t))))
+     (eval c-set-offset 'access-label '-)
+     (eval c-set-offset 'substatement-open 0)
+     (eval c-set-offset 'arglist-cont-nonempty '+)
+     (eval c-set-offset 'arglist-cont 0)
+     (eval c-set-offset 'arglist-intro '+)
+     (eval c-set-offset 'inline-open 0)
+     (eval c-set-offset 'defun-open 0)
+     (eval c-set-offset 'innamespace 0)
+     (indicate-empty-lines . t)))
  '(scroll-bar-mode nil)
  '(select-enable-primary t)
  '(tool-bar-mode nil)
+ '(truncate-partial-width-windows 100)
  '(undo-outer-limit 20000000)
  '(undo-strong-limit 15000000)
  '(whitespace-style
-   (quote
-    (face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark)))
+   '(face trailing tabs spaces lines newline empty indentation::space space-after-tab space-before-tab space-mark tab-mark newline-mark))
  '(word-wrap t)
- '(yas-indent-line (quote fixed))
- '(yas-snippet-dirs (quote ("~/.emacs.d/snippets"))))
+ '(yas-indent-line 'fixed)
+ '(yas-snippet-dirs '("~/.emacs.d/snippets")))
 
 (global-undo-tree-mode 1)
+
+
+;;;****************************************************************************************
+;; EXPERIMENTING WITH WORD WRAPPING
+;;;****************************************************************************************
+
+; See my comment in https://www.emacswiki.org/emacs/LineWrap
+(setq word-wrap-by-category t)
+(modify-category-entry '(32 . 38) ?|)
+(modify-category-entry '(45 . 47) ?|)
 
 ;;;****************************************************************************************
 ;;; DISABLE TABS
@@ -295,12 +281,12 @@
 ;(set-default-font "Terminus-10")
 ;(set-default-font "Fira Code-10")
 ;(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
-(set-face-attribute 'default nil :font "Fira Code-10")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil :family "Fira Code" :foundry "CTDB" :slant normal :weight semi-bold :height 100 :width normal))))
  '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
  '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
  '(fstar-subp-overlay-processed-face ((t (:background "#071c1c"))))

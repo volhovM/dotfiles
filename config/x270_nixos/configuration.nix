@@ -86,11 +86,13 @@ in {
   };
 
   # https://github.com/nix-community/emacs-overlay
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
+  nixpkgs.overlays = [ (import ./emacs-overlay/default.nix) ];
+#  nixpkgs.overlays = [
+#    (import (builtins.fetchTarball {
+#      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+#    }))
+#  ];
+
 
   environment.systemPackages = (with pkgs; [
     acpi

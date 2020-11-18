@@ -500,6 +500,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (setq dumb-jump-mode t)
 (setq dumb-jump-force-searcher 'ag)
 (setq dumb-jump-fallback-search nil)
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
 ;;;****************************************************************************************
 ;;; Haskell

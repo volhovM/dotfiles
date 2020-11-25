@@ -27,3 +27,4 @@ makeLink "./.orgstat.yaml" ~/.orgstat.yaml
 makeLink "./.Xresources" ~/.Xresources
 makeLink "./categorize.cfg" ~/.arbtt/categorize.cfg
 makeLink "./.stylish-haskell.yaml" ~/.stylish-haskell.yaml
+makeLink "./motion.conf" ~/.motion/motion.conf

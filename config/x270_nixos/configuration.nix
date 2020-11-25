@@ -361,7 +361,7 @@ in {
       extraConfig = ''
         address=/2ch.hk/127.0.0.1
         address=/instagram.com/127.0.0.1
-        address=/telegram.org/127.0.0.1
+        #address=/telegram.org/127.0.0.1
       '';
     };
 

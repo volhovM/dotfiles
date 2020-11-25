@@ -40,6 +40,7 @@
  '(encourage-mode nil)
  '(epg-gpg-program "gpg")
  '(evil-undo-system 'undo-tree)
+ '(font-use-system-font nil)
  '(haskell-interactive-popup-errors nil)
  '(haskell-interactive-types-for-show-ambiguous t)
  '(haskell-process-args-stack-ghci '("--ghci-options=-ferror-spans" "--no-load"))
@@ -121,6 +122,24 @@
  '(org-habit-graph-column 47)
  '(org-habit-preceding-days 18)
  '(org-habit-show-all-today nil)
+ '(org-latex-default-packages-alist
+   '(("AUTO" "inputenc" t
+      ("pdflatex"))
+     ("T1" "fontenc" t
+      ("pdflatex"))
+     ("" "graphicx" t nil)
+     ("" "grffile" t nil)
+     ("" "longtable" nil nil)
+     ("" "wrapfig" nil nil)
+     ("" "rotating" nil nil)
+     ("normalem" "ulem" t nil)
+     ("" "amsmath" t nil)
+     ("" "textcomp" t nil)
+     ("" "amssymb" t nil)
+     ("" "capt-of" nil nil)
+     ("" "hyperref" nil nil)
+     ("n,advantage,operators,sets,adversary,primitives,asymptotics,keys" "cryptocode" nil nil)))
+ '(org-latex-packages-alist '(("lambda" "cryptocode" nil)))
  '(org-log-done t)
  '(org-log-state-notes-insert-after-drawers t)
  '(org-modules '(org-habit org-drill))
@@ -175,14 +194,14 @@
 
 (global-undo-tree-mode 1)
 
-
 ;;;****************************************************************************************
 ;; EXPERIMENTING WITH WORD WRAPPING
 ;;;****************************************************************************************
 
 ; See my comment in https://www.emacswiki.org/emacs/LineWrap
 (setq word-wrap-by-category t)
-(modify-category-entry '(32 . 38) ?|)
+(modify-category-entry '(32 . 32) ?|)
+(modify-category-entry '(36 . 38) ?|)
 (modify-category-entry '(45 . 47) ?|)
 
 ;;;****************************************************************************************
@@ -293,6 +312,7 @@
  '(org-agenda-date ((t (:inherit org-agenda-structure :underline "gray23"))))
  '(org-agenda-structure ((t (:foreground "LightSkyBlue"))))
  '(org-column ((t (:background "#260826" :strike-through nil :underline nil :slant normal :weight normal))))
+ '(org-indent ((t (:background "gray10" :inherit org-hide))))
  '(sbt:error ((t (:foreground "red"))))
  '(whitespace-hspace ((t (:foreground "gray22"))))
  '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
@@ -336,7 +356,7 @@
 
 ;; Org roam
 (setq org-roam-directory "~/org/roam")
-;(add-hook 'after-init-hook 'org-roam-mode)
+(add-hook 'after-init-hook 'org-roam-mode)
 
 (org-clock-persistence-insinuate)
 (org-babel-do-load-languages
@@ -460,6 +480,21 @@ Switch projects and subprojects from STARTED back to TODO"
 ;  ;;(insert (format-time-string "%A, %B %e, %Y")))
 ;  (insert (format-time-string "%y-%m-%d")))
 
+;(quelpa
+; '(quelpa-use-package
+;   :fetcher git
+;   :url "https://github.com/quelpa/quelpa-use-package.git"))
+;(require 'quelpa-use-package)
+;(add-to-list 'load-path "~/.emacs.d/org-backlink.el")
+;(require org-backlink)
+
+;
+;(use-package org-super-links
+;  :quelpa (org-super-links :repo "toshism/org-super-links" :fetcher github :commit "0.3")
+;  :bind (("C-c s s" . sl-link)
+;           ("C-c s l" . sl-store-link)
+;           ("C-c s C-l" . sl-insert-link)))
+
 ;;;****************************************************************************************
 ;;; Latex / auctex
 ;;;****************************************************************************************
@@ -478,6 +513,107 @@ Switch projects and subprojects from STARTED back to TODO"
   (olivetti-set-width 120)
   )
 (add-hook 'LaTeX-mode-hook 'my-LaTeX-hook)
+
+(defvar org-latex-fragment-last nil
+  "Holds last fragment/environment you were on.")
+
+(defun my/org-latex-fragment--get-current-latex-fragment ()
+  "Return the overlay associated with the image under point."
+  (car (--select (eq (overlay-get it 'org-overlay-type) 'org-latex-overlay) (overlays-at (point)))))
+
+(defun my/org-in-latex-fragment-p ()
+    "Return the point where the latex fragment begins, if inside
+  a latex fragment. Else return false"
+    (let* ((el (org-element-context))
+           (el-type (car el)))
+      (and (or (eq 'latex-fragment el-type) (eq 'latex-environment el-type))
+          (org-element-property :begin el))))
+
+(defun org-latex-fragment-toggle-auto ()
+  ;; Wait for the s
+  (interactive)
+  (while-no-input
+    (run-with-idle-timer 0.05 nil 'org-latex-fragment-toggle-helper)))
+
+(defun org-latex-fragment-toggle-helper ()
+    "Toggle a latex fragment image "
+    (condition-case nil
+        (and (eq 'org-mode major-mode)
+             (let* ((begin (my/org-in-latex-fragment-p)))
+               (cond
+                ;; were on a fragment and now on a new fragment
+                ((and
+                  ;; fragment we were on
+                  org-latex-fragment-last
+                  ;; and are on a fragment now
+                  begin
+                  ;; but not on the last one this is a little tricky. as you edit the
+                  ;; fragment, it is not equal to the last one. We use the begin
+                  ;; property which is less likely to change for the comparison.
+                  (not (= begin
+                          org-latex-fragment-last)))
+                 ;; go back to last one and put image back
+                 (save-excursion
+                   (goto-char org-latex-fragment-last)
+                   (when (my/org-in-latex-fragment-p) (org-latex-preview))
+                   ;; now remove current imagea
+                   (goto-char begin)
+                   (let ((ov (my/org-latex-fragment--get-current-latex-fragment)))
+                     (when ov
+                       (delete-overlay ov)))
+                   ;; and save new fragment
+                   (setq org-latex-fragment-last begin)))
+
+                ;; were on a fragment and now are not on a fragment
+                ((and
+                  ;; not on a fragment now
+                  (not begin)
+                  ;; but we were on one
+                  org-latex-fragment-last)
+                 ;; put image back on
+                 (save-excursion
+                   (goto-char org-latex-fragment-last)
+                   (when (my/org-in-latex-fragment-p)(org-latex-preview)))
+
+                 ;; unset last fragment
+                 (setq org-latex-fragment-last nil))
+
+                ;; were not on a fragment, and now are
+                ((and
+                  ;; we were not one one
+                  (not org-latex-fragment-last)
+                  ;; but now we are
+                  begin)
+                 (save-excursion
+                   (goto-char begin)
+                   ;; remove image
+                   (let ((ov (my/org-latex-fragment--get-current-latex-fragment)))
+                     (when ov
+                       (delete-overlay ov)))
+                   (setq org-latex-fragment-last begin)))
+                ;; else not on a fragment
+                ((not begin)
+                 (setq org-latex-fragment-last nil)))))
+      (error nil)))
+
+
+(add-hook 'post-command-hook 'org-latex-fragment-toggle-auto)
+(setq org-latex-fragment-toggle-helper (byte-compile 'org-latex-fragment-toggle-helper))
+(setq org-latex-fragment-toggle-auto (byte-compile 'org-latex-fragment-toggle-auto))
+
+(plist-put org-format-latex-options :scale 1.4)
+;
+;(defun update-org-latex-fragment-scale ()
+;  (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
+;    (plist-put org-format-latex-options :scale (* 2.3 text-scale-factor)))
+;)
+;(add-hook 'text-scale-mode-hook 'update-org-latex-fragment-scale)
+;(defun update-org-latex-fragments ()
+;  (org-latex-preview '(64))
+;  (plist-put org-format-latex-options :scale text-scale-mode-amount)
+;  (org-latex-preview '(16)))
+;(add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
+
 
 ;;;****************************************************************************************
 ;;; Frames
@@ -703,6 +839,15 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;;****************************************************************************************
 ;;;; Spelling
 ;;;****************************************************************************************
+
+; multiple dictionaries
+(with-eval-after-load "ispell"
+  (setq ispell-program-name "hunspell")
+  (setq ispell-dictionary "en_GB,ru_RU")
+  ;; ispell-set-spellchecker-params has to be called
+  ;; before ispell-hunspell-add-multi-dic will work
+  (ispell-set-spellchecker-params)
+  (ispell-hunspell-add-multi-dic "en_GB,ru_RU"))
 
 (setq flyspell-persistent-highlight t)
 (global-set-key (kbd "<f8>") 'ispell-word)

@@ -1,28 +1,21 @@
-;; package ---- summary
-;;; Commentary:
-;;;.emacs settings
+; package ---- summary
+;; Commentary:
+;;.emacs settings
 
 (require 'package)
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ;("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
-
-; activate all the packages (in particular autoloads)
-(package-initialize)
-
-; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-indent-level 4)
  '(ansi-color-faces-vector
    [default bold default italic underline success warning error])
  '(ansi-color-names-vector
@@ -47,6 +40,7 @@
  '(haskell-process-log t)
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save nil)
+ '(helm-org-rifle-input-idle-delay 0.1)
  '(inhibit-startup-screen t)
  '(ledger-reports
    '(("debit" "ledger -f finances.dat report Assets:Debit")
@@ -74,7 +68,7 @@
                    :overlap-face nil :gap-face nil :no-end-time-face nil :long-face nil :short-face nil))
  '(org-agenda-deadline-leaders '("" "%-2d d:" "%2d d. ago:"))
  '(org-agenda-files
-   '("~/org/study.org" "~/org/private.org" "~/org/knowledge.org" "~/org/info.org.gpg"))
+   '("~/org/study.org" "~/org/private.org" "~/org/reviews.org" "~/org/notes.org.gpg" "~/org/technical.org"))
  '(org-agenda-ignore-properties '(effort appt))
  '(org-agenda-prefix-format
    '((agenda . " %i %-10:c% t% s")
@@ -91,6 +85,28 @@
      "" "------------------------------"))
  '(org-agenda-use-time-grid t)
  '(org-archive-location "archive.org.gpg::* From %s")
+ '(org-capture-templates
+   '(("h" "Health" entry
+      (file+olp "~/org/notes.org.gpg" "Stats" "Health" "Health log")
+      "** HN%<%Y-%m-%d>
+#+DATE: %<%Y-%m-%d>
+%?" :jump-to-captured t)
+     ("f" "Fleeting" entry
+      (file+headline "~/org/notes.org.gpg" "Fleeting")
+      "** N%<%Y-%m-%d>
+#+DATE: %<%Y-%m-%d>
+%?" :prepend t :jump-to-captured t)
+     ("r" "Research" entry
+      (file "~/org/technical.org")
+      "
+* RN%<%Y-%m-%d>
+#+DATE: %<%Y-%m-%d>
+%?" :prepend t :jump-to-captured t)
+     ("p" "Project" entry
+      (file+headline "~/org/notes.org.gpg" "Projects")
+      "** %?
+#+DATE: %<%Y-%m-%d>
+" :prepend t :jump-to-captured t)))
  '(org-catch-invisible-edits 'show-and-error)
  '(org-clock-auto-clock-resolution 'when-no-clock-is-running)
  '(org-clock-history-length 23)
@@ -122,28 +138,13 @@
  '(org-habit-graph-column 47)
  '(org-habit-preceding-days 18)
  '(org-habit-show-all-today nil)
- '(org-latex-default-packages-alist
-   '(("AUTO" "inputenc" t
-      ("pdflatex"))
-     ("T1" "fontenc" t
-      ("pdflatex"))
-     ("" "graphicx" t nil)
-     ("" "grffile" t nil)
-     ("" "longtable" nil nil)
-     ("" "wrapfig" nil nil)
-     ("" "rotating" nil nil)
-     ("normalem" "ulem" t nil)
-     ("" "amsmath" t nil)
-     ("" "textcomp" t nil)
-     ("" "amssymb" t nil)
-     ("" "capt-of" nil nil)
-     ("" "hyperref" nil nil)
-     ("n,advantage,operators,sets,adversary,primitives,asymptotics,keys" "cryptocode" nil nil)))
- '(org-latex-packages-alist '(("lambda" "cryptocode" nil)))
+ '(org-latex-packages-alist
+   '(("lambda,adversary,operators,asymptotics,keys,oracles,primitives" "cryptocode" t)))
  '(org-log-done t)
  '(org-log-state-notes-insert-after-drawers t)
  '(org-modules '(org-habit org-drill))
  '(org-pretty-entities t)
+ '(org-preview-latex-image-directory "~/.emacs.d/ltximg/")
  '(org-startup-folded t)
  '(org-startup-truncated nil)
  '(org-tags-column -80)
@@ -167,9 +168,11 @@
  '(org-trello-current-prefix-keybinding "C-c o")
  '(org-use-effective-time t)
  '(package-selected-packages
-   '(visual-fill-column adaptive-wrap evil-better-visual-line olivetti ansi org-roam org-pomodoro latex-preview-pane iedit fstar-mode tidal dired-single evil dumb-jump minimap tuareg ag smart-mode-line yasnippet org package-build shut-up epl git commander f dash s websocket unicode-fonts undo-tree sublime-themes semi rainbow-delimiters python-mode purescript-mode nyan-mode nlinum markdown-mode ledger-mode idris-mode htmlize hindent goto-chg git-rebase-mode git-commit-mode font-lock+ flycheck-purescript flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete))
+   '(helm-org-ql minimap helm-org-rifle ox-hugo org-journal auctex quelpa-use-package helm visual-fill-column adaptive-wrap evil-better-visual-line olivetti ansi latex-preview-pane dired-single evil dumb-jump ag smart-mode-line yasnippet org package-build epl git commander dash s unicode-fonts undo-tree sublime-themes rainbow-delimiters python-mode nyan-mode nlinum ledger-mode htmlize hindent goto-chg flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete))
  '(safe-local-variable-values
-   '((TeX-master . "../")
+   '((eval run-with-idle-timer 5 t #'volhovm-save-study)
+     (eval load-file "formatting.el")
+     (TeX-master . "../")
      (TeX-master . "../weakse")
      (eval c-set-offset 'access-label '-)
      (eval c-set-offset 'substatement-open 0)
@@ -192,6 +195,12 @@
  '(yas-indent-line 'fixed)
  '(yas-snippet-dirs '("~/.emacs.d/snippets")))
 
+; activate all the packages, refresh, install missing
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+(package-install-selected-packages)
+
 (global-undo-tree-mode 1)
 
 ;;;****************************************************************************************
@@ -202,7 +211,7 @@
 (setq word-wrap-by-category t)
 (modify-category-entry '(32 . 32) ?|)
 (modify-category-entry '(36 . 38) ?|)
-(modify-category-entry '(45 . 47) ?|)
+(modify-category-entry '(47 . 47) ?|)
 
 ;;;****************************************************************************************
 ;;; DISABLE TABS
@@ -211,8 +220,52 @@
 (setq-default indent-tabs-mode nil)
 
 ;;;****************************************************************************************
-;;; THEMES
+;;; THEMES AND FACES
 ;;;****************************************************************************************
+
+;(require 'sublime-themes)
+;(load-theme 'junio t)
+;(setq custom--inhibit-theme-enable nil)
+
+(with-eval-after-load "junio-theme"
+  (custom-theme-set-faces
+   'junio
+   '(org-drawer ((t (:foreground "gray30"))))
+   '(whitespace-hspace ((t (:foreground "gray22"))))
+   '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
+   '(whitespace-space ((t (:foreground "gray20"))))
+   '(whitespace-tab ((t (:foreground "gray25"))))
+   ))
+
+(with-eval-after-load "tango-theme"
+  (custom-theme-set-faces
+   'tango
+   '(org-table ((t (:foreground "gray40"))))
+   '(org-drawer ((t (:foreground "gray70"))))
+   '(whitespace-hspace ((t (:foreground "gray22"))))
+   '(whitespace-newline ((t (:foreground "gray80" :weight normal))))
+   '(whitespace-space ((t (:foreground "gray88"))))
+   '(whitespace-tab ((t (:foreground "gray88"))))
+   ))
+
+;(set-default-font "Terminus-10")
+;(set-default-font "Fira Code-10")
+;(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil))))
+ '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
+ '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
+ '(fstar-subp-overlay-processed-face ((t (:background "#071c1c"))))
+ '(org-agenda-date ((t (:inherit org-agenda-structure :underline "gray23"))))
+ '(org-column ((t (:background "#260826" :strike-through nil :underline nil :slant normal :weight normal))))
+ '(org-indent ((t (:inherit (whitespace-space))))))
+
+;(setq org-indent-boundary-char 46)
+(setq org-indent-boundary-char 124)
 
 ; Taken from here: https://emacs.stackexchange.com/questions/24088/make-a-function-to-toggle-themes
 (defvar theme-dark 'junio)
@@ -239,23 +292,48 @@
 
 (global-set-key (kbd "<f6>") 'toggle-theme)
 
+; I don't know why this is needed but otherwise the original theme colours are broken
+(toggle-theme)
+(toggle-theme)
+
 
 ;;;****************************************************************************************
 ;;; EVIL MODE
 ;;;****************************************************************************************
 
+;(setq evil-respect-visual-line-mode t)
 (require 'evil)
 (evil-mode t)
 (setq evil-want-C-i-jump nil)
 ; jump-back is useless, I use it to open org-links instead
-(eval-after-load "evil-maps"
-  (define-key evil-motion-state-map "\C-o" nil))
+(eval-after-load "evil-maps" (lambda ()
+  (define-key evil-motion-state-map "\C-o" nil)
+  (define-key evil-motion-state-map "\C-z" nil)))
 
-(define-key evil-motion-state-map "j" 'evil-next-visual-line)
-(define-key evil-motion-state-map "k" 'evil-previous-visual-line)
-;; Also in visual mode
-(define-key evil-visual-state-map "j" 'evil-next-visual-line)
-(define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+; Something here breaks undo tree..
+
+(define-key evil-motion-state-map   (kbd "<remap> <evil-next-line>")     #'evil-next-visual-line)
+(define-key evil-motion-state-map   (kbd "<remap> <evil-previous-line>") #'evil-previous-visual-line)
+(define-key evil-operator-state-map (kbd "<remap> <evil-next-line>")     #'evil-next-line)
+(define-key evil-operator-state-map (kbd "<remap> <evil-previous-line>") #'evil-previous-line)
+
+; TODO this work universally, but probably should only affect org-mode
+(define-key evil-motion-state-map "$" 'evil-end-of-visual-line)
+(define-key evil-motion-state-map "0" 'evil-beginning-of-visual-line)
+(define-key evil-visual-state-map "$" 'evil-end-of-visual-line)
+(define-key evil-visual-state-map "0" 'evil-beginning-of-visual-line)
+
+
+;(define-key evil-normal-state-map "j" 'evil-next-visual-line)
+;(define-key evil-normal-state-map "k" 'evil-previous-visual-line)
+
+;(define-key evil-motion-state-map "j" 'evil-next-visual-line)
+;(define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+;;; Also in visual mode (disabled, since anyway visual selection ignores visual-line-mode)
+;(define-key evil-visual-state-map "j" 'evil-next-visual-line)
+;(define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+
 
 ;;;****************************************************************************************
 ;;; YASNIPPET
@@ -263,22 +341,41 @@
 
 (yas-global-mode 1)
 
-
 ;;;****************************************************************************************
 ;;; Mode line
 ;;;****************************************************************************************
 
 (nyan-mode t)
 
-
 ;;;****************************************************************************************
 ;;; IDO MODE
 ;;;****************************************************************************************
+
+; conflicts with helm?
 
 (ido-mode t)
 (add-to-list 'ido-ignore-files "\.checked")
 (add-to-list 'ido-ignore-files "\.hints")
 (add-to-list 'ido-ignore-files "\.exe")
+
+;;;****************************************************************************************
+;;; HELM
+;;;***********************************************************************************
+
+;; Taken from: https://tuhdo.github.io/helm-intro.html
+;
+;(global-set-key (kbd "C-c h") 'helm-command-prefix)
+;(global-unset-key (kbd "C-x c"))
+;
+;(setq helm-split-window-in-side-p t)
+;(global-set-key (kbd "M-x") 'helm-M-x)
+;(global-set-key (kbd "C-x b") 'helm-mini)
+;(global-set-key (kbd "C-x C-f") 'helm-find-files)
+;
+;; Because the default completion while searching (for files) is enter.
+;(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+;(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 ;;;****************************************************************************************
 ;; DIRED
@@ -296,28 +393,54 @@
         ("\\.jpg\\'" "gqview")
         ("\\.png\\'" "gqview")))
 
-;; FONTS
-;(set-default-font "Terminus-10")
-;(set-default-font "Fira Code-10")
-;(set-default-font "gohufont-10") ; it looks nicer, but doesn't scale (11pk, 14px)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background nil :family "Fira Code" :foundry "CTDB" :slant normal :weight semi-bold :height 100 :width normal))))
- '(fstar-subp-overlay-busy-face ((t (:background "#2b0819"))))
- '(fstar-subp-overlay-pending-face ((t (:background "#2b0819"))))
- '(fstar-subp-overlay-processed-face ((t (:background "#071c1c"))))
- '(org-agenda-date ((t (:inherit org-agenda-structure :underline "gray23"))))
- '(org-agenda-structure ((t (:foreground "LightSkyBlue"))))
- '(org-column ((t (:background "#260826" :strike-through nil :underline nil :slant normal :weight normal))))
- '(org-indent ((t (:background "gray10" :inherit org-hide))))
- '(sbt:error ((t (:foreground "red"))))
- '(whitespace-hspace ((t (:foreground "gray22"))))
- '(whitespace-newline ((t (:foreground "gray19" :weight normal))))
- '(whitespace-space ((t (:foreground "gray20"))))
- '(whitespace-tab ((t (:foreground "gray25")))))
+;;;****************************************************************************************
+;; ORG RIFLE custom
+;;;***********************************************************************************
+
+;; Somehow this version doesn't have a timeout bug present!
+;(load-file "~/code/org-rifle/helm-org-rifle.el")
+
+;;;****************************************************************************************
+;; ORG super links
+;;;****************************************************************************************
+
+;(defun volhovm-org-make-link-description-function (link desc)
+;  (read-string "Description: " desc))
+;
+;(setq org-make-link-description-function 'volhovm-org-make-link-description-function)
+
+(add-to-list 'load-path "~/code/org-super-links/")
+(require 'org-super-links)
+
+(setq org-super-links-enable-forward-prompt t)
+
+(defun volhovm-exists-backlink ()
+  (interactive)
+  (save-window-excursion
+    (with-current-buffer (current-buffer)
+      (save-excursion
+        (let ((id (org-id-get (point))))
+          (org-open-at-point)
+          (org-super-links--find-link id))))))
+(defun volhovm-convert-to-super-maybe ()
+  (interactive)
+  "Tries to insert a backlink if not present. Direct outside-of-drawer
+  backlinks also count"
+  (let* ((ltype (org-element-property :type (org-element-context))))
+    (if (and (not (org-super-links--in-drawer))
+               (string= ltype "id")
+               (not (volhovm-exists-backlink)))
+      (org-super-links-convert-link-to-super t)
+      (message "Not converting")
+      )))
+(defun volhovm-convert-all-links-to-super ()
+  (interactive)
+  "Goes through all the id-type links after the pointer that don't have backlinks
+  and tries to add the backlinks."
+  (while (not (string= (org-next-link) "No further link found"))
+    (volhovm-convert-to-super-maybe))
+  (message "Conversion done"))
+
 
 ;;;****************************************************************************************
 ;; ORG MODE
@@ -325,6 +448,10 @@
 
 (global-set-key (kbd "<f12>") 'org-agenda)
 (global-set-key "\C-ca" 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(defun volhovm-save-study ()
+  (with-current-buffer "study.org" (save-buffer)))
 (defun my-org-mode-hook ()
   "Hook for org mode."
   (local-set-key (kbd "C-c C-k") 'org-resolve-clocks)
@@ -332,31 +459,50 @@
   (local-set-key (kbd "C-c C-o") 'org-clock-out)
   (local-set-key (kbd "C-c C-j") 'org-clock-goto)
   (local-set-key (kbd "C-o") 'org-open-at-point)
+  (local-set-key (kbd "C-z") 'org-mark-ring-goto)
+;  (local-set-key (kbd "C-c /") 'helm-org-rifle-agenda-files)
+;  (local-set-key (kbd "C-c /") 'helm-org-rifle-current-buffer)
+  (local-set-key (kbd "C-c /") 'helm-org-ql-agenda-files)
+  (local-set-key (kbd "C-c l") 'org-store-link)
+  (local-set-key (kbd "C-c C-l") 'org-insert-link)
+  (local-set-key (kbd "C-c s s") 'org-super-links-link)
+  (local-set-key (kbd "C-c s l") 'org-super-links-store-link)
+  (local-set-key (kbd "C-c s C-l") 'org-super-links-insert-link)
   (setq fill-column 5000)
-  (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
-  (auto-save-mode)
   (define-key org-mode-map (kbd "C-c C-x C-s") nil)
   (org-indent-mode)
   (olivetti-mode)
+  (flyspell-mode)
+;  (run-with-idle-timer 5 t #'my-save-function)
+;  (org-backlink-mode)
   (setq word-wrap t)
-  ; TODO this work universally, but should only affect org-mode
-  (define-key evil-motion-state-map "$" 'evil-end-of-visual-line)
-  (define-key evil-motion-state-map "0" 'evil-beginning-of-visual-line)
-  (define-key evil-visual-state-map "$" 'evil-end-of-visual-line)
-  (define-key evil-visual-state-map "0" 'evil-beginning-of-visual-line)
   )
 (defun my-org-agenda-mode-hook ()
   "Enables hjkl-bindings for agenda-mode."
   (define-key org-agenda-mode-map "j" 'org-agenda-next-line)
   (define-key org-agenda-mode-map "k" 'org-agenda-previous-line)
   (define-key org-agenda-mode-map "l" 'evil-forward-char)
-  (define-key org-agenda-mode-map "h" 'evil-backward-char))
+  (define-key org-agenda-mode-map "h" 'evil-backward-char)
+  (olivetti-mode))
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-agenda-mode-hook 'my-org-agenda-mode-hook)
+(global-set-key (kbd "<f5>") 'olivetti-mode)
+
+(defun my-save-some-buffers ()
+  (interactive)
+  (org-save-all-org-buffers)
+  (save-some-buffers))
+(global-set-key (kbd "C-x s") 'my-save-some-buffers)
 
 ;; Org roam
-(setq org-roam-directory "~/org/roam")
-(add-hook 'after-init-hook 'org-roam-mode)
+;(setq org-roam-directory "~/org/roam")
+;(add-hook 'after-init-hook 'org-roam-mode)
+
+;; Org id (for links)
+;; Taken from: https://writequit.org/articles/emacs-org-mode-generate-ids.html
+;; can be improved?
+(require 'org-id)
+(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 
 (org-clock-persistence-insinuate)
 (org-babel-do-load-languages
@@ -370,6 +516,41 @@
 (setq org-drill-maximum-duration 25)
 (setq org-drill-spaced-repetition-algorithm 'sm5)
 (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
+
+
+;; Appointmens with org
+
+;(require 'org-alert)
+
+
+(require 'appt)
+(setq appt-time-msg-list nil)    ;; clear existing appt list
+(setq appt-display-interval '10) ;; warn every 10 minutes from t - appt-message-warning-time
+(setq
+  appt-message-warning-time '10  ;; send first warning 10 minutes before appointment
+  appt-display-mode-line nil     ;; don't show in the modeline
+  appt-display-format 'window)   ;; pass warnings to the designated window function
+(appt-activate 1)                ;; activate appointment notification
+(display-time)                   ;; activate time display
+
+(org-agenda-to-appt)             ;; generate the appt list from org agenda files on emacs launch
+(run-at-time "24:01" 1200 'org-agenda-to-appt)           ;; update appt list every 20m
+(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
+
+;; set up the call to terminal-notifier
+(defvar my-notifier-path
+  "/run/current-system/sw/bin/notify-send")
+(defun my-appt-send-notification (title msg)
+  (shell-command (concat my-notifier-path " " title " " msg  )))
+
+;; designate the window function for my-appt-send-notification
+(defun my-appt-display (min-to-app new-time msg)
+  (my-appt-send-notification
+    (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
+    (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
+(setq appt-disp-window-function (function my-appt-display))
+
+
 
 (require 'ox-latex)
 (setq org-latex-listings t)
@@ -466,34 +647,8 @@ Switch projects and subprojects from STARTED back to TODO"
        (get-buffer "broken-links")))))
 
 
-;(defun org/timestamp-now ()
-;  "Insert string for the current time formatted like '2:34 PM' or 1507121460"
-;  (interactive)                 ; permit invocation in minibuffer
-;  ;;(insert (format-time-string "%D %-I:%M %p")))
-;  ;;(insert (format-time-string "%02y%02m%02d%02H%02M%02S")))
-;  (insert (format-time-string "%02y%02m%02d%02H%02M")))
-;
-;(defun org/timestamp-today ()
-;  "Insert string for today's date nicely formatted in American style,
-;  e.g. Sunday, September 17, 2000 or standard 17-09-2000."
-;  (interactive)       ; permit invocation in minibuffer
-;  ;;(insert (format-time-string "%A, %B %e, %Y")))
-;  (insert (format-time-string "%y-%m-%d")))
-
-;(quelpa
-; '(quelpa-use-package
-;   :fetcher git
-;   :url "https://github.com/quelpa/quelpa-use-package.git"))
-;(require 'quelpa-use-package)
-;(add-to-list 'load-path "~/.emacs.d/org-backlink.el")
-;(require org-backlink)
-
-;
-;(use-package org-super-links
-;  :quelpa (org-super-links :repo "toshism/org-super-links" :fetcher github :commit "0.3")
-;  :bind (("C-c s s" . sl-link)
-;           ("C-c s l" . sl-store-link)
-;           ("C-c s C-l" . sl-insert-link)))
+;; Blogging
+(with-eval-after-load 'ox (require 'ox-hugo))
 
 ;;;****************************************************************************************
 ;;; Latex / auctex
@@ -602,15 +757,10 @@ Switch projects and subprojects from STARTED back to TODO"
 (setq org-latex-fragment-toggle-auto (byte-compile 'org-latex-fragment-toggle-auto))
 
 (plist-put org-format-latex-options :scale 1.4)
-;
-;(defun update-org-latex-fragment-scale ()
-;  (let ((text-scale-factor (expt text-scale-mode-step text-scale-mode-amount)))
-;    (plist-put org-format-latex-options :scale (* 2.3 text-scale-factor)))
-;)
-;(add-hook 'text-scale-mode-hook 'update-org-latex-fragment-scale)
+; scaling fragments doesn't work :(
 ;(defun update-org-latex-fragments ()
 ;  (org-latex-preview '(64))
-;  (plist-put org-format-latex-options :scale text-scale-mode-amount)
+;  (plist-put org-format-latex-options :scale 1.4)
 ;  (org-latex-preview '(16)))
 ;(add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
 
@@ -642,10 +792,10 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; Haskell
 ;;;****************************************************************************************
 
-(add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
-(require 'haskell-mode-autoloads)
-(add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode-neongreen/")
-(require 'haskell-process)
+;(add-to-list 'load-path "~/.emacs.d/haskell-mode-neongreen/")
+;(require 'haskell-mode-autoloads)
+;(add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode-neongreen/")
+;(require 'haskell-process)
 (remove-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'volhovm-haskell-mode-hook)
 (defun volhovm-haskell-mode-hook ()
@@ -667,17 +817,15 @@ Switch projects and subprojects from STARTED back to TODO"
         haskell-indentation-left-offset 4
         haskell-indentation-ifte-offset 4))
 ; ghc 8.2 relevant
-(setq haskell-process-args-ghci
-      '("-ferror-spans" "-fshow-loaded-modules"))
-(setq haskell-process-args-cabal-repl
-      '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
-(setq haskell-process-args-stack-ghci
-      '("--ghci-options=-ferror-spans -fshow-loaded-modules"
-        "--no-build" "--no-load"))
-(setq haskell-process-args-cabal-new-repl
-      '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
-
-
+;(setq haskell-process-args-ghci
+;      '("-ferror-spans" "-fshow-loaded-modules"))
+;(setq haskell-process-args-cabal-repl
+;      '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
+;(setq haskell-process-args-stack-ghci
+;      '("--ghci-options=-ferror-spans -fshow-loaded-modules"
+;        "--no-build" "--no-load"))
+;(setq haskell-process-args-cabal-new-repl
+;      '("--ghc-options=-ferror-spans -fshow-loaded-modules"))
 
 
 ;;;****************************************************************************************
@@ -762,7 +910,8 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;; Agda
 ;;;****************************************************************************************
 
-(add-to-list 'load-path "~/.emacs.d/agda-input/")
+;(add-to-list 'load-path "~/.emacs.d/agda-input/")
+(load-file "~/.emacs.d/agda-input.el")
 (require 'agda-input)
 
 ;;;****************************************************************************************
@@ -775,13 +924,6 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;              auto-mode-alist))
 ;;(add-hook 'asm86-mode-hook 'turn-on-font-lock)
 ;;(add-hook 'asm-mode-hook '(lambda () (linum-mode) ))
-
-;;;****************************************************************************************
-;;; Encrypting
-;;;****************************************************************************************
-
-(require 'epa-file)
-(epa-file-enable)
 
 ;;;****************************************************************************************
 ;;; Backups
@@ -802,25 +944,6 @@ Switch projects and subprojects from STARTED back to TODO"
 ;;;****************************************************************************************
 
 (add-hook 'java-mode-hook '(lambda () (whitespace-mode)))
-
-;;;****************************************************************************************
-;;; Proof General
-;;;****************************************************************************************
-
-(load-file "~/.emacs.d/ProofGeneral/generic/proof-site.el")
-(setq coq-prog-name "/run/current-system/sw/bin/coqtop")
-(setq proof-splash-enable nil)
-
-;;;****************************************************************************************
-;;; Eshell
-;;;****************************************************************************************
-
-;(require 'ansi-color)
-;(require 'eshell)
-;(defun eshell-handle-ansi-color ()
-;  (ansi-color-apply-on-region eshell-last-output-start
-;                              eshell-last-output-end))
-;(add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
 
 ;;;****************************************************************************************
 ;;; Nix support
@@ -995,6 +1118,24 @@ Switch projects and subprojects from STARTED back to TODO"
 ;    ;; otherwise do ordinary fill paragraph
 ;    (fill-paragraph P)))
 ;(define-key LaTeX-mode-map (kbd "M-q") 'ales/fill-paragraph)
+
+;(require 'quelpa-use-package)
+;(use-package org-super-links
+;  :quelpa (org-super-links :repo "toshism/org-super-links" :fetcher github :commit "0.3")
+;  :bind (("C-c s s" . sl-link)
+;           ("C-c s l" . sl-store-link)
+;           ("C-c s C-l" . sl-insert-link)))
+
+;(use-package org-sidebar
+;  :quelpa (org-sidebar :fetcher github :repo "alphapapa/org-sidebar"))
+;
+;(load-file "~/.emacs.d/org-backlink.el")
+;
+;(defun volhovm-test-regexp ()
+;  (interactive)
+;  (re-search-forward "\\[\\[\\(\\(file:[^:]+::\\(\\*\\)\\)\\|\\(id:\\)\\|\\(\\*\\)\\)" nil t))
+;  ;(re-search-forward "\\[\\[\\(\\(file:[^:]+::\\(\\*\\)\\)|\\(id:\\)|\\(\\*\\)\\)?" nil t))
+;(global-set-key (kbd "C-c r") 'volhovm-test-regexp)
 
 (provide '.emacs)
 ;;; .emacs ENDS HERE

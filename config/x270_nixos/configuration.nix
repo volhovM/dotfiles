@@ -17,7 +17,7 @@ in {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     kernel.sysctl = {
-      "vm.swappiness" = 5;
+      "vm.swappiness" = 20;
       "net.ipv4.ip_default_ttl" = 65;
       "kernel.sysrq" = 1;
     };
@@ -53,7 +53,11 @@ in {
     hostName = "keshet";
     firewall.allowPing = true;
     firewall.enable = false;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      logLevel = "DEBUG";
+      wifi.powersave = false;
+    };
   };
 
   #time.timeZone = "Europe/Paris";
@@ -306,6 +310,9 @@ in {
     };
   };
 
+  # Otherwise I get this: https://github.com/NixOS/nixpkgs/issues/92319
+  programs.dconf.enable = true;
+
   programs.light.enable = true;
   programs.ssh.startAgent= true;
 
@@ -365,6 +372,8 @@ in {
       '';
     };
 
+    gnome3.gnome-keyring.enable = true;
+
     openvpn.servers = {
       metajoinVPN = {
         config = '' config /home/volhovm/reps/private/volhovm.ovpn '';
@@ -374,8 +383,6 @@ in {
 
     openssh.enable = true;
 
-    gnome3.gnome-keyring.enable = true;
-
     printing = {
       enable = true;
       browsing = true;
@@ -384,6 +391,8 @@ in {
     };
 
     teamviewer.enable = true;
+
+    udev.packages = [ pkgs.yubikey-personalization ];
 
     xserver = {
       autorun = true;

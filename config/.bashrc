@@ -79,6 +79,9 @@ function __prompt_command() {
       fi
     }
 
+    echo -ne "\033]0;$(basename "$(pwd)")/\007"
+
+
     #PS1="${ps1_date} ${ps1_user} ${ps1_path} \n${ps1_lambda} "
     PS1="${ps_date} ${ps_whoami} ${ps_excode}${ps_path} \$(git_prompt)\n${ps_lambda}"
 

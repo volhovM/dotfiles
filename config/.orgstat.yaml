@@ -1,5 +1,6 @@
 scopes:
   - paths: ['/home/volhovm/org/study.org', '/home/volhovm/org/private.org']
+ # - paths: ['/home/volhovm/org/study.org']
 timelineDefault:
   colorSalt: 3
   legend: false
@@ -8,11 +9,11 @@ timelineDefault:
 reports:
   - name: thisWeekAll
     range: week
-  - name: thisWeekProductive
+  - name: thisWeekTimelineReport
     range: week
     modifiers:
       - type: filterbytag
-        tags: [M,H]
+        tags: [M,H,sleep]
 
   # Statistics
   - name: thisWeekM
@@ -60,7 +61,7 @@ reports:
 
 outputs:
   - name: thisWeekTimeline
-    report: thisWeekProductive
+    report: thisWeekTimelineReport
     type: timeline
   - name: thisWeekTimelineAll
     report: thisWeekAll
@@ -75,9 +76,10 @@ outputs:
     reports: [thisWeekM,thisWeekH,thisWeekA,thisWeekE,todayM,todayH,todayA,todayE]
 
   # For debug
-  - name: thisWeekStatsBlock
+  - name: debugBlock
     type: block
-    report: thisWeekProductive
+    report: todayM
+    #report: thisWeekProductive
 
 outputDir: /home/volhovm/code/orgstat/
 todoKeywords: [ TD, ST, WT, CL, DN ]

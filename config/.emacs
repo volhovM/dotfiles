@@ -534,8 +534,8 @@
 (display-time)                   ;; activate time display
 
 (org-agenda-to-appt)             ;; generate the appt list from org agenda files on emacs launch
-(run-at-time "24:01" 1200 'org-agenda-to-appt)           ;; update appt list every 20m
-(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
+(run-at-time "24:01" 300 'org-agenda-to-appt)           ;; update appt list every 5m
+;(add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
 
 ;; set up the call to terminal-notifier
 (defvar my-notifier-path

@@ -27,204 +27,125 @@ in {
     '';
   };
 
-  krb5 = {
-    enable = true;
-    libdefaults.default_realm = "INF.ED.AC.UK";
-  };
-
-  hardware = {
-    # It's overriden by libinput anyway.
-    #trackpoint = {
-    #  enable = true;
-    #  speed = 120;
-    #  sensitivity = 120;
-    #  emulateWheel = true;
-    #};
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
-      daemon.config = { realtime-scheduling = "yes"; };
-    };
-    bluetooth.enable = true;
-    opengl.enable = true;
-  };
-
-  networking = {
-    hostName = "keshet";
-    firewall.allowPing = true;
-    firewall.enable = false;
-    networkmanager = {
-      enable = true;
-      logLevel = "DEBUG";
-      wifi.powersave = false;
-    };
-  };
-
-  #time.timeZone = "Europe/Paris";
-  time.timeZone = "Europe/London";
-
   console = {
     font = "cyr-sun16";
     keyMap = "dvorak";
   };
   i18n.defaultLocale = "en_GB.UTF-8";
 
-  fonts = {
-    fontDir.enable = true;
-    fontconfig.enable = true;
-    fonts = with pkgs; [
-      unifont
-      terminus_font
-      source-code-pro
-      fira-mono
-      fira-code
-      gohufont
-   ];
-  };
-
-  nix.trustedUsers = [ "root" "volhovm" ];
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = false;
-  };
-
-  # https://github.com/nix-community/emacs-overlay
-  nixpkgs.overlays = [ (import ./emacs-overlay/default.nix) ];
-#  nixpkgs.overlays = [
-#    (import (builtins.fetchTarball {
-#      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-#    }))
-#  ];
-
-
   environment.systemPackages = (with pkgs; [
-    acpi
-    alsaUtils
-    at
-    ag
-    audacity
-    autocutsel
-    bc
-    binutils-unwrapped
-    bup
-    bluedevil
-    chromium
-    cryptsetup
-    deadbeef
-    djvulibre
-    efibootmgr
-    elinks
-    electrum
-    evince
-#    emacs
-    emacsGit
-    enca
-    exiftool
-    espeak
-    ffmpeg
-    file
-    firefox
-    ffmpeg-full
-    gimp
-    git
-    gitAndTools.git-extras
-    gitAndTools.tig
-    gitinspector
-    gitstats
-    git-latexdiff
-    gnupg
-    gnuplot
-    gnutls
-    gparted
-    gptfdisk
-    gtypist
-    gqview
-    graphviz
-    grub2
-    grub2_efi
-    hledger
-    htop
-    httpie
-    hunspell
-    hunspellDicts.en_GB-ize
-    hunspellDicts.ru-ru
-    hunspellDicts.uk-ua
-    imagemagick
-    inkscape
-    iotop
-    iptables
-    iw
-    jack2
-    jq
-    ledger
-    libjpeg
-    libreoffice
-    libressl
-    lshw
-    lsof
-    manpages
-    mkpasswd
-    mplayer
-    mosh
-    mtr
-    nextcloud-client
-    ncdu
-    ntfs3g
-    openvpn
-    p7zip
-    pandoc
-    par2cmdline # needed for bup fsck
-    pass
-    pavucontrol
-    pciutils
-    pdftk
-    pkgconfig
-    poppler_utils # pdfimages
-    postgresql
-    powertop
-    pv
-    qjackctl
-    rsync
-    scrot
-    simplescreenrecorder
-    signal-desktop
-    smartmontools
-    socat
-    sox
-    speedcrunch
-    speedtest-cli
-    syslinux
-    sysstat
-    tcpdump
-    thunderbird
-    tmux
-    teams
-    teamviewer
-    texlive.combined.scheme-full
-    #tor-browser-bundle
-    traceroute
-    transmission_gtk
-    tree
-    tty-clock
-    unetbootin
-    unzip
-    usbutils
-    vim
-    vimPlugins.vim-nix
-    vlc
-    webfs
-    wirelesstools
-    wget
-    which
-    xournalpp
-    zathura
-    zip
-    zoom-us
+    acpi                               # Battery/etc
+    ag                                 # Searching
+    alsaUtils                          # Audio
+    audacity                           # Audio editing
+    autocutsel                         # Syncing clibboards
+    bluedevil                          # Bluetooth
+    bup                                # Backups
+    brightnessctl                      # Controlling brightness (light.sh)
+    chromium                           # Browser
+    cryptsetup                         # LUKS
+    deadbeef                           # Audio player
+    djvulibre                          # DJVU
+    efibootmgr                         # EFI boot manager
+    electrum                           # Bitcoin
+    elinks                             # Browser
+    emacsGit                           # Emacs
+    enca                               # Encodings (e.g. subtitles)
+    espeak                             # Speech generator
+    evince                             # PDFs
+    exiftool                           # EXIF data extraction
+    ffmpeg                             # Media
+    ffmpeg-full                        # Extensions?
+    file                               # Determining file type
+    firefox                            # Browser
+    gimp                               # Image editing
+    git                                # Git
+    gitAndTools.git-extras             # Extras
+    gitAndTools.tig                    # Git ncurses viewer
+    gitstats                           # Git stats
+    gnupg                              # GPG
+    gnuplot                            # Plotting
+    gparted                            # Disk partitioning, GUI
+    gptfdisk                           # Disk partitioning: `gdisk` et al.
+    gqview                             # Viewing photos
+    graphviz                           # Graph plotting
+    grub2                              # GRUB
+    grub2_efi                          # GRUB efi support?
+    gtypist                            # Typing drills
+    hledger                            # Finances
+    htop                               # top+
+    httpie                             # `http` command for manual HTTP queries
+    hunspell                           # Spelling
+    hunspellDicts.en_GB-ize            # Dictionary
+    hunspellDicts.ru-ru                # Dictionary
+    hunspellDicts.uk-ua                # Dictionary
+    imagemagick                        # cli image editing: `mogrify`, `convert`
+    inkscape                           # Image editing, vector
+    iotop                              # Top for I/O
+    iptables                           # Networking
+    iw                                 # Networking / wifi
+    ledger                             # Finances
+    libreoffice                        # Office
+    lshw                               # List hardware
+    lsof                               # List open files/who uses file/socket
+    manpages                           # Manpages
+    mosh                               # Robust SSH over UDP
+    motion                             # Web camera alerts
+    mplayer                            # Video player
+    ncdu                               # Ncurses du
+    nextcloud-client                   # Cloud/backup/sync
+    ntfs3g                             # NTFS support for `mount`
+    obs-studio                         # Recording/streaming
+    openvpn                            # VPN
+    p7zip                              # ZIP tool; rarely used
+    pandoc                             # Converter
+    par2cmdline                        # Needed for bup fsck
+    pass                               # Passwords
+    pavucontrol                        # Audio GUI
+    pciutils                           # `lspci`
+    pdftk                              # CLI PDF editing
+    pitivi                             # Video/audio editing studio
+    pkgconfig                          # `pkg-config`, helper for libraries/linking
+    poppler_utils                      # Images extraction from PDFs
+    powertop                           # Power usage
+    pv                                 # CLI progress bar
+    rsync                              # Syncing data
+    scrot                              # Screenshots
+    signal-desktop                     # Signal messaging app
+    skypeforlinux                      # Skype, well
+    smartmontools                      # `smartctl`
+    socat                              # Connecting sockets
+    speedcrunch                        # Calculator
+    speedtest-cli                      # Networking, speed test
+    sysstat                            # CPU/IO/etc stats tool for debugging
+    tcpdump                            # TCP analyzer
+    teams                              # Microsoft teams desktop client
+    teamviewer                         # Controlling windows machines
+    texlive.combined.scheme-full       # Tex
+    thunderbird                        # Email
+    tmux                               # Tmux
+    traceroute                         # Networking: tracing packages
+    transmission_gtk                   # Torrents
+    tree                               # `ls`, but tree view
+    tty-clock                          # Fancy TTY clock
+    unetbootin                         # Create bootable USB for Windows
+    unzip                              # UnZIP
+    unrar                              # UnRAR
+    usbutils                           # `lsusb`, `usb-devices`
+    vim                                # Vim
+    vimPlugins.vim-nix                 # Vim support for nix
+    vlc                                # Media player
+    webfs                              # Serving files over HTTP
+    wget                               # Wget, retrieving content from web
+    which                              # Similar to `where` (which uses `type`)
+    wirelesstools                      # `iwconfig`
+    xournalpp                          # PDF note taking/annotations
+    zathura                            # PDF/djvu viewer
+    zip                                # ZIP
+    zoom-us                            # Audio calls
 
     # Nix-related
     nix-prefetch-git
-    nixops
     patchelf
 
     # Development
@@ -256,8 +177,6 @@ in {
 #          universum
           zlib
         ]))
-#    haskellPackages.weeder
-#    haskellPackages.hpack
     libnotify
     python3
     #sage
@@ -285,6 +204,63 @@ in {
     xsel
     xsecurelock
   ]); # ++ [ rustcNightly cargoNightly ];
+
+  fonts = {
+    fontDir.enable = true;
+    fontconfig.enable = true;
+    fonts = with pkgs; [
+      unifont
+      terminus_font
+      source-code-pro
+      fira-mono
+      fira-code
+      gohufont
+   ];
+  };
+
+
+  hardware = {
+    # It's overriden by libinput anyway.
+    #trackpoint = {
+    #  enable = true;
+    #  speed = 120;
+    #  sensitivity = 120;
+    #  emulateWheel = true;
+    #};
+    pulseaudio = {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+      daemon.config = { realtime-scheduling = "yes"; };
+    };
+    bluetooth.enable = true;
+    opengl.enable = true;
+  };
+
+  krb5 = {
+    enable = true;
+    libdefaults.default_realm = "INF.ED.AC.UK";
+  };
+
+  networking = {
+    hostName = "keshet";
+    firewall.allowPing = true;
+    firewall.enable = false;
+    networkmanager = {
+      enable = true;
+      logLevel = "DEBUG";
+      wifi.powersave = false;
+    };
+  };
+
+  nix.trustedUsers = [ "root" "volhovm" ];
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowBroken = false;
+  };
+
+  # https://github.com/nix-community/emacs-overlay
+  nixpkgs.overlays = [ (import ./emacs-overlay/default.nix) ];
 
   # Taken from: https://gist.github.com/ioggstream/8f380d398aef989ac455b93b92d42048
   # To prevent suspend issues I had with USB device 0000:00:14.0 returning -16 code.
@@ -325,169 +301,149 @@ in {
   security = {
     rtkit.enable = true;
     sudo.enable = true;
-
-    #pam.services = {
-    #  login.limits =
-    #    [ { domain = "@realtime"; type = "-"; item = "rtprio"; value = "99"; }
-    #      { domain = "@realtime"; type = "-"; item = "memlock"; value = "unlimited"; }
-    #    ];
-    #  #login.text =
-    #  #  lib.mkDefault (lib.mkAfter ''
-    #  #    auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
-    #  #    account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh
-    #  #  '');
-    #  #common-auth.text =
-    #  #  lib.mkDefault (lib.mkAfter "auth required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
-    #  #common-account.text =
-    #  #  lib.mkDefault (lib.mkAfter "account required pam_exec.so debug log=/var/log/pamexec.log /home/volhovm/dotfiles/scripts/pam_shutdown.sh");
-    #};
   };
 
-# ------ SERVICES ------
 
-  services = {
-    batteryNotifier = {
-      enable = true;
-      device = "BAT1";
-      notifyCapacity = 15;
-      suspendCapacity = 5;
+  services.batteryNotifier = {
+    enable = true;
+    device = "BAT1";
+    notifyCapacity = 15;
+    suspendCapacity = 5;
+  };
+
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "0 */2 * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/bupcron 2> /tmp/bupcron.error"
+      "* * * * *  volhovm date > /tmp/crontest"
+    ];
+  };
+
+  # Blocking out distractions, yeah.
+  services.dnsmasq = {
+    enable = true;
+    extraConfig = ''
+      #address=/telegram.org/127.0.0.1
+    '';
+  };
+
+  services.gnome3.gnome-keyring.enable = true;
+
+  services.openvpn.servers = {
+    metajoinVPN = {
+      config = '' config /home/volhovm/reps/private/volhovm.ovpn '';
+      autoStart = false;
     };
+  };
 
-    cron = {
+  services.openssh.enable = true;
+
+  services.printing = {
+    enable = true;
+    browsing = true;
+    defaultShared = true;
+#    drivers = [ pkgs.hplipWithPlugin ];
+  };
+
+  services.teamviewer.enable = true;
+
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+
+  services.xserver = {
+    autorun = true;
+    enable = true;
+
+    videoDrivers = [ "intel" ];
+
+    layout = "pl,ru";
+    xkbOptions = "grp:rshift_toggle,ctrl:swap_lalt_lctl,caps:escape_shifted_capslock";
+    xkbVariant = "dvorak,ruu";
+
+    wacom.enable = true;
+
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 40;
+
+    # Libinput can't handle trackpoint normally, though it works better
+    # with touchpad that synaptics.
+    libinput.enable = false;
+    # Synaptics is crap. It doesn't support palm detection for touchpad.
+    # It steals middle button.
+    synaptics.enable = false;
+
+    dpi = 130;
+
+    displayManager.sessionCommands = ''
+      sh ~/.xinitrc
+    '';
+    windowManager.xmonad = {
       enable = true;
-      systemCronJobs = [
-        "0 */2 * * *  volhovm sh /home/volhovm/org/backup.sh > /tmp/bupcron 2> /tmp/bupcron.error"
-        "* * * * *  volhovm date > /tmp/crontest"
+      enableContribAndExtras = true;
+      extraPackages = hsPkgs: [
+        hsPkgs.xmobar
+        hsPkgs.xmonad-contrib
       ];
     };
-
-    # Blocking out distractions, yeah.
-        #address=/facebook.com/127.0.0.1
-    dnsmasq = {
-      enable = true;
-      extraConfig = ''
-        address=/2ch.hk/127.0.0.1
-        address=/instagram.com/127.0.0.1
-        #address=/telegram.org/127.0.0.1
-      '';
-    };
-
-    gnome3.gnome-keyring.enable = true;
-
-    openvpn.servers = {
-      metajoinVPN = {
-        config = '' config /home/volhovm/reps/private/volhovm.ovpn '';
-        autoStart = false;
-      };
-    };
-
-    openssh.enable = true;
-
-    printing = {
-      enable = true;
-      browsing = true;
-      defaultShared = true;
-#      drivers = [ pkgs.hplipWithPlugin ];
-    };
-
-    teamviewer.enable = true;
-
-    udev.packages = [ pkgs.yubikey-personalization ];
-
-    xserver = {
-      autorun = true;
-      enable = true;
-
-      videoDrivers = [ "intel" ];
-
-      layout = "pl,ru";
-      xkbOptions = "grp:rshift_toggle,ctrl:swap_lalt_lctl,caps:escape_shifted_capslock";
-      xkbVariant = "dvorak,ruu";
-
-      wacom.enable = true;
-
-      autoRepeatDelay = 200;
-      autoRepeatInterval = 40;
-
-      # Libinput can't handle trackpoint normally, though it works better
-      # with touchpad that synaptics.
-      libinput.enable = false;
-      # Synaptics is crap. It doesn't support palm detection for touchpad.
-      # It steals middle button.
-      synaptics.enable = false;
-
-      dpi = 130;
-
-      displayManager.sessionCommands = ''
-        sh ~/.xinitrc
-      '';
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        extraPackages = hsPkgs: [
-          hsPkgs.xmobar
-          hsPkgs.xmonad-contrib
-        ];
-      };
-      deviceSection = ''
-          Option "Backlight" "intel_backlight"
-      '';
-      inputClassSections = [''
-          Identifier "TPPS/2 IBM TrackPoint"
-          Driver "evdev"
-          MatchDevicePath "/dev/input/event*"
-          Option "ConstantDeceleration" "0.4"
-          Option "EmulateWheel" "true"
-          Option "EmulateWheelButton" "2"
-          Option "Emulate3Buttons" "false"
-          Option "XAxisMapping" "6 7"
-          Option "YAxisMapping" "4 5"
-      ''];
-    };
-
-    logind.extraConfig = ''
-      HandleLidSwitch=ignore
-      HandleHibernateKey=ignore
-      LidSwitchIgnoreInhibited=no
-      IdleAction=ignore
+    deviceSection = ''
+        Option "Backlight" "intel_backlight"
     '';
-
-    acpid.enable = true;
-    ntp.enable = true;
-
-    tor = {
-      enable = true;
-      client.enable = true;
-      torsocks.enable = true;
-    };
-
-    tlp.enable = true;
-    #tlp.settings = ''
-    #  USB_BLACKLIST="8087:0a2b"
-    #'';
-
-#    thermald.enable = true;
-# new nixos seems to work fine w/o it, at 45 degrees fan doesn't work
-    thinkfan = {
-      enable = true;
-
-      levels = ''
-        (0, 0, 70)
-        (1, 60, 70)
-        (3, 68, 77)
-        (5, 76, 82)
-        (7, 80, 32767)
-      '';
-
-      # Now I seem to have /proc/acpi/ibm/thermal !
-      #sensors = ''
-      #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
-      #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp2_input
-      #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input
-      #'';
-    };
-
+    inputClassSections = [''
+        Identifier "TPPS/2 IBM TrackPoint"
+        Driver "evdev"
+        MatchDevicePath "/dev/input/event*"
+        Option "ConstantDeceleration" "0.4"
+        Option "EmulateWheel" "true"
+        Option "EmulateWheelButton" "2"
+        Option "Emulate3Buttons" "false"
+        Option "XAxisMapping" "6 7"
+        Option "YAxisMapping" "4 5"
+    ''];
   };
+
+  services.logind.extraConfig = ''
+    HandleLidSwitch=ignore
+    HandleHibernateKey=ignore
+    LidSwitchIgnoreInhibited=no
+    IdleAction=ignore
+  '';
+
+  services.acpid.enable = true;
+
+  services.ntp.enable = true;
+
+  services.tor = {
+    enable = true;
+    client.enable = true;
+    torsocks.enable = true;
+  };
+
+  services.tlp.enable = true;
+
+  services.thinkfan = {
+    enable = true;
+
+    # TODO FIX
+    levels = [
+      [0 0 70]
+      [1 60 70]
+      [3 68 77]
+      [5 76 82]
+      [7 80 32767]
+    ];
+
+    # Now I seem to have /proc/acpi/ibm/thermal !
+    #sensors = ''
+    #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+    #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp2_input
+    #   hwmon /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp3_input
+    #'';
+  };
+
+  # The NixOS release to be compatible with for stateful data such as databases.
+  system.stateVersion = "20.09";
+
+  #time.timeZone = "Europe/Paris";
+  time.timeZone = "Europe/London";
 
   users = {
     extraUsers.volhovm = {
@@ -497,8 +453,5 @@ in {
     motd = "Stay noided";
     groups = { realtime = { }; };
   };
-
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "20.09";
 
 }

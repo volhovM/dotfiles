@@ -24,6 +24,7 @@ myMusPlayerNext = "deadbeef --next"
 myMusPlayerPlay = "deadbeef --play-pause"
 myMusPlayerPrev = "deadbeef --prev"
 myTerminal      = "urxvt"
+myTerminalRun x = "urxvt -e " ++ x
 myBrowser       = "firefox"
 myFocusFollowsMouse = False
 myClickJustFocuses = False
@@ -32,7 +33,9 @@ myModMask       = mod4Mask
 myWorkspaces    = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
-makeScreen = "scrot -s ~/screen.png"
+makeScreen = "sleep 0.2; scrot -s -q 100 ~/screen.png"
+makeScreenFull = "sleep 0.2; scrot ~/screen.png"
+--makeScreen = "urxvt"
 myDmenu = "dmenu_run -fn \"Terminus-10:normal\""
 myLockCmd = "xsecurelock"
 
@@ -69,14 +72,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
          -- display
     , ((0,                 0x1008ff59), spawn "sh ~/dotfiles/scripts/xrandr-auto.sh")
 
-          -- org mode files
+          -- Emacs: Super+o
     , ((modm,              0x6f), spawn "emacs ~/org/private.org")
 
-          -- launch browser
-    , ((modm,              0x73), spawn $ myBrowser ++ "&")
+          -- launch browser: Super+s
+    , ((modm,              0x73), spawn $ myBrowser)
 
-          -- make a screenshot
-    , ((modm,              0x72), spawn $ makeScreen ++ "&")
+    -- nmtui
+    , ((modm,              xK_u), spawn $ myTerminalRun "nmtui")
+
+          -- make a screenshot: Super+g, or with shift
+    , ((modm,              0x67), spawn $ makeScreen)
+    , ((modm .|. shiftMask, 0x67), spawn $ makeScreenFull)
 
           --DEFAULT-----------------------------------------------------------
 

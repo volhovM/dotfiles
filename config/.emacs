@@ -15,6 +15,23 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-indent-environment-list
+   '(("verbatim" current-indentation)
+     ("verbatim*" current-indentation)
+     ("filecontents" current-indentation)
+     ("filecontents*" current-indentation)
+     ("tabular" LaTeX-indent-tabular)
+     ("tabular*" LaTeX-indent-tabular)
+     ("align" LaTeX-indent-tabular)
+     ("align*" LaTeX-indent-tabular)
+     ("array" LaTeX-indent-tabular)
+     ("eqnarray" LaTeX-indent-tabular)
+     ("eqnarray*" LaTeX-indent-tabular)
+     ("displaymath")
+     ("equation")
+     ("equation*")
+     ("picture")
+     ("tabbing")))
  '(LaTeX-indent-level 4)
  '(ansi-color-faces-vector
    [default bold default italic underline success warning error])
@@ -170,8 +187,21 @@
  '(package-selected-packages
    '(helm-org-ql minimap helm-org-rifle ox-hugo org-journal auctex quelpa-use-package helm visual-fill-column adaptive-wrap evil-better-visual-line olivetti ansi latex-preview-pane dired-single evil dumb-jump ag smart-mode-line yasnippet org package-build epl git commander dash s unicode-fonts undo-tree sublime-themes rainbow-delimiters python-mode nyan-mode nlinum ledger-mode htmlize hindent goto-chg flycheck-ledger flycheck-haskell encourage-mode eimp cask auto-complete))
  '(safe-local-variable-values
-   '((eval run-with-idle-timer 5 t #'volhovm-save-study)
-     (eval load-file "formatting.el")
+   '((eval if
+           (string= "1e9dbb542af80b927a097a92da4de658c7aa6fe6e78434b129e27c86f062b898"
+                    (with-temp-buffer
+                      (insert-file-contents "./formatting.el")
+                      (secure-hash 'sha256
+                                   (current-buffer))))
+           (load-file "./formatting.el"))
+     (eval if
+           (string= "1e9dbb542af80b927a097a92da4de658c7aa6fe6e78434b129e27c86f062b898"
+                    (with-temp-buffer
+                      (insert-file-contents "../formatting.el")
+                      (secure-hash 'sha256
+                                   (current-buffer))))
+           (load-file "./formatting.el"))
+     (eval run-with-idle-timer 5 t #'volhovm-save-study)
      (TeX-master . "../")
      (TeX-master . "../weakse")
      (eval c-set-offset 'access-label '-)
@@ -237,6 +267,7 @@
    '(whitespace-tab ((t (:foreground "gray25"))))
    ))
 
+; Light
 (with-eval-after-load "tango-theme"
   (custom-theme-set-faces
    'tango
@@ -246,6 +277,7 @@
    '(whitespace-newline ((t (:foreground "gray80" :weight normal))))
    '(whitespace-space ((t (:foreground "gray88"))))
    '(whitespace-tab ((t (:foreground "gray88"))))
+   '(org-warning ((t (:background "dark gray" :foreground "red3" :weight bold))))
    ))
 
 ;(set-default-font "Terminus-10")
@@ -765,6 +797,19 @@ Switch projects and subprojects from STARTED back to TODO"
 ;(add-hook 'text-scale-mode-hook 'update-org-latex-fragments)
 
 
+(defun my-latex-mode-setup ()
+  "Redefines and updates variables for various customizations."
+  (setq LaTeX-paragraph-commands
+      '("If" "State" "Loop" "For"))
+  (setq LaTeX-begin-regexp
+    (concat "begin\\b" "\\|If\\b" "\\|Loop\\b" "\\|For\\b"))
+  (setq LaTeX-end-regexp
+    (concat "end\\b" "\\|EndIf\\b" "\\|EndLoop\\b" "\\|EndFor\\b"))
+  (setq LaTeX-paragraph-commands-regexp (LaTeX-paragraph-commands-regexp-make)))
+
+(add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
+
+
 ;;;****************************************************************************************
 ;;; Frames
 ;;;****************************************************************************************
@@ -837,7 +882,7 @@ Switch projects and subprojects from STARTED back to TODO"
 (add-hook 'c++-mode-hook 'whitespace-mode)
 (add-hook 'tuareg-mode-hook 'whitespace-mode)
 ;(add-hook 'scala-mode 'whitespace-mode)
-(add-hook 'before-save-hook 'whitespace-cleanup)
+(add-hook 'before-save-hook 'whitespace-cleanup) ; removes trailing whitespaces tabs spaces on save
 
 ;;;****************************************************************************************
 ;;; C

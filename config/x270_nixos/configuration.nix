@@ -84,6 +84,7 @@ in {
     iotop                              # Top for I/O
     iptables                           # Networking
     iw                                 # Networking / wifi
+    jq                                 # For ledger-fetch-price script
     ledger                             # Finances
     libreoffice                        # Office
     lshw                               # List hardware
@@ -115,6 +116,7 @@ in {
     skypeforlinux                      # Skype, well
     smartmontools                      # `smartctl`
     socat                              # Connecting sockets
+    sox                                # Noise/audio generation
     speedcrunch                        # Calculator
     speedtest-cli                      # Networking, speed test
     sysstat                            # CPU/IO/etc stats tool for debugging
@@ -124,6 +126,7 @@ in {
     texlive.combined.scheme-full       # Tex
     thunderbird                        # Email
     tmux                               # Tmux
+    tor-browser-bundle-bin             # Tor
     traceroute                         # Networking: tracing packages
     transmission_gtk                   # Torrents
     tree                               # `ls`, but tree view
@@ -265,7 +268,11 @@ in {
   # Taken from: https://gist.github.com/ioggstream/8f380d398aef989ac455b93b92d42048
   # To prevent suspend issues I had with USB device 0000:00:14.0 returning -16 code.
   powerManagement = {
-    powerDownCommands = "grep XHC.*enable /proc/acpi/wakeup && echo XHC > /proc/acpi/wakeup";
+    powerDownCommands = ''
+      grep XHC.*enable /proc/acpi/wakeup && echo XHC > /proc/acpi/wakeup
+      echo enabled > /sys/bus/usb/devices/usb1/power/wakeup
+      echo enabled > /sys/bus/usb/devices/usb2/power/wakeup
+    '';
     resumeCommands = "grep XHC.*disable /proc/acpi/wakeup && echo XHC > /proc/acpi/wakeup";
   };
 
@@ -348,6 +355,60 @@ in {
   services.teamviewer.enable = true;
 
   services.udev.packages = [ pkgs.yubikey-personalization ];
+
+  # Required for ledger nano
+  # https://support.ledger.com/hc/en-us/articles/115005165269-Fix-connection-issues
+  services.udev.extraRules = ''
+  KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="plugdev", ATTRS{idVendor}=="2c97"
+
+  KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="plugdev", ATTRS{idVendor}=="2581"
+
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="1b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="2b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="3b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="4b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="1807", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="1808", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0000", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0001", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0004", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="1011", MODE="0660", GROUP="plugdev"
+
+  SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="1015", MODE="0660", GROUP="plugdev"
+
+  ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="03f0", ATTRS{idProduct}=="304a" RUN+="${pkgs.stdenv.shell} -c 'echo enabled > /sys/bus/usb/devices/usb1/power/wakeup'"
+  '';
+
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="1b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="2b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="3b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="4b7c", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="1807", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2581", ATTRS{idProduct}=="1808", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0000", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0001", MODE="0660", TAG+="uaccess", TAG+="udev-acl”
+#
+# SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0004", MODE="0660", TAG+="uaccess", TAG+="udev-acl"
+#
+
 
   services.xserver = {
     autorun = true;
@@ -439,19 +500,26 @@ in {
     #'';
   };
 
+  services.zerotierone = {
+    enable = true;
+  };
+
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "20.09";
 
   #time.timeZone = "Europe/Paris";
   time.timeZone = "Europe/London";
+  #time.timeZone = "Europe/Moscow";
 
   users = {
     extraUsers.volhovm = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "networkmanager" "audio" "disk" "storage" "realtime" ];
+      extraGroups = [ "wheel" "networkmanager" "audio" "disk" "storage" "realtime" "plugdev" "docker" ];
     };
     motd = "Stay noided";
-    groups = { realtime = { }; };
+    groups = { realtime = { }; plugdev = {}; docker = {}; };
   };
+
+  virtualisation.docker.enable = true;
 
 }

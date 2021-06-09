@@ -1,5 +1,6 @@
 set -o vi
 wallpaper=~/thisWeekTimeline.png
+#wallpaper=~/reps/pictures/Wallpapers/wallpaper.jpg
 alias speak="espeak -g 20mS -p 60 -a 150 -s 100"
 alias noise="play -n -c1 synth whitenoise band -n 100 20 band -n 50 20 gain +25  fade h 1 864000 1"
 alias noise2="play -n -c1 synth whitenoise band -n 200 30 band -n 50 20 gain +25 band -n 500 20 band -n 800 10 gain +10 fade h 1 864000  1"

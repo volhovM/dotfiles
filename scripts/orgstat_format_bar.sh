@@ -128,8 +128,8 @@ eColor=$(avg_col $prevENum $eRateHigh $thisWeekENum 1 )
 
 #str="[<fc=#429942>$(pomodoro_rat $todayMDurationsList)</fc>] <fc=$mColor>m$thisWeekM</fc>/$(convert_to $mRateHigh)"
 #str="[<fc=#429942>$(pomodoro_rat $todayMDurationsList)</fc>] <fc=$mColor>###</fc>"
-#str="[<fc=$mColor>$(pomodoro_rat $todayMDurationsList)</fc>]"
-str=""
+str="[<fc=$mColor>$(pomodoro_rat $todayMDurationsList)</fc>]"
+#str=""
 
 
 echo $str > ~/thisWeekStats.txt

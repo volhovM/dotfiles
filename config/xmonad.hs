@@ -33,8 +33,8 @@ myModMask       = mod4Mask
 myWorkspaces    = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myNormalBorderColor  = "#555555"
 myFocusedBorderColor = "#ee4444"
-makeScreen = "sleep 0.2; scrot -s -q 100 ~/screen.png"
-makeScreenFull = "sleep 0.2; scrot ~/screen.png"
+makeScreen = "sleep 0.2; scrot -s -q 100 ~/screen_%Y-%m-%d.png"
+makeScreenFull = "sleep 0.2; scrot -q 100 ~/screen_%Y-%m-%d.png"
 --makeScreen = "urxvt"
 myDmenu = "dmenu_run -fn \"Terminus-10:normal\""
 myLockCmd = "xsecurelock"
@@ -65,6 +65,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
          -- lock&sleep
     , ((0,                 0x1008ff81), spawn (myLockCmd ++ " & (sleep 0.5 && systemctl suspend)")) -- settings
+    , ((0,                 0x1008ff2f), spawn (myLockCmd ++ " & (sleep 0.5 && systemctl suspend)")) -- settings
 
          -- locking
     , ((0,                 0x1008ff30), spawn myLockCmd)
